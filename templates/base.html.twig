@@ -1,17 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xml:lang="en">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
         {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {{ encore_entry_script_tags('app') }}
         {% endblock %}
-    </head>
-    <body>
+      </head>
+      <body class="h-100 position-relative">
+        <header class="h-auto fixed-top bg-dark pt-3 pb-3">
+          <nav class="navbar navbar-expand-lg navbar-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse justify-content-md-center" id="navbarsExample08">
+              <ul class="navbar-nav">
+                <div class="pe-5 d-flex flex-row w-auto me-5">
+                  
+                  <li class="nav-item pe-5 text-center m-auto">
+                    <a class="nav-link header-link" href="#"><h3 class="mb-0">Home</h3></a>
+                  </li>
+                  <li class="nav-item ps-5 text-center m-auto">
+                    <a class="nav-link header-link" href="#"><h3 class="mb-0">Carshares</h3></a>
+                  </li>
+      
+                </div>
+      
+                <li class="nav-item text-center m-auto ">
+                  <a href="/" class="">
+                    <img src="{{ asset('images/Logo.svg') }}" alt="Logo" class="logo logo-nav">
+                  </a>
+                </li>
+      
+                <div class="ps-5 d-flex flex-row w-auto ms-5">
+      
+                  <li class="nav-item pe-5 text-center m-auto">
+                    <a class="nav-link header-link" href="#"><h3 class="mb-0">Contact</h3></a>
+                  </li>
+                  <li class="nav-item ps-5 text-center m-auto">
+                    <button class="btn-primary btn p-3"><h3 class="mb-0">Login</h3></button>
+                  </li>
+      
+                </div>
+              </ul>
+            </div>
+          </nav>
+
+          
+          <form class="d-flex search-bar">
+            <div class="">
+              <input class="form-control me-2 rounded-pill" type="search" placeholder="Search" aria-label="Search">
+              <button class=" mt-1 border-2 btn btn-outline-success rounded-pill" type="submit"><h5 class="fw-bold m-0">Search</h5></button>
+            </div>
+          </form>
+
+        </header>
+
+        
+    
+
+        
+        <footer class="d-flex flex-wrap justify-content-between align-items-center pt-5 pb-5 mt-5 border-top position-absolute bottom-0 bg-secondary w-100">
+          <div class="col-md-4 ms-5 pt-3 text-center text-white footer-group">
+            
+            <h4 class="col-md-4 w-100 fs-2">Contact us !</h4>
+            <a href="mailto:test@email.com" class="w-100 fs-4 text-dark footer-link"><h5 class=" fs-3">test@email.com</h5></a>
+            
+          </div>
+
+          <div class="col-md-4 me-5 pt-3 text-center text-white footer-group">
+            <h4 class="col-md-4 w-100 fs-2">Legal settings</h4>
+            <a href="#" class="fs-4 w-100 text-dark footer-link"><h5 class=" fs-3">Cookies and privacy</h5></a>
+          </div>
+          <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
+            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
+          </a>
+      
+        </footer>
         {% block body %}{% endblock %}
     </body>
 </html>

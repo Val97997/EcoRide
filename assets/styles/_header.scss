@@ -1,0 +1,74 @@
+$primary: #3e6259ff; // change the primary color to red
+$secondary: #aef6c7ff; // change the secondary color to blue
+$neutal: #5b8266ff; // change the neutral color to green
+$dark: #294936ff; // change the dark color to black
+$black: #212922ff; // change the background color to white
+$font-sans-serif: 'Poppins', sans-serif !default;
+$font-monospace: "Poppins", monospace !default;
+$font-serif : "Raleway", serif !default;
+// header edition
+header{
+    .search-bar{
+        height: 5rem;
+        width: 100%;
+        text-align: center;
+        div{
+            width: 50%;
+            height: 3.5rem;
+            margin: auto;
+            padding: auto;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            position: relative;
+            input{
+                height: 3.5rem;
+                width: 100%;
+                font-size: 1.6rem;
+                z-index: 2;
+                color: $dark;
+            }
+            button{
+                height: 3rem;
+                color: $dark;
+                border-color: $dark;
+                position: absolute;
+                right: 1rem;
+                font-size: 1.4rem;
+                z-index: 5;
+                &:hover{
+                    background-color: $dark;
+                    color: $secondary;
+                    border-color: $secondary;
+                }
+                h5{
+                    padding: auto;
+                }
+            }
+
+        }
+    }
+}
+nav{
+    font-family: $font-sans-serif;
+
+    .header-link{
+        font-size: 2.5rem ;
+        font-weight: 900 ;
+        color: white ;
+        text-shadow: $black 0.1rem 0.1rem 0.2rem ;
+        &:hover{
+            color: $secondary ;
+        }
+        &:active{
+            color: $black ;
+        }
+    }
+    .logo-nav{
+        &:hover{
+            transform: scale(1.1);
+            transition: transform 0.5s ease-in-out;
+        }
+        
+    }
+}
