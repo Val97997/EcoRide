@@ -1,11 +1,20 @@
 $primary: #3e6259ff; // change the primary color to red
 $secondary: #aef6c7ff; // change the secondary color to blue
-$neutal: #5b8266ff; // change the neutral color to green
+$neutral: #5b8266ff; // change the neutral color to green
 $dark: #294936ff; // change the dark color to black
 $black: #212922ff; // change the background color to white
 $font-sans-serif: 'Poppins', sans-serif !default;
 $font-monospace: "Poppins", monospace !default;
 $font-serif : "Raleway", serif !default;
+
+@keyframes hover_shake{
+    0% {transform: rotate(2deg);}
+    25% {transform: rotate(-2deg);}
+    50% {transform: rotate(2deg);}
+    75% {transform: rotate(-2deg);}
+    100% {transform: rotate(0deg);}
+}
+
 
 .big-hero-img{
     z-index: -1;
@@ -15,6 +24,7 @@ $font-serif : "Raleway", serif !default;
     width: 100%;
     height: 100%;
     background-image: url('img/hero.jpg');
+    background-size: 100% 100%;
     background-repeat: no-repeat;
     filter:saturate(0.8);
     opacity: 0.8;
@@ -40,5 +50,155 @@ $font-serif : "Raleway", serif !default;
         width: 100%;
         font-size: 2rem;
         color: white;
+        text-shadow: white 0px 0px 20px;
     }
 }
+
+
+.hook{
+    height: auto;
+    width: 100%;
+    background: linear-gradient($secondary, white);
+    h2{
+        text-align: center;
+        font-size: 4rem;
+        background-color: $neutral;
+        box-shadow: 0px 0px 10px $dark;
+    }
+    .hook-text{
+        padding-left: 2rem;
+        padding-right: 2rem;
+        width: 80%;
+        height: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        text-align: center;
+        justify-content:space-around;
+        .hook-par{
+            line-height: 5rem;
+            height: 100%;
+            font-size: 1.6rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            width: 40%;
+            &:first-child{
+                padding-bottom: 20rem;
+                margin-right: 15rem;
+            }
+            &:nth-child(4){
+                padding-top: 20rem;
+                margin-left: 15rem;
+            }
+            .fa-solid{
+                font-size: 4rem;
+                color: $neutral;
+            }
+        }
+        .hook-button {
+            z-index: 3;
+            height: 20rem;
+            width: 20rem;
+            border-radius: 50%;
+            background-color: $black;
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: $secondary;
+            margin: 5rem 0;
+            padding: none;
+            &:hover{
+                background-color: $neutral;
+            }
+        }
+        .semicirclebtn{
+            background-color: transparent;
+            visibility: hidden;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            margin: 5rem 0;
+            padding: none;
+            .semicircle-btn{
+                font-family: $font-monospace;
+                font-size: 2.5rem;
+                font-weight: bold;
+                &:first-child{
+                    width: 20rem;
+                    height: 10rem;
+                    border-radius: 10rem 10rem 0 0;
+                    color: $secondary;
+                    background-color: $dark;
+                    &:hover{
+                        transform:translate(0, -0.5rem);
+                        transition: all 0.5s ease-in-out;
+                    }
+                }
+                &:last-child{
+                    width: 20rem;
+                    height: 10rem;
+                    border-radius: 0 0 10rem 10rem;
+                    color: $black;
+                    background-color: $secondary;
+                    &:hover{
+                        transform:translate(0, 0.5rem);
+                        transition: all 0.5s ease-in-out;
+                    }
+                }
+            }
+        }
+    }
+}
+.article-section{
+    article{
+        height: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        &:nth-child(odd){
+            background-color: $neutral;
+        }
+        &:nth-child(even){
+            background-color: transparent;
+            color: $black;
+            .article-content{
+                border-radius: 15px;
+                background-color: $secondary;
+            }
+        }
+        .article-content{
+            padding-left: 10rem;
+            padding-right: 10rem;
+            position: relative;
+            height: 50rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            button{
+                width: 15rem;
+                height: 5rem;
+                background-color: $dark;
+                color: white;
+                font-size: 1.8rem;
+                font-weight: bold;
+                margin-left: 70%;
+                &:hover{
+                    filter:saturate(1.5);
+                    color: $secondary;
+                    animation-name: hover_shake;
+                    animation-duration: 0.5s;
+                    animation-iteration-count: 1;
+                }
+            }
+            h3{
+                font-weight: bold;
+                font-size: 3rem;
+            }
+            p{
+                font-size: 1.8rem;
+            }
+        }
+    }
+}
+
+// carousel

@@ -104,7 +104,7 @@
 // customize some Bootstrap variables
 $primary: #3e6259ff; // change the primary color to red
 $secondary: #aef6c7ff; // change the secondary color to blue
-$neutal: #5b8266ff; // change the neutral color to green
+$neutral: #5b8266ff; // change the neutral color to green
 $dark: #294936ff; // change the dark color to black
 $black: #212922ff; // change the background color to white
 $font-sans-serif: 'Poppins', sans-serif !default;
@@ -117,10 +117,9 @@ $font-serif : "Raleway", serif !default;
 
 @import "../../node_modules/bootstrap/scss/bootstrap";
 
-// general styles
+// general rules
 html{
     font-size: 62.5% !important; // 1rem = 10px
-    height: 250rem ;
 }
 main{
     margin-top: 9.3rem ;
@@ -133,4 +132,7 @@ h1, h2, h3, h4, h5, h6, button{
 p, input, textarea, select{
     font-family: $font-sans-serif;
 }
-
+body{
+    box-sizing: border-box !important;
+    height:fit-content !important;
+}

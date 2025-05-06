@@ -7,6 +7,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <script src="https://kit.fontawesome.com/6aa7418ce8.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -16,8 +18,8 @@
         {% endblock %}
       </head>
       <body class="h-100 position-relative">
-        <header class="h-auto fixed-top bg-dark pt-3 pb-3">
-          <nav class="navbar navbar-expand-lg navbar-dark">
+        <header class="h-auto sticky-top bg-dark pt-3 pb-3">
+          <nav class="navbar navbar-expand-lg navbar-dark" id="navbar">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample08" aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -69,23 +71,21 @@
     
 
         
-        <footer class="d-flex flex-wrap justify-content-between align-items-center pt-5 pb-5 mt-5 border-top position-absolute bottom-0 bg-secondary w-100">
-          <div class="col-md-4 ms-5 pt-3 text-center text-white footer-group">
+        {% block body %}{% endblock %}
+        
+        <footer class="footer d-flex flex-wrap justify-content-between align-items-center pt-5 pb-5 mt-5 w-100">
+          <div class="col-md-4 ms-5 pt-3 text-center text-black footer-group">
             
             <h4 class="col-md-4 w-100 fs-2">Contact us !</h4>
-            <a href="mailto:test@email.com" class="w-100 fs-4 text-dark footer-link"><h5 class=" fs-3">test@email.com</h5></a>
+            <a href="mailto:test@email.com" class="w-100 fs-4 text-dark footer-link">test@email.com</a>
             
           </div>
 
-          <div class="col-md-4 me-5 pt-3 text-center text-white footer-group">
+          <div class="col-md-4 me-5 pt-3 text-center text-black footer-group">
             <h4 class="col-md-4 w-100 fs-2">Legal settings</h4>
-            <a href="#" class="fs-4 w-100 text-dark footer-link"><h5 class=" fs-3">Cookies and privacy</h5></a>
+            <a href="#" class="fs-4 w-100 text-dark footer-link">Cookies and privacy</a>
           </div>
-          <a href="/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-            <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-          </a>
       
         </footer>
-        {% block body %}{% endblock %}
     </body>
 </html>
