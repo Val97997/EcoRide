@@ -82,6 +82,12 @@ header{
                 padding: auto;
                 vertical-align: baseline;
             }
+            .nav-link{
+                color: white;
+                &:hover{
+                    color: $secondary;
+                }
+            }
         }
         .logo-nav{
             &:hover{

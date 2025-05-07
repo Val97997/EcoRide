@@ -75,6 +75,12 @@ header .search-bar div button h5, header .search-bar div button .h5 {
     padding: auto;
     vertical-align: baseline;
   }
+  .navbar-desktop .nav-items .nav-link {
+    color: white;
+  }
+  .navbar-desktop .nav-items .nav-link:hover {
+    color: #aef6c7;
+  }
   .navbar-desktop .logo-nav:hover {
     transform: scale(1.1);
     transition: transform 0.5s ease-in-out;
