@@ -1,4 +1,9 @@
 @charset "UTF-8";
+header {
+  z-index: 1000;
+  position: sticky;
+  top: 0;
+}
 header .search-bar {
   height: 5rem;
   width: 100%;
@@ -39,26 +44,88 @@ header .search-bar div button h5, header .search-bar div button .h5 {
   padding: auto;
 }
 
-nav {
-  font-family: "Poppins", sans-serif;
+@media (min-width: 800px) {
+  .navbar-desktop {
+    margin: auto;
+    padding: auto;
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+    font-family: "Poppins", sans-serif;
+  }
+  .navbar-desktop .nav-items {
+    min-width: 35rem;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+  }
+  .navbar-desktop .nav-items:first-child {
+    margin-right: 10rem;
+  }
+  .navbar-desktop .nav-items:last-child {
+    margin-left: 10rem;
+  }
+  .navbar-desktop .nav-items a, .navbar-desktop .nav-items button {
+    font-size: 2.5rem;
+    height: auto;
+    width: 15rem;
+    margin: auto;
+    padding: auto;
+    vertical-align: baseline;
+  }
+  .navbar-desktop .logo-nav:hover {
+    transform: scale(1.1);
+    transition: transform 0.5s ease-in-out;
+  }
+  .navbar-mobile {
+    display: none;
+  }
 }
-nav .header-link {
-  font-size: 2.5rem;
-  font-weight: 900;
-  color: white;
-  text-shadow: #212922 0.1rem 0.1rem 0.2rem;
+@media (max-width: 800px) {
+  header .navbar-desktop {
+    display: none !important;
+    opacity: 0 !important;
+  }
+  header .navbar-mobile {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 10vh;
+  }
+  header .navbar-mobile input[type=checkbox] {
+    display: none;
+  }
+  header .navbar-mobile input[type=checkbox]:checked ~ .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 10vh;
+    right: 0;
+    width: 50%;
+    height: 80vh;
+  }
+  header .navbar-mobile .nav-links {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+  }
+  header .navbar-mobile .nav-links li {
+    list-style: none;
+  }
+  header .navbar-mobile .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.8rem;
+    font-family: "Poppins", sans-serif;
+    font-weight: bold;
+  }
+  header .burger {
+    cursor: pointer;
+  }
 }
-nav .header-link:hover {
-  color: #aef6c7;
-}
-nav .header-link:active {
-  color: #212922;
-}
-nav .logo-nav:hover {
-  transform: scale(1.1);
-  transition: transform 0.5s ease-in-out;
-}
-
 .footer {
   background-image: url("../../public/images/Wave.svg");
   background-position: bottom;
@@ -275,6 +342,33 @@ nav .logo-nav:hover {
   font-size: 1.8rem;
 }
 
+aside {
+  color: #212922;
+  border-radius: 15px;
+  background-color: #aef6c7;
+  padding: 0.15rem 0.3rem;
+  position: fixed;
+  bottom: 5rem;
+  right: 2rem;
+  z-index: 1000;
+  border: solid 0.1rem #294936;
+}
+aside a {
+  width: 100%;
+  height: 100%;
+}
+aside:hover {
+  box-shadow: 0px 0px 10px #294936;
+}
+
+@media (max-width: 850px) {
+  .big-hero-img {
+    height: 50vh !important;
+  }
+  .big-hero {
+    height: 40vh !important;
+  }
+}
 @font-face {
   font-family: "Raleway";
   src: url("./fonts/Raleway/Raleway-Regular.ttf") format("truetype");

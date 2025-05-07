@@ -8,6 +8,9 @@ $font-monospace: "Poppins", monospace !default;
 $font-serif : "Raleway", serif !default;
 // header edition
 header{
+    z-index: 1000;
+    position: sticky;
+    top: 0;
     .search-bar{
         height: 5rem;
         width: 100%;
@@ -49,26 +52,95 @@ header{
         }
     }
 }
-nav{
-    font-family: $font-sans-serif;
+@media (min-width: 800px) {
+    
+    .navbar-desktop{
+        margin:auto;
+        padding: auto;
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: center;
+        font-family: $font-sans-serif;
+        .nav-items{
+            min-width: 35rem;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+            &:first-child{
+                margin-right: 10rem;
+            }
+            &:last-child{
+                margin-left: 10rem;
+            }
+            a, button{
+                font-size: 2.5rem;
+                height: auto;
+                width: 15rem;
+                margin:auto;
+                padding: auto;
+                vertical-align: baseline;
+            }
+        }
+        .logo-nav{
+            &:hover{
+                transform: scale(1.1);
+                transition: transform 0.5s ease-in-out;
+            }
+            
+        }
+    }
+    
+    .navbar-mobile{
+        display: none;
+    }
+}
 
-    .header-link{
-        font-size: 2.5rem ;
-        font-weight: 900 ;
-        color: white ;
-        text-shadow: $black 0.1rem 0.1rem 0.2rem ;
-        &:hover{
-            color: $secondary ;
+
+@media (max-width: 800px) {
+    header{
+        .navbar-desktop {
+            display: none !important;
+            opacity: 0 !important;
         }
-        &:active{
-            color: $black ;
+        .navbar-mobile{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            min-height:10vh;
+            input[type=checkbox]{
+                display: none;
+            }
+            input[type=checkbox]:checked ~ .nav-links{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                position: absolute;
+                top:10vh;
+                right:0;
+                width: 50%;
+                height: 80vh;
+            }
+            .nav-links{
+                display: flex;
+                justify-content: space-around;
+                width: 50%;
+                li{
+                    list-style: none;
+                }
+                a{
+                    text-decoration: none;
+                    color: white;
+                    font-size: 1.8rem;
+                    font-family: $font-sans-serif;
+                    font-weight: bold;
+                }
+            }
+        }
+        .burger{
+            cursor:pointer;
         }
     }
-    .logo-nav{
-        &:hover{
-            transform: scale(1.1);
-            transition: transform 0.5s ease-in-out;
-        }
-        
-    }
+
 }
