@@ -111,12 +111,12 @@ $font-serif : "Raleway", serif !default;
             }
         }
         .semicirclebtn{
+            top:25%;
             background-color: transparent;
             visibility: hidden;
             z-index: 2;
             display: flex;
             flex-direction: column;
-            margin: 5rem 0;
             padding: none;
             .semicircle-btn{
                 font-family: $font-monospace;

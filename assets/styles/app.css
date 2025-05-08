@@ -43,95 +43,50 @@ header .search-bar div button:hover {
 header .search-bar div button h5, header .search-bar div button .h5 {
   padding: auto;
 }
+header .navbar-desktop {
+  margin: auto;
+  padding: auto;
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: center;
+  font-family: "Poppins", sans-serif;
+}
+header .navbar-desktop .nav-items {
+  min-width: 35rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+header .navbar-desktop .nav-items:first-child {
+  margin-right: 10rem;
+}
+header .navbar-desktop .nav-items:last-child {
+  margin-left: 10rem;
+}
+header .navbar-desktop .nav-items a, header .navbar-desktop .nav-items button {
+  font-size: 2.5rem;
+  height: auto;
+  width: 15rem;
+  margin: auto;
+  padding: auto;
+  vertical-align: baseline;
+}
+header .navbar-desktop .nav-items .nav-link {
+  color: white;
+}
+header .navbar-desktop .nav-items .nav-link:hover {
+  color: #aef6c7;
+}
+header .navbar-desktop .logo-nav:hover {
+  transform: scale(1.1);
+  transition: transform 0.5s ease-in-out;
+}
+header .navbar-mobile {
+  display: none;
+}
 
-@media (min-width: 800px) {
-  .navbar-desktop {
-    margin: auto;
-    padding: auto;
-    width: 100%;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    justify-content: center;
-    font-family: "Poppins", sans-serif;
-  }
-  .navbar-desktop .nav-items {
-    min-width: 35rem;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-  }
-  .navbar-desktop .nav-items:first-child {
-    margin-right: 10rem;
-  }
-  .navbar-desktop .nav-items:last-child {
-    margin-left: 10rem;
-  }
-  .navbar-desktop .nav-items a, .navbar-desktop .nav-items button {
-    font-size: 2.5rem;
-    height: auto;
-    width: 15rem;
-    margin: auto;
-    padding: auto;
-    vertical-align: baseline;
-  }
-  .navbar-desktop .nav-items .nav-link {
-    color: white;
-  }
-  .navbar-desktop .nav-items .nav-link:hover {
-    color: #aef6c7;
-  }
-  .navbar-desktop .logo-nav:hover {
-    transform: scale(1.1);
-    transition: transform 0.5s ease-in-out;
-  }
-  .navbar-mobile {
-    display: none;
-  }
-}
-@media (max-width: 800px) {
-  header .navbar-desktop {
-    display: none !important;
-    opacity: 0 !important;
-  }
-  header .navbar-mobile {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    min-height: 10vh;
-  }
-  header .navbar-mobile input[type=checkbox] {
-    display: none;
-  }
-  header .navbar-mobile input[type=checkbox]:checked ~ .nav-links {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: absolute;
-    top: 10vh;
-    right: 0;
-    width: 50%;
-    height: 80vh;
-  }
-  header .navbar-mobile .nav-links {
-    display: flex;
-    justify-content: space-around;
-    width: 50%;
-  }
-  header .navbar-mobile .nav-links li {
-    list-style: none;
-  }
-  header .navbar-mobile .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.8rem;
-    font-family: "Poppins", sans-serif;
-    font-weight: bold;
-  }
-  header .burger {
-    cursor: pointer;
-  }
-}
 .footer {
   background-image: url("../../public/images/Wave.svg");
   background-position: bottom;
@@ -261,12 +216,12 @@ header .search-bar div button h5, header .search-bar div button .h5 {
   background-color: #5b8266;
 }
 .hook .hook-text .semicirclebtn {
+  top: 25%;
   background-color: transparent;
   visibility: hidden;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  margin: 5rem 0;
   padding: none;
 }
 .hook .hook-text .semicirclebtn .semicircle-btn {
