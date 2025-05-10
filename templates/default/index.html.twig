@@ -11,7 +11,7 @@
 
         <div class="big-hero-text" id="hero">
             <h1 class="text-center">Welcome to EcoRide</h1>
-            <p class="text-center">Your eco-friendly car sharing platform</p>
+            <p class="text-center text-black fw-bolder">Your eco-friendly car sharing platform</p>
         </div>
 
     </div>
@@ -42,7 +42,7 @@
                 <p class="text-center text-white">On EcoRide, you earn credits by offering travel options, and then spend them <br> to book your next destination .</p>
                 <button class="btn text-center mb-5">More info</button>
             </div>
-            <img src="{{ asset('images/Article_pic_01.png') }}" alt="Picture of a car" class="article-img">
+            <img src="{{ asset('build/img/Article_pic_01.png') }}" alt="Picture of a car" class="article-img">
         </article>
 
         <article class="pt-5 pb-5">
@@ -51,7 +51,7 @@
                 <p class="text-center">As a passenger, find numerous destinations all over the country <br> and leave a review after your trip !</p>
                 <button class="btn text-center mb-5">Book now</button>
             </div>
-            <img src="{{ asset('images/Article_pic_02.png') }}" alt="Picture of a car" class="article-img">
+            <img src="{{ asset('build/img/Article_pic_02.png') }}" alt="Picture of a car" class="article-img">
         </article>
 
         <article class="pt-5 pb-5">
@@ -60,13 +60,32 @@
                 <p class="text-center text-white">As a driver, you can setup your own route from your profile, <br> and become an actor on the platform !</p>
                 <button class="btn text-center mb-5">Create route</button>
             </div>
-            <img src="{{ asset('images/Article_pic_03.png') }}" alt="Picture of a car" class="article-img">
+            <img src="{{ asset('build/img/Article_pic_03.png') }}" alt="Picture of a car" class="article-img">
         </article>
 
     </section>
 
+    <section class="carousel-main">
+        <button class=" position-absolute z-3 h-100" id="carousel-prev"><i class="fa-regular fa-square-caret-left fa-2x"></i></button>
+        <button class=" position-absolute z-3 h-100" id="carousel-next"><i class="fa-regular fa-square-caret-right  fa-2x"></i></button>
+        <div class="carousel-slider anim-slider" id="carousel-slider">
+            <a href="/">
+                <img src="{{ asset('build/img/London.jpg') }}" alt="London" id="London"><h4>London, <span class=" fs-2">capital of Britain</span></h4>
+            </a>
+            <a href="">
+                <img src="{{ asset('build/img/Amsterdam.jpg') }}" alt="Amsterdam"><h4>title</h4>
+            </a>
+            <a href=""><img src="{{ asset('build/img/Berlin.jpg') }}" alt="Berlin"><h4>title</h4></a>
+            <a href=""><img src="{{ asset('build/img/Paris.jpg') }}" alt="Paris"><h4>title</h4></a>
+            <a href=""><img src="{{ asset('build/img/Nice.jpg') }}" alt="Nice"><h4>title</h4></a>
+            <a href=""><img src="{{ asset('build/img/Munich.jpg') }}" alt="Munich"><h4>title</h4></a>
+            <a href=""><img src="{{ asset('build/img/Madrid.jpg') }}" alt="Madrid" id="Madrid"><h4>title</h4></a>
+        </div>
+    </section>
+  
+
     <aside>
-        <a href="#hero"><i class="fa-solid fa-angle-up fa-3x"></i></a>
+        <a href="#top"><i class="fa-solid fa-angle-up fa-3x"></i></a>
     </aside>
 
 </main>

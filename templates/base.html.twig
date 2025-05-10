@@ -17,7 +17,7 @@
         {{ encore_entry_script_tags('app') }}
         {% endblock %}
       </head>
-      <body class="h-100 position-relative">
+      <body class="h-100 position-relative" id="top">
         
         <header class="h-auto bg-dark pt-3 pb-3" id="header">
           <nav class="navbar-desktop text-center" id="navbar">
@@ -30,7 +30,7 @@
                 </div>
       
                   <a href="/" class="">
-                    <img src="{{ asset('images/Logo.svg') }}" alt="Logo" class="logo logo-nav">
+                    <img src="{{ asset('build/img/Logo.svg') }}" alt="Logo" class="logo logo-nav">
                   </a>
               
                 <div class="d-flex nav-items">
@@ -46,7 +46,7 @@
           <nav class="navbar-mobile">
             <input type="checkbox" id="menu-toggle" class="burger">
             <label for="menu-toggle" class="burger">
-              <img src="{{ asset('images/Logo.svg')}}" alt="Logo">
+              <img src="{{ asset('build/img/Logo.svg')}}" alt="Logo">
             </label>
 
             <ul class="nav-links">
