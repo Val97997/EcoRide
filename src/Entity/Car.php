@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CarRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,24 @@ class Car
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $registration_date = null;
+
+    /**
+     * @var Collection<int, Carshare>
+     */
+    #[ORM\OneToMany(targetEntity: Carshare::class, mappedBy: 'car')]
+    private Collection $carshares;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'cars')]
+    private Collection $user;
+
+    public function __construct()
+    {
+        $this->carshares = new ArrayCollection();
+        $this->user = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +110,60 @@ class Car
     public function setRegistrationDate(\DateTimeInterface $registration_date): static
     {
         $this->registration_date = $registration_date;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Carshare>
+     */
+    public function getCarshares(): Collection
+    {
+        return $this->carshares;
+    }
+
+    public function addCarshare(Carshare $carshare): static
+    {
+        if (!$this->carshares->contains($carshare)) {
+            $this->carshares->add($carshare);
+            $carshare->setCar($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarshare(Carshare $carshare): static
+    {
+        if ($this->carshares->removeElement($carshare)) {
+            // set the owning side to null (unless already changed)
+            if ($carshare->getCar() === $this) {
+                $carshare->setCar(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUser(): Collection
+    {
+        return $this->user;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->user->contains($user)) {
+            $this->user->add($user);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        $this->user->removeElement($user);
 
         return $this;
     }
