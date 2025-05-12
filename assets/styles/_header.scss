@@ -6,6 +6,14 @@ $black: #212922ff; // change the background color to white
 $font-sans-serif: 'Poppins', sans-serif !default;
 $font-monospace: "Poppins", monospace !default;
 $font-serif : "Raleway", serif !default;
+@keyframes headerBounceSlide{
+    0% {transform: translateX(-100%);}
+    20% {transform: translateX(0%);}
+    40% {transform: translateX(-5%);}
+    60% {transform: translateX(0%);}
+    80% {transform: translateX(-2.5%);}
+    100% {transform: translateX(0%);}
+}
 // header edition
 header{
     z-index: 1000;
@@ -52,6 +60,8 @@ header{
         }
     }
     .navbar-desktop{
+        animation: headerBounceSlide .5s;
+        animation-iteration-count: 1;
         margin:auto;
         padding: auto;
         width: 100%;
