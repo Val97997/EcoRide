@@ -78,6 +78,12 @@ Encore
         //optional target path, relative to the output dir
         to: 'img/[path][name].[ext]',
     })
+
+        .copyFiles({
+        from: './assets/js',
+        //optional target path, relative to the output dir
+        to: 'js/[path][name].[ext]',
+    })
 ;
 
 module.exports = Encore.getWebpackConfig();

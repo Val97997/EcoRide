@@ -1,23 +1,71 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Register{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('build/js/register.js') }}" defer></script>
+  
+{% endblock javascripts %}
+{% block title %}Register{% endblock title %}
 
 {% block body %}
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
+    <div class="bg-gif">
+    </div>
 
-    <h1>Register</h1>
+    <div class="register_form">
+        
+        <h1>Create your account !</h1>
+    
+        {{ form_errors(registrationForm) }}
+        {{ form_start(registrationForm) }}
+        <div class="form-contain"  id="form-container">
 
-    {{ form_errors(registrationForm) }}
+            <div class="slide slide1 slide-move" id="slider1">
+                <div class="content">
+                    <div class="icon"></div>
+                        <i class="fa fa-user-circle text-secondary fa-10x" aria-hidden="true"></i>
+                        <h3 class="text-secondary mt-2">Identity</h3>
+                    </div>
+                </div>
+                
+                <div class="slide slide2 slide-move" id="slider2">
+                    {{ form_row(registrationForm.first_name) }}
+                    {{ form_row(registrationForm.last_name) }}
+                    {{ form_row(registrationForm.pseudo) }}
+                    {{ form_row(registrationForm.birth_date) }}
+                    {{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
+                    <div aria-disabled="true"></div>
+                </div>
+                
+        </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.pseudo) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+        <div class="form-contain"  id="form-container2">
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+            <div class="slide slide1 slide-move" id="slider3">
+                <div class="content">
+                    <div class="icon"></div>
+                        <i class="fa fa-circle-info text-secondary fa-10x" aria-hidden="true"></i>
+                        <h3 class="text-secondary mt-2">Additional infos</h3>
+                    </div>
+                </div>
+                
+                <div class="slide slide2 slide-move" id="slider4">
+                    {{ form_row(registrationForm.picture) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.phone_nb) }}
+                    {{ form_row(registrationForm.address) }}
+                    {{ form_row(registrationForm.agreeTerms) }}
+                </div>
+                
+        </div>
+
+        <div class="button-container">
+            <button type="submit" class="btn btn-submit">Register</button>
+        </div>
+        {{ form_end(registrationForm) }}
+        
+    </div>
+
+
+
 {% endblock %}
