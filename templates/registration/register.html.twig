@@ -34,6 +34,7 @@
                     {{ form_row(registrationForm.pseudo) }}
                     {{ form_row(registrationForm.birth_date) }}
                     {{ form_row(registrationForm.plainPassword, {label: 'Password'}) }}
+                    {{ form_row(registrationForm.confirmPw) }}
                     <div aria-disabled="true"></div>
                 </div>
                 
@@ -60,7 +61,7 @@
         </div>
 
         <div class="button-container">
-            <button type="submit" class="btn btn-submit">Register</button>
+            <button type="submit" class="btn btn-submit" id="submit-btn">Register</button>
         </div>
         {{ form_end(registrationForm) }}
         

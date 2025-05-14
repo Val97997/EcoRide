@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -74,7 +75,7 @@ class RegistrationFormType extends AbstractType
                                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password', 'placeholder' => 'Min 9 char long, 1 capital letter, 1 number, 1 special char'],
+                'attr' => ['autocomplete' => 'new-password', 'placeholder' => 'Min 8 char long, 1 Maj, 1 number, 1 special char'],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -86,6 +87,10 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('confirmPw',PasswordType::class, [
+                'mapped' => false,
+                'attr' => ['placeholder' => 're-enter password to confirm'],
             ])
         ;
     }

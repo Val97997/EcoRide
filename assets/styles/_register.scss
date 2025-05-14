@@ -123,6 +123,15 @@ $font-serif : "Raleway", serif !default;
                     margin: 1rem;
                     padding: 0rem 2rem;
                     border-radius: 1.5rem;
+                    position: relative;
+                    ul{
+                        list-style: none;
+                        color: red;
+                        position: absolute;
+                        font-weight: bold;
+                        font-size: 1.4rem;
+                        z-index: 2;
+                    }
                     label{
                         height: 3rem;
                         width: 20%;
