@@ -1,6 +1,7 @@
 import './bootstrap.js';
 import './bootstrap';
 import 'bootstrap';
+import { waapi, animate, createSpring, stagger } from 'animejs';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -26,3 +27,13 @@ import './styles/app.scss';
 //     $('[data-toggle="popover"]').popover();
 // });
 
+// anime.js animation setups
+
+waapi.animate('.animate-title span', {
+  translate: `0 -2rem`,
+  delay: stagger(100),
+  duration: 600,
+  loop: 3,
+  alternate: true,
+  ease: 'inOut(2)',
+});

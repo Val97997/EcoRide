@@ -36,7 +36,11 @@
                 <div class="d-flex nav-items">
       
                     <a class="nav-link header-link text-start" href="">Contact</a>
-                    <a href="{{path('app_register')}}" class="btn-primary btn p-0 text-center" type="button">Login</a>
+                    {% if app.user %}
+                    <a href="{{path('app_logout')}}" class="btn-primary btn p-0 text-center" type="button">Logout</a>
+                    {% else %}
+                    <a href="{{path('app_login')}}" class="btn-primary btn p-0 text-center" type="button">Login</a>
+                    {% endif %}
       
                 </div>
 
@@ -53,7 +57,11 @@
               <li><a href="#">Home</a></li>
               <li><a href="">Carshares</a></li>
               <li><a href="">Contact</a></li>
-              <li><a href="{{ path('app_register')}}">Login</a></li>
+              {% if app.user %}
+              <li><a href="{{ path('app_logout')}}">Logout</a></li>
+              {% else %}
+              <li><a href="{{ path('app_login')}}">Login</a></li>
+              {% endif %}
             </ul>
           </nav>
           

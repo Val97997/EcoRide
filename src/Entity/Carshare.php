@@ -18,7 +18,7 @@ class Carshare
     private ?\DateTimeInterface $departure_date = null;
 
     #[ORM\Column(type: Types::TIME_MUTABLE)]
-    private ?\DateTimeInterface $deaprture_hour = null;
+    private ?\DateTimeInterface $departure_hour = null;
 
     #[ORM\Column(length: 45)]
     private ?string $departure_location = null;
@@ -66,14 +66,14 @@ class Carshare
         return $this;
     }
 
-    public function getDeaprtureHour(): ?\DateTimeInterface
+    public function getdepartureHour(): ?\DateTimeInterface
     {
-        return $this->deaprture_hour;
+        return $this->departure_hour;
     }
 
-    public function setDeaprtureHour(\DateTimeInterface $deaprture_hour): static
+    public function setdepartureHour(\DateTimeInterface $departure_hour): static
     {
-        $this->deaprture_hour = $deaprture_hour;
+        $this->departure_hour = $departure_hour;
 
         return $this;
     }
