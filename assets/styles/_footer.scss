@@ -12,6 +12,8 @@ $font-serif : "Raleway", serif !default;
     background-position:bottom;
     background-size:cover;
     background-repeat: no-repeat ;
+    position:absolute;
+    bottom: 0%;
     .footer-link{
         &:hover{
             transform: scale(1.1);

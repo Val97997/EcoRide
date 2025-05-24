@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Data\SearchData;
 use App\Entity\Carshare;
 use App\Form\SearchFormType;
 use App\Repository\CarshareRepository;
@@ -14,13 +15,13 @@ final class SearchController extends AbstractController{
     #[Route('/search', name: 'app_search')]
     public function index(CarshareRepository $carshareRepository, Request $request): Response
     {
-        $data = new Carshare();
+        $data = new SearchData();
         $form = $this->createForm(SearchFormType::class, $data);
         $form->handleRequest(($request));
         $carshares = $carshareRepository->findSearch($data);
         return $this->render('search/index.html.twig', [
             'carshares' => $carshares,
-            'form' => $form->createView(),
+            'searchForm' => $form,
         ]);
     }
 }

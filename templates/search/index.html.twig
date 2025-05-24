@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
+{% block javascripts %}
+    <script src="{{ asset('build/js/list-index.js') }}" defer></script>
+{% endblock javascripts %}
 
-{% block title %}Hello SearchController!{% endblock %}
+{% block title %}Available carshares{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="search-page-hero-bg"></div>
+<div class="search-page-big-hero text-center">
+    <h1 class="text-secondary">You are looking for adventure, here is your inspiration !</h1>
+    <h4 class="text-white"><span class=" bg-dark pe-1 ps-1">Browse all the routes available on our website, search by fuel type, maximal price, or user rating.</span></h4>
+</div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="container">
+    <div class="column">
+        <div class="form-search position-relative d-flex flex-column justify-content-center align-items-center">
+            {% include "pages/_filter.html.twig" %}
+        </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/guilh/OneDrive/Documents/Formation Front-End/VSC/EcoRide/EcoRide_Front/EcoRide/src/Controller/SearchController.php</code></li>
-        <li>Your template at <code>C:/Users/guilh/OneDrive/Documents/Formation Front-End/VSC/EcoRide/EcoRide_Front/EcoRide/templates/search/index.html.twig</code></li>
-    </ul>
+        <div class="col-md-9 mt-5 carshare-list-container">
+            <div class=" d-grid">
+                {% for carshare in carshares %}
+                {% if carshare.availableSeats > 0 %}
+                    {% include "pages/_card.html.twig" with {carshare: carshare} only %}
+                {% endif %}
+                {% endfor %}
+        
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

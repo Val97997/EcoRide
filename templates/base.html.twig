@@ -25,7 +25,7 @@
                 <div class="d-flex nav-items">
                   
                     <a class="nav-link header-link bg-black btn" href="{{ path('app_default')}}">Home</a>
-                    <a class="nav-link header-link text-end" href="">Carshares</a>
+                    <a class="nav-link header-link text-end" href="{{ path('app_search')}}">Carshares</a>
       
                 </div>
       
@@ -73,9 +73,14 @@
           </form>
 
         </header>
-
+        {% if app.user %}
+          
+        <aside class="mini-profile position-fixed">
+          <img src="{{ path('app_profile_pic', {'id': app.user.id}) }}" alt="Profile" style="height: 5rem; width: 5rem;">
+          <h5>{{app.user.pseudo}}</h5>
+        </aside>
         
-    
+        {% endif %}
 
         
         {% block body %}{% endblock %}

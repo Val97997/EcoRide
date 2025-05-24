@@ -1,6 +1,6 @@
-import './bootstrap.js';
 import './bootstrap';
 import 'bootstrap';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import { waapi, animate, createSpring, stagger } from 'animejs';
 /*
  * Welcome to your app's main JavaScript file!
@@ -28,7 +28,7 @@ import './styles/app.scss';
 // });
 
 // anime.js animation setups
-
+//login page
 waapi.animate('.animate-title span', {
   translate: `0 -2rem`,
   delay: stagger(100),
@@ -36,4 +36,21 @@ waapi.animate('.animate-title span', {
   loop: 3,
   alternate: true,
   ease: 'inOut(2)',
+});
+
+//list carshares page
+animate('.search-page-big-hero h1', {
+  opacity: [0, 1],
+  translateY: ['-2rem', '0'],
+  duration: 1000,
+  ease: 'bounce(2, 0.3)',
+  delay: stagger(100),
+});
+
+animate('.search-page-big-hero h4', {
+  opacity: [0, 1],
+  translateY: ['2rem', '0'],
+  duration: 1000,
+  ease: 'bounce(2, 0.3)',
+  delay: stagger(100),
 });

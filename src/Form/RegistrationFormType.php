@@ -25,9 +25,13 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('pseudo', TextType::class, [
+                'label' => 'Pseudo*',
+                'required' => true,
                 'attr' => ['placeholder' => 'The pseudonym that will be displayed'],
             ])
             ->add('email', EmailType::class, [
+                'label' => 'Email*',
+                'required' => true,
                 'attr' => ['placeholder' => 'test@mail.com'],
             ])
             ->add('phone_nb', TextType::class, [
@@ -64,6 +68,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
+                'required' => true,
                 'constraints' => [
                     new IsTrue([
                         'message' => 'You should agree to our terms.',
@@ -99,6 +104,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'crsf_protection' => false,
         ]);
     }
 }

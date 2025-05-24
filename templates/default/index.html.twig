@@ -2,7 +2,7 @@
 {% block javascripts %}
 <script src="{{ asset('build/js/homepage.js') }}" defer></script>
 {% endblock javascripts %}
-{% block title %}Hello DefaultController!{% endblock %}
+{% block title %}Home{% endblock %}
 
 {% block body %}
 <main>
@@ -28,8 +28,8 @@
                 Join us !
             </button>
             <div class="position-absolute semicirclebtn" id="semicirclebtn">
-                <button class="btn text-capitalize semicircle-btn" type="button">Driver</button>
-                <button class="btn text-capitalize semicircle-btn text" type="button">Passenger</button>
+                <button class="btn text-capitalize semicircle-btn" type="button" id="btn-driver">Driver</button>
+                <button class="btn text-capitalize semicircle-btn text" type="button" id="btn-passenger">Passenger</button>
             </div>
             <p class="hook-par text-center"><i class="fa-solid fa-quote-left p-0 pe-5"></i>Help us grow and build a cleaner way of envisioning the <br>future of roadtrips and travels,<br>
                 so that we can all work towards a more eco-responsible planet<i class="fa-solid fa-quote-right p-0 ps-5"></i>
@@ -91,5 +91,6 @@
     </aside>
 
 </main>
+
 
 {% endblock %}

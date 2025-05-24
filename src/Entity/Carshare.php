@@ -41,7 +41,7 @@ class Carshare
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\ManyToOne(inversedBy: 'user')]
+    #[ORM\ManyToOne(inversedBy: 'carshare')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

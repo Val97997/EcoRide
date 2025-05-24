@@ -7,18 +7,19 @@ $font-sans-serif: 'Poppins', sans-serif !default;
 $font-monospace: "Poppins", monospace !default;
 $font-serif : "Raleway", serif !default;
 @keyframes headerBounceSlide{
-    0% {transform: translateX(-100%);}
-    20% {transform: translateX(0%);}
-    40% {transform: translateX(-5%);}
-    60% {transform: translateX(0%);}
-    80% {transform: translateX(-2.5%);}
-    100% {transform: translateX(0%);}
+    0% {transform: translateY(-40%);}
+    20% {transform: translateY(0%);}
+    40% {transform: translateY(-5%);}
+    60% {transform: translateY(0%);}
+    80% {transform: translateY(-2.5%);}
+    100% {transform: translateY(0%);}
 }
 // header edition
 header{
     z-index: 1000;
     position: sticky;
     top: 0;
+    box-shadow: 1rem .5rem .5rem $primary;
     .search-bar{
         height: 5rem;
         width: 100%;
@@ -33,7 +34,6 @@ header{
             flex-wrap: wrap;
             position: relative;
             input{
-                height: 3.5rem;
                 width: 100%;
                 font-size: 1.6rem;
                 z-index: 2;
@@ -44,7 +44,7 @@ header{
                 color: $dark;
                 border-color: $dark;
                 position: absolute;
-                right: 1rem;
+                right: 3%;
                 font-size: 1.4rem;
                 z-index: 5;
                 &:hover{
@@ -93,6 +93,7 @@ header{
                 color: white;
                 &:hover{
                     color: $secondary;
+                    text-decoration: none;
                 }
             }
         }
@@ -106,5 +107,26 @@ header{
     }
     .navbar-mobile{
         display: none;
+    }
+}
+// mini profile styling
+.mini-profile{
+    top:2%;
+    border-radius: .5rem;
+    background-color: $secondary;
+    height: 10rem;
+    width: auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img{
+        border-radius: 50%;
+    }
+    h5{
+        font-size: 1.6rem;
+        color: $dark;
+        font-weight: 500;
     }
 }

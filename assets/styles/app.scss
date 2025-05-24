@@ -5,6 +5,9 @@
 @import "homepage";
 @import "register";
 @import "login";
+@import "list-page";
+@import "carshare-card";
+@import 'carshare-view';
 
 @font-face {
     font-family: 'Raleway';
@@ -137,4 +140,6 @@ p, input, textarea, select{
 body{
     box-sizing: border-box !important;
     height:fit-content !important;
+    min-height: 350vh !important;
+    padding-bottom: 15rem !important;
 }

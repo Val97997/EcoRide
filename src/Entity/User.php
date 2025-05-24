@@ -7,8 +7,10 @@ use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -53,7 +55,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $address = null;
 
     #[ORM\Column(length: 45, nullable: true)]
-    private ?\DateTimeInterface $birth_date = null;
+    private ?string $birth_date = null;
 
     #[ORM\Column(type: Types::BLOB, nullable: true)]
     private $picture = null;
@@ -73,10 +75,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+    #[ORM\Column]
+    private ?int $credit_balance = 20;
+
+    /**
+     * @var Collection<int, Review>
+     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'user')]
+    private ?Collection $reviews;
+
     public function __construct()
     {
         $this->carshare = new ArrayCollection();
         $this->cars = new ArrayCollection();
+        $this->reviews = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -201,12 +213,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthDate(): ?\DateTimeInterface
+    public function getBirthDate(): ?string
     {
         return $this->birth_date;
     }
 
-    public function setBirthDate(?\DateTimeInterface $birth_date): static
+    public function setBirthDate(?string $birth_date): static
     {
         $this->birth_date = $birth_date;
 
@@ -302,6 +314,59 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    
+    public function displayImg(User $user): Response
+    {
+        $img = $user->getPicture();
+
+        $response = new Response(stream_get_contents($img));
+        $response->headers->set('Content-Type', ['image/jpeg', 'image/png', 'image/jpg']);
+        return $response;
+    }
+
+    public function getCreditBalance(): ?int
+    {
+        return $this->credit_balance;
+    }
+
+    public function setCreditBalance(int $credit_balance): static
+    {
+        $this->credit_balance = $credit_balance;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): ?Collection
+    {
+        return $this->reviews;
+    }
+    
+
+    public function addReview(Review $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getUser() === $this) {
+                $review->setUser(null);
+            }
+        }
 
         return $this;
     }

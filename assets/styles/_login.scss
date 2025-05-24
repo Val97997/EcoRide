@@ -26,13 +26,17 @@ $font-serif : "Raleway", serif !default;
     label, input, button{
         margin-top: 3rem;
     }
+
     label{
         font-size: 1.8rem;
     }
-    #password, #username{
+    #password, #username, #password:autofill, #username:autofill{
         height: 3rem;
         width: 50rem;
         font-size: 1.6rem;
+    }
+    #password:auto, #username:autofill{
+        background-color: none !important;
     }
     button{
         height: 7.5rem;
