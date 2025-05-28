@@ -1,5 +1,6 @@
 <?php
 // src/Service/ProductQuantityChecker.php
+//Deal with the empty carshares and remove them from DB for free space
 namespace App\Service;
 
 use App\Entity\Carshare;

@@ -19,6 +19,17 @@ services:
             - '../src/DependencyInjection/'
             # - '../src/Entity/'
             - '../src/Kernel.php'
-
+            
+    # necessary to autowire the TicketGeneratorService
+    # as it is not in the src/ directory 
+    App\Service\TicketGeneratorService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # set up the Booking email confirmation service
+    App\Service\BookMailService:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
+            $logger: '@logger'

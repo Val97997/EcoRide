@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class ProfilePicController extends AbstractController{
-    #[Route('/image/{id}', name: 'app_profile_pic')]
-    public function afficherImage(EntityManagerInterface $entityManager, int $id): Response
+    #[Route('user/image/{id}', name: 'app_profile_pic')]
+    public function displayImage(EntityManagerInterface $entityManager, int $id): Response
     {
         $user = $entityManager->getRepository(User::class)->find($id);
 

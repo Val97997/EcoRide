@@ -1,3 +1,11 @@
+$primary: #3e6259ff; // change the primary color to red
+$secondary: #aef6c7ff; // change the secondary color to blue
+$neutral: #5b8266ff; // change the neutral color to green
+$dark: #294936ff; // change the dark color to black
+$black: #212922ff; // change the background color to white
+$font-sans-serif: 'Poppins', sans-serif !default;
+$font-monospace: "Poppins", monospace !default;
+$font-serif : "Raleway", serif !default;
 .carshare-details-container{
     margin: 10rem auto;
     min-height: 40rem;
@@ -93,7 +101,7 @@
         }
     }
     .btn-book-container{
-        a{
+        a, button{
             margin: 2rem;
             height: auto;
             width: 25rem;
@@ -104,6 +112,22 @@
                 color: $secondary;
             }
         }
+    }
+}
+//reviews display :
+.reviews-row{
+    margin: auto 2.5rem;
+    width: 50%;
+    border: .1rem doted $primary;
+    border-radius: .1rem;
+    h3{
+        font-size: 2rem;
+    }
+    p{
+        font-size: 1.4rem;
+    }
+    .bi-star-fill{
+        color: yellowgreen;
     }
 }
 
@@ -127,3 +151,32 @@
     visibility: visible;
 }
 
+//modal styling 
+.confirm-modal{
+    position: fixed;
+    top:40%;
+    .modal-dialog{
+        height: auto;
+        padding: 1rem;
+    }
+}
+.confirm-modal-title{
+    font-size: 2rem;
+}
+.confirm-modal-footer{
+    button,a{
+        height: 5rem;
+        width: auto;
+        padding: 0rem 1rem;
+        font-size: 1.6rem;
+    }
+}
+.modal-body-confirm{
+    h3{
+        font-size: 2.2rem;
+        font-weight: 600;
+    }
+    p{
+        font-size: 1.8rem;
+    }
+}

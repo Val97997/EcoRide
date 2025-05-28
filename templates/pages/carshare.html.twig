@@ -1,7 +1,12 @@
 {% extends "base.html.twig" %}
+
+
 {# customized title page #}
 {% block title %}{{carshare.arrivalLocation}} / {{carshare.departureDate|date('Y-m-d')}}{% endblock %}
 {% block body %}
+
+
+
 <div class="carshare-details-container">
     <div class="text-center title-row">
         <span class="position-relative">
@@ -87,20 +92,48 @@
     {% for car in '{{carshare.user.cars}}'  %}
       {{car.color}}
     {% endfor %}
-    <div class="reviews-row">
-        {% for review in '{{carshare.user.reviews}}' %}
-          <p><strong>{{carshare.user.review.rating}}/5</strong><br>{{carshare.user.review.comment}}</p>
-        {% endfor %}
-    </div>
-
+    
     <div class="btn-book-container w-100 text-center">
         {% if app.user %}
-        <a href="{{path('app_book', {'id': carshare.id})}}" class="btn m-auto btn-dark">Book</a>
+        {% if app.user.creditBalance > carshare.price %}
+            <button type="button" data-bs-toggle="modal" data-bs-target="#confirmBookingModal" class="btn m-auto btn-dark">Book</button>
+        {% else %}
+            <button type="button" class="btn m-auto btn-danger" href="/">Not enough credits</button>
+        {% endif %}
         {% else %}
         <a href="{{path('app_login')}}" class="btn m-auto btn-dark">Login to book</a>
         {% endif %}
     </div>
+    <div class="reviews-row">
+        <h3>Driver reviews :</h3>
+        {% for review in reviews %}
+            {% for i in 1..review.rating %}
+                <i class="bi bi-star-fill"></i>
+            {% endfor %}
+            <p><strong>{{review.rating}}/5</strong><br>{{review.comment}}</p><hr>
+        {% endfor %}
+    </div>
 </div>
 
 
+<!-- Modal -->
+<div class="modal fade confirm-modal" id="confirmBookingModal" tabindex="-1" role="dialog" aria-labelledby="confirmBookingModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold confirm-modal-title text-primary" id="confirmBookingModalLabel">Do you wish to proceed ?</h5>
+      </div>
+      <div class="modal-body modal-body-confirm">
+        <h3>You are about to book the following route :</h3>
+        <p>{{carshare.departureLocation}}<i class="bi bi-arrow-right me-5 ms-5"></i>{{carshare.arrivalLocation}}
+            <i class="bi bi-calendar ms-5 me-2"></i>{{carshare.departureDate|date('d/m/Y')}}</p>
+      </div>
+      <div class="modal-footer confirm-modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go back</button>
+        <button type="button" class="btn btn-primary"><a href="{{path('app_book', {'id': carshare.id, 'uid': app.user.id})}}" class=" text-secondary text-decoration-none">
+            Confirm (-{{carshare.price}}/10 credits)</a></button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock body %}

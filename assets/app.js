@@ -1,6 +1,9 @@
+import $ from 'jquery';
+// Import the necessary styles and scripts
 import './bootstrap';
 import 'bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { waapi, animate, createSpring, stagger } from 'animejs';
 /*
  * Welcome to your app's main JavaScript file!
@@ -20,12 +23,7 @@ import './styles/app.scss';
 // require('bootstrap');
 
 // // or you can include specific pieces
-// // require('bootstrap/js/dist/tooltip');
-// // require('bootstrap/js/dist/popover');
 
-// $(document).ready(function() {
-//     $('[data-toggle="popover"]').popover();
-// });
 
 // anime.js animation setups
 //login page
