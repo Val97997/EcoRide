@@ -25,6 +25,9 @@ For testing with phpUnit :
 We have installed an extension for access to DQL higher functions for our queries (needed for Search page filters)
 # $ composer require beberlei/doctrineextensions
 
+ADMIN USER CREATION :
+    In order to process the Admin profile creation, NAVIGATE to localhost/creatAdmin (only accessible if logged in => security.yaml config),
+    this will execute a custom pure SQL script and create the Admin profile. @Todo : think of a better and safer method for implementing Admin profile
 
  >> We have set up connection for the Doctrine component to MongoDB for the NoSQL part of the databases, which
  we will be using for storing the destination list as verbose descriptive files.
