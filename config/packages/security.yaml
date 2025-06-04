@@ -1,4 +1,9 @@
 security:
+    role_hierarchy:
+        ROLE_ADMIN: [ROLE_USER, ROLE_EMPLOYEE]
+        ROLE_EMPLOYEE: ROLE_USER
+        ROLE_DRIVER: [ROLE_USER, ROLE_PASSENGER]
+        ROLE_PASSENGER: [ROLE_USER]
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
         Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
@@ -19,7 +24,7 @@ security:
             form_login:
                 login_path: app_login
                 check_path: app_login
-                enable_csrf: false
+                enable_csrf: true
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -33,9 +38,14 @@ security:
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
+    # define access control for both the website admin and employees from the company :
+    # same to restrict carshare creation to Drivers only, aswell as the registration of new vehicles for routes: 
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/employee, roles: ROLE_EMPLOYEE }
+        - { path: ^/carshare/crud, roles: ROLE_DRIVER}
+        - { path: ^/car, roles: ROLE_DRIVER}
+        - { path: ^/user, roles: ROLE_USER}
 
 when@test:
     security:

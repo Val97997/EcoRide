@@ -25,6 +25,7 @@ let lnameInput = document.getElementById("registration_form_last_name");
 let passwordInput = document.getElementById("registration_form_plainPassword");
 const passwRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_])[A-Za-z\d\W_]{8,}$/;
 let confirmPwInput = document.getElementById("registration_form_confirmPw");
+let phoneInput = document.getElementById('registration_form_phone_nb')
 
 confirmPwInput.disabled = true;
 submitBtn.disabled =true;
@@ -33,11 +34,9 @@ passwordInput.addEventListener("keyup", function(){
     confirmPwInput.disabled = false;
     if((this.value).match(passwRegex)){
         this.style.color = "green";
-        submitBtn.disabled = false;
     }
     else{
         this.style.color = "red";
-        submitBtn.disabled = true;
     }
 })
 
@@ -54,4 +53,84 @@ fnameInput.addEventListener("keyup", function(){
 })
 lnameInput.addEventListener("keyup", function(){
     pseudoInput.value = fnameInput.value + this.value + Math.floor(Math.random()* 10);
+})
+
+// display styling to make warnings readable
+let flashMessages = document.querySelectorAll("ul");
+let k = 5;
+flashMessages.forEach((message) => {
+    message.appendChild(
+        document.createElement("i")
+    );
+    message.style.right = k + "%";
+    k += 20;
+});
+
+// Role selection dynamic feedback in select element :
+const driverRole = document.getElementById("driver");
+const passengerRole = document.getElementById("passenger");
+if(window.location == "http://127.0.0.1:8000/register/driver"){
+    driverRole.checked = true;
+    passengerRole.checked = false;
+}
+else{
+    driverRole.checked = false;
+    passengerRole.checked = true;
+}
+driverRole.addEventListener("click", function() {
+    window.location.replace("driver");
+})
+
+passengerRole.addEventListener("click", function() {
+    window.location.replace("passenger");
+})
+
+document.addEventListener("DOMContentLoaded", function( ) {
+    const divRole = document.getElementById("role-choice");
+    divRole.classList.add('slide-role-choice');
+})
+
+// Preventing the input of a non valid date (too recent) for the birth_date field :
+// Only customers of at least 18 yrs old are allowed for legal reasons ?
+
+let birthInput = document.getElementById('registration_form_birth_date');
+// Calculate the date 18 years ago from today
+let today = new Date();
+let dateTreshold = new Date(today.getFullYear()-18, today.getMonth(), today.getDay());
+
+// Format the date as YYYY-MM-DD
+const formattedDate = dateTreshold.toISOString().split('T')[0];
+// Set the max attribute of the date input
+birthInput.max = formattedDate;
+
+// prevent use of wrong key inputs :
+const validKeys = [ 
+    'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
+    'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
+    'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+    'backspace', 'Tab', 'Enter', 'Shift', 'Control', 'Alt', 'Meta',
+    'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Escape', 'Backspace',
+    '\'', 'é', 'è', 'ê', 'ë', 'ç', 'à', 'â', 'ä', 'ô', 'ö', 'ù', 'û',
+    'ü', 'î', 'ï', 'ô',
+];
+const validPhoneKeys = [
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '+',
+    'backspace', 'Tab', 'Enter', 'Shift', 'Control', 'Alt', 'Meta',
+    'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Escape', 'Backspace',
+];
+lnameInput.addEventListener('keydown', function(){
+    if (!validKeys.includes(event.key)) {
+        event.preventDefault();
+    }
+})
+fnameInput.addEventListener('keydown', function(){
+    if (!validKeys.includes(event.key)) {
+        event.preventDefault();
+    }
+})
+phoneInput.addEventListener('keydown', ()=>{
+    if (!validPhoneKeys.includes(event.key)) {
+        event.preventDefault();
+    }
 })

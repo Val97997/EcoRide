@@ -27,8 +27,4 @@ carouselbtnnext.addEventListener('mouseleave', function(){
 let btnPassenger = document.getElementById('btn-passenger');
 let btnDriver = document.getElementById('btn-driver');
 
-btnPassenger.addEventListener('click', function() {
-    window.location.href = "{{ path('app_register') }}";
-});
-
 

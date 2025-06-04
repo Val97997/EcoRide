@@ -25,7 +25,14 @@ doctrine:
                 prefix: 'App\Entity'
                 alias: App
         controller_resolver:
-            auto_mapping: false
+            auto_mapping: 
+        # now time to access our additionnal native SQL functions from extension :
+        dql:
+            datetime_functions:
+                timediff: DoctrineExtensions\Query\Mysql\TimeDiff
+                cast: DoctrineExtensions\Query\Mysql\Cast
+                timestampdiff: DoctrineExtensions\Query\Mysql\TimestampDiff
+                hour: DoctrineExtensions\Query\Mysql\Hour
 
 when@test:
     doctrine:

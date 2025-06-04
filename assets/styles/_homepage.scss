@@ -127,6 +127,7 @@ $font-serif : "Raleway", serif !default;
                 font-family: $font-monospace;
                 font-size: 2.5rem;
                 font-weight: bold;
+                padding-top: 3rem;
                 &:first-child{
                     width: 20rem;
                     height: 10rem;
@@ -206,7 +207,7 @@ $font-serif : "Raleway", serif !default;
     }
 }
 
-aside{
+aside.btn-scroll-top{
     color: $black;
     border-radius: 15px;
     background-color: $secondary;

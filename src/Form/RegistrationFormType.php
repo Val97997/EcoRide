@@ -18,6 +18,7 @@ use Symfony\Component\Validator\Constraints\FileValidator;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class RegistrationFormType extends AbstractType
 {
@@ -36,7 +37,16 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('phone_nb', TextType::class, [
                 'required' => false,
-                'attr' => ['placeholder' => 'Your personal number'],
+                'attr' => [
+                    'placeholder' => 'Your personal number',
+                    'pattern' => '[0-9 ]+'
+                ],
+                'constraints' => [
+                    new Regex([
+                        'pattern' => '/^[0-9 ]+$/',
+                        'message' => 'numbers only'
+                    ]),
+                ]
             ])
             ->add('first_name', TextType::class, [
                 'required' => false,
@@ -56,12 +66,11 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('picture', FileType::class, [
                 'required' => false,
-                'empty_data' => 'Choose a picture',
                 'attr' => ['accept' => '.png,.jpg,.jpeg', 'placeholder' => 'Choose a profile picture'],
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
-                        'extensions' => ['png', 'jpg', 'jpeg'],
+                        'extensions' => [ 'jpg'],
                         'extensionsMessage' => 'Please upload a valid image (max 1024ko) '
                     ])
                 ]
@@ -104,7 +113,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'crsf_protection' => true,
+            'crsf_protection' => false,
         ]);
     }
 }

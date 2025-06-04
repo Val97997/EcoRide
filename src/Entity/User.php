@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -26,23 +25,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 180, nullable:true)]
     private ?string $pseudo = null;
 
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column]
+    #[ORM\Column(type: 'json')]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
-    #[ORM\Column]
-    private ?string $password = null;
+    #[ORM\Column(name: 'password', nullable: true)]
+    private ?string $password = '';
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $email = '';
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $first_name = null;
@@ -56,26 +55,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $address = null;
 
-    #[ORM\Column(length: 45, nullable: true)]
-    private ?string $birth_date = null;
-
-    #[ORM\Column(type: Types::BLOB, nullable: true)]
-    private $picture = null;
-
     /**
      * @var Collection<int, Carshare>
      */
     #[ORM\OneToMany(targetEntity: Carshare::class, mappedBy: 'user')]
     private Collection $carshare;
-
-    /**
-     * @var Collection<int, Car>
-     */
-    #[ORM\ManyToMany(targetEntity: Car::class, mappedBy: 'user')]
-    private Collection $cars;
-
-    #[ORM\Column]
-    private bool $isVerified = false;
 
     #[ORM\Column]
     private ?int $credit_balance = 20;
@@ -86,11 +70,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'user')]
     private ?Collection $reviews;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $birthDate = null;
+
+    #[ORM\Column(type: Types::BLOB, length: 4294967295, nullable: true)]
+    private $picture = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_verified = false;
+
+    /**
+     * @var Collection<int, Car>
+     */
+    #[ORM\OneToMany(targetEntity: Car::class, mappedBy: 'user')]
+    private Collection $cars;
+    // Here we are creating the booked carshares history, so that when User Passenger books one route, it gets saved and added to it
+    // => modif needed in the BookController for saving booked carshare to history .
+    /**
+     * @var Collection<int, Carshare>
+     */
+    #[ORM\ManyToMany(targetEntity: Carshare::class, inversedBy: 'usersBookedHistory')]
+    private Collection $bookHistory;
+
     public function __construct()
     {
         $this->carshare = new ArrayCollection();
-        $this->cars = new ArrayCollection();
         $this->reviews = new ArrayCollection();
+        $this->cars = new ArrayCollection();
+        $this->bookHistory = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -215,30 +222,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthDate(): ?string
-    {
-        return $this->birth_date;
-    }
-
-    public function setBirthDate(?string $birth_date): static
-    {
-        $this->birth_date = $birth_date;
-
-        return $this;
-    }
-
-    public function getPicture()
-    {
-        return $this->picture;
-    }
-
-    public function setPicture($picture): static
-    {
-        $this->picture = $picture;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Carshare>
      */
@@ -269,6 +252,106 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): static
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+  
+    
+    public function getCreditBalance(): ?int
+    {
+        return $this->credit_balance;
+    }
+    
+    public function setCreditBalance(int $credit_balance): static
+    {
+        $this->credit_balance = $credit_balance;
+        
+        return $this;
+    }
+    
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviews(): ?Collection
+    {
+        return $this->reviews;
+    }
+    
+    
+    public function addReview(Review $review): static
+    {
+        if (!$this->reviews->contains($review)) {
+            $this->reviews->add($review);
+            $review->setUser($this);
+        }
+        
+        return $this;
+    }
+    
+    public function removeReview(Review $review): static
+    {
+        if ($this->reviews->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getUser() === $this) {
+                $review->setUser(null);
+            }
+        }
+        
+        return $this;
+    }
+    
+    public function getBirthDate(): ?\DateTimeInterface
+    {
+        return $this->birthDate;
+    }
+    
+    public function setBirthDate(?\DateTimeInterface $birthDate): static
+    {
+        $this->birthDate = $birthDate;
+        
+        return $this;
+    }
+    
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+    
+    public function setPicture($picture): static
+    {
+        $this->picture = $picture;
+        
+        return $this;
+    }
+    
+    public function isVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+    
+    public function setIsVerified(?bool $is_verified): static
+    {
+        $this->is_verified = $is_verified;
+        
+        return $this;
+    }
+    public function displayImg(User $user): Response
+    {
+        $img = $user->getPicture();
+    
+        $response = new Response(stream_get_contents($img));
+        $response->headers->set('Content-Type', ['image/jpeg', 'image/png', 'image/jpg']);
+        return $response;
+    }
+
     /**
      * @return Collection<int, Car>
      */
@@ -281,7 +364,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->cars->contains($car)) {
             $this->cars->add($car);
-            $car->addUser($this);
+            $car->setUser($this);
         }
 
         return $this;
@@ -290,85 +373,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCar(Car $car): static
     {
         if ($this->cars->removeElement($car)) {
-            $car->removeUser($this);
+            // set the owning side to null (unless already changed)
+            if ($car->getUser() === $this) {
+                $car->setUser(null);
+            }
         }
-
-        return $this;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
-
-    public function setEmail(string $email): static
-    {
-        $this->email = $email;
-
-        return $this;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): static
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
-    
-    public function displayImg(User $user): Response
-    {
-        $img = $user->getPicture();
-
-        $response = new Response(stream_get_contents($img));
-        $response->headers->set('Content-Type', ['image/jpeg', 'image/png', 'image/jpg']);
-        return $response;
-    }
-
-    public function getCreditBalance(): ?int
-    {
-        return $this->credit_balance;
-    }
-
-    public function setCreditBalance(int $credit_balance): static
-    {
-        $this->credit_balance = $credit_balance;
 
         return $this;
     }
 
     /**
-     * @return Collection<int, Review>
+     * @return Collection<int, Carshare>
      */
-    public function getReviews(): ?Collection
+    public function getBookHistory(): Collection
     {
-        return $this->reviews;
+        return $this->bookHistory;
     }
-    
 
-    public function addReview(Review $review): static
+    public function addBookHistory(Carshare $bookHistory): static
     {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews->add($review);
-            $review->setUser($this);
+        if (!$this->bookHistory->contains($bookHistory)) {
+            $this->bookHistory->add($bookHistory);
         }
 
         return $this;
     }
 
-    public function removeReview(Review $review): static
+    public function removeBookHistory(Carshare $bookHistory): static
     {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getUser() === $this) {
-                $review->setUser(null);
-            }
-        }
+        $this->bookHistory->removeElement($bookHistory);
 
         return $this;
     }

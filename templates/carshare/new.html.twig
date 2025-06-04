@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Carshare{% endblock %}
+
+{% block body %}
+    <h1>Create new Carshare</h1>
+
+    {{ include('carshare/_form.html.twig') }}
+
+    <a href="{{ path('app_carshare_index') }}">back to list</a>
+{% endblock %}

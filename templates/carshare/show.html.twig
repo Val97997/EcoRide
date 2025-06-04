@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carshare{% endblock %}
+
+{% block body %}
+    <h1>Carshare</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ carshare.id }}</td>
+            </tr>
+            <tr>
+                <th>Departure_date</th>
+                <td>{{ carshare.departureDate ? carshare.departureDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Departure_hour</th>
+                <td>{{ carshare.departureHour ? carshare.departureHour|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Departure_location</th>
+                <td>{{ carshare.departureLocation }}</td>
+            </tr>
+            <tr>
+                <th>Arrival_date</th>
+                <td>{{ carshare.arrivalDate ? carshare.arrivalDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Arrival_hour</th>
+                <td>{{ carshare.arrivalHour ? carshare.arrivalHour|date('H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Arrival_location</th>
+                <td>{{ carshare.arrivalLocation }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ carshare.status }}</td>
+            </tr>
+            <tr>
+                <th>Available_seats</th>
+                <td>{{ carshare.availableSeats }}</td>
+            </tr>
+            <tr>
+                <th>Price</th>
+                <td>{{ carshare.price }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_carshare_index') }}">back to list</a>
+
+    <a href="{{ path('app_carshare_edit', {'id': carshare.id}) }}">edit</a>
+
+    {{ include('carshare/_delete_form.html.twig') }}
+{% endblock %}

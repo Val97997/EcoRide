@@ -78,9 +78,14 @@
         </header>
         {% if app.user %}
           
-        <aside class="mini-profile position-fixed">
-          <img src="{{ path('app_profile_pic', {'id': app.user.id}) }}" alt="Profile" style="height: 5rem; width: 5rem;">
-          <h5>{{app.user.pseudo}}</h5>
+        <aside class="mini-profile position-fixed p-2">
+          {# IMPORTANT: In order to be able to display the profile picture, use a dynamic link through Twig's formatted variable,
+          to the profile imgs folder in the correct way #}
+          <img src="{{asset('profile_pics/%s.jpg'|format(app.user.pseudo))}}" alt="Profile" style="height: 5rem; width: 5rem;">
+          <h5><a class="text-secondary text-decoration-none" href="{{path('app_user_profile')}}">
+            {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}
+            {{app.user.pseudo|slice(0, 10)}}
+          </a></h5>
         </aside>
         
         {% endif %}

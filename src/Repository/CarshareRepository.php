@@ -46,15 +46,16 @@ class CarshareRepository extends ServiceEntityRepository
 public function findSearch(SearchData $search){
     //create the search query
     $query = $this->createQueryBuilder('c')
-        ->orderBy('c.departure_date', 'ASC');
+        ->orderBy('c.departure_date', 'ASC')
         // ->select('c')
-        // ->join('c.user', 'u')
-        // ->join('c.car', 'ca');
+        ->join('c.user', 'u')
+        ->join('c.car', 'ca');
+        // we join the car and driver User linked to the carshare for ulterior specifications and details
 
     // create the PDO Query statement for fltering arrival locations and departure locations with the departure date:
     if(!empty($search->arrival_location)){
         $query->andWhere('c.arrival_location LIKE :arrival_location AND c.departure_location LIKE :departure_location
-        AND c.departure_date = :departure_date')
+        AND c.departure_date >= :departure_date')
         ->setParameter('departure_date', $search->departure_date)
         ->setParameter('departure_location', "%{$search->departure_location}%")
         ->setParameter('arrival_location', "%{$search->arrival_location}%");
@@ -66,10 +67,19 @@ public function findSearch(SearchData $search){
     }
 
     if(!empty($search->duration)){
-        $query->andWhere('DATE_DIFF(c.arrival_hour, c.departure_hour) <= :duration')
-        ->setParameter('duration', $search->duration);
+        $durationHours = $search->duration->h + ($search->duration->d * 24);
+        // Here we write the SQL builder Query in order to get the datetime interval to filter by duration 
+        // (we had to install DQN functions library dependency) :
+        $query->andWhere('
+        (TIMESTAMPDIFF(DAY, c.departure_date, c.arrival_date) * 24) + ABS(TIMESTAMPDIFF(HOUR, c.departure_hour, c.arrival_hour))
+         < :duration')
+        ->setParameter('duration', $durationHours);
     }
-
+    
+    if(!empty($search->eco) && $search->eco){
+        $query->andWhere('ca.fuel LIKE :ecological')
+        ->setParameter('ecological', 'electric');
+    }
     return $query->getQuery()->getResult();
 }
 }

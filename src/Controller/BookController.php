@@ -37,6 +37,7 @@ class BookController extends AbstractController{
         // fix the credit price to be 10% of the carshare price in currency units
         $creditPrice = (int)($carshare->getPrice() / 10);
         $user->setCreditBalance($balance-$creditPrice);
+        $user->addBookHistory($carshare);
         $carshare->setAvailableSeats($quantity - 1);
         
         // Optionally, you can add logic to handle the case when no seats are available

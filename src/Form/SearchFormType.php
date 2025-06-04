@@ -84,10 +84,11 @@ class SearchFormType extends AbstractType
             ->add('duration', DateIntervalType::class, [
                 'with_years' => false,
                 'with_months' => false,
-                'with_days' => true,
                 'with_hours' => true,
                 'required' => false,
                 'label' => 'Duration',
+                'days' => range(0,4),
+                'hours' => array_combine(range(1, 23), range(1, 23)),
                 'attr' => ['placeholder' => 'HH', 'min' => '0', 'max' => '1000'],
             ])
             ;

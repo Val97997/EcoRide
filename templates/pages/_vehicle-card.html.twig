@@ -1,0 +1,9 @@
+<tr>
+    <td>{{car.model}}</td>
+    <td>{{car.color}}</td>
+    <td>{{car.registration}}</td>
+    <td>{{car.registrationDate|date("m/d/Y")}}</td>
+    <td>{{car.fuel.value}}</td>
+    <td><a class=" text-info" href="{{path('app_car_edit', {'id': car.id})}}">Edit</a></td>
+    <td><a class="text-danger" href="{{path('app_car_delete', {'id': car.id})}}">Remove</a></td>
+</tr>

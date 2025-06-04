@@ -8,6 +8,11 @@
 @import "list-page";
 @import "carshare-card";
 @import 'carshare-view';
+@import 'profile';
+@import 'profile-edit';
+@import 'car-crud';
+@import 'car-show';
+
 
 @font-face {
     font-family: 'Raleway';
@@ -141,7 +146,7 @@ p, input, textarea, select{
 body{
     box-sizing: border-box !important;
     height:fit-content !important;
-    min-height: 350vh !important;
+    min-height: 150vh !important;
     padding-bottom: 15rem !important;
 }
 // modal
@@ -151,4 +156,37 @@ body{
 .modal-dialog{
     width: 40vw;
     height: 30vh;
+}
+//mini profile aside
+@keyframes mini-profile-anime{
+    0% {transform: scale(1.0);}
+    100% {transform: scale(1.15);}
+}
+aside.mini-profile{
+    width: 9rem;
+    z-index: 1000;
+    top:2%;
+    right: 2%;
+    border-radius: .5rem;
+    background-color: transparent;
+    height: 10rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: $secondary;
+    &:hover{
+        background-color: $black;
+        box-shadow: 0 0 1rem $secondary;
+        animation: mini-profile-anime 1.5s ease-in-out alternate infinite;
+    }
+    img{
+        border-radius: 50%;
+    }
+    h5{
+        text-decoration: none;
+        font-size: 1.6rem;
+        font-weight: 1000;
+    }
 }

@@ -64,7 +64,7 @@ const validKeys = [
     'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
     'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
     'backspace', 'Tab', 'Enter', 'Shift', 'Control', 'Alt', 'Meta',
-    'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Escape',
+    'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Escape', 'Backspace',
     '\'', 'é', 'è', 'ê', 'ë', 'ç', 'à', 'â', 'ä', 'ô', 'ö', 'ù', 'û',
     'ü', 'î', 'ï', 'ô',
 ];

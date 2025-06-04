@@ -109,24 +109,3 @@ header{
         display: none;
     }
 }
-// mini profile styling
-.mini-profile{
-    top:2%;
-    border-radius: .5rem;
-    background-color: $secondary;
-    height: 10rem;
-    width: auto;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    img{
-        border-radius: 50%;
-    }
-    h5{
-        font-size: 1.6rem;
-        color: $dark;
-        font-weight: 500;
-    }
-}

@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{app.user.pseudo}} profile{% endblock %}
+
+{% block body %}
+{# bg image on screen #}
+<div class="bg-profile">
+
+</div>
+
+<section class="profile m-auto pt-5 pb-5">
+    <div class="profile-row-1 m-auto">
+        <span>{{app.user.pseudo}}</span>
+        <img src="{{asset('profile_pics/%s.jpg'|format(app.user.pseudo))}}" alt="Profile" style="height: 20rem; width: 20rem;">
+        <span>{{app.user.email}}</span>
+    </div>
+
+    <div class="profile-body mt-5 p-3">
+        
+        <div class="profile-row-2 ps-5 pe-5 btn btn-primary">
+            <span><i class="bi bi-person-vcard me-2"></i>{{app.user.firstName}} {{app.user.lastName}}</span>
+
+            <span><i class="bi bi-cake-fill me-2"></i> {{app.user.birthDate|date('d/m/Y')}}</span>
+            <span><i class="bi bi-geo-fill me-2"></i>{{app.user.address}}</span>
+            <span><i class="bi bi-telephone-fill me-2"></i>{{app.user.phoneNb}}</span>
+        </div>
+        <div class="profile-row-3">
+            <span class="btn btn-secondary"><i class="bi bi-credit-card-fill me-2"></i> Current Credit balance : <em>{{app.user.creditBalance}}</em></span>
+            {# check verification status in dynamic field display #}
+            {% if app.user.isVerified %}
+              <h4 class="verif-title fs-1">Verified Profile<i class="bi bi-patch-check-fill ms-2"></i></h4>
+            {% else %}
+              <h4 class="not-verif-title">Verification pending <hr> <em>please check your mail inbox</em></h4>
+            {% endif %}
+
+            {# manage if user can create routes or just book them #}
+            {% if 'ROLE_DRIVER' in app.user.roles  %}
+            {# REMEMBER to specify the app.user.id so that it gets added and queried automatically in the DB car.user field ! DO NOT
+            leave it as an input choice for the Driver User, otherwise granting access to other Users IDs ! #}
+                <h3><a href="{{path('app_car_new', {'id': app.user.id})}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-plus-circle-fill"></i> Add a car</a></h3>
+                {% if app.user.cars|length > 0 %}
+                    {# <h3><a href="{{path('app_carshare_new')}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-file-earmark-plus"></i> Create carshare</a></h3> #}
+                {% elseif app.user.cars|length == 0 %}
+                    <h3><a href="{{path('app_car_new', {'id': app.user.id})}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-file-earmark-plus">
+                    </i> Register a car in order to create a voyage</a></h3>
+                {# here we checked if the Driver has currently a car registered, as such allowing him to create a carshare / or not #}
+                {% endif %}
+                
+                
+            {% else %}
+                <h3><a href="/">Become driver</a></h3>
+                <h3><a href="/">Access history</a></h3>
+                
+            {% endif %}
+                
+                
+        </div>
+            
+    </div>
+        
+        
+        <a href="{{path('app_user_edit')}}" class="fs-2 btn btn-dark text-danger mt-2 btn-edit-profile">Edit info</a>
+
+
+        {% if app.user.cars|length > 0 %}
+        
+            <table class="table-car-listing bg-black mt-3 mb-3">
+                <caption class="text-white caption-top">
+                    {% if app.user.cars|length > 1 %}
+                      Vehicle fleet
+                       {% elseif app.user.cars|length == 1 %}
+                      Vehicle
+                    {% endif %}
+                </caption>
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Color</th>
+                        <th>Registration</th>
+                        <th>Reg. date</th>
+                        <th>Fuel</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for car in app.user.cars %}
+                    {% include "pages/_vehicle-card.html.twig" %}
+                    {% endfor %}
+                </tbody>
+            </table>
+          
+        {% endif %}
+</section>
+{% endblock %}

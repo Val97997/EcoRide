@@ -1,20 +1,51 @@
 {% extends 'base.html.twig' %}
 {% block javascripts %}
 <script src="{{ asset('build/js/register.js') }}" defer></script>
-  
+
 {% endblock javascripts %}
-{% block title %}Register{% endblock title %}
+{% block title %}
+Register 
+{% if userRole == 'driver' %}
+  Driver
+  {% else %}
+  Passenger
+{% endif %}
+{% endblock title %}
 
 {% block body %}
+{# style error messages otherwise unreadable #}
+<style>
+    ul{
+        z-index: 15 !important;
+    }
+</style>
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
     <div class="bg-gif">
     </div>
 
+    <div class="role-choice mt-5 mb-3 p-5" id="role-choice">
+        <h1 class="text-white">Choose your role in the EcoRide community !</h1>
+        <div>
+            <input type="radio" name="role" value="driver" id="driver" class=" me-3">
+            <label for="driver">Driver</label>
+        </div>
+        <div>
+            <input type="radio" name="role" value="passenger" id="passenger" class=" me-3">
+            <label for="passenger">Passenger</label>
+        </div>
+    </div>
+
     <div class="register_form">
         
-        <h1>Create your account !</h1>
+        <h1>
+            {% if userRole == 'driver' %}
+            Create your driver account !
+             {% else %}
+             Register as a passenger ! 
+            {% endif %}
+        </h1>
     
         {{ form_errors(registrationForm) }}
         {{ form_start(registrationForm) }}
@@ -66,7 +97,5 @@
         {{ form_end(registrationForm) }}
         
     </div>
-
-
 
 {% endblock %}

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\FuelTypes;
 use App\Repository\CarRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,9 +24,6 @@ class Car
     private ?string $registration = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $fuel = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
     private ?string $color = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -37,16 +35,16 @@ class Car
     #[ORM\OneToMany(targetEntity: Carshare::class, mappedBy: 'car')]
     private Collection $carshares;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'cars')]
-    private Collection $user;
+    #[ORM\ManyToOne(inversedBy: 'cars', cascade:['persist'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    #[ORM\Column(enumType: FuelTypes::class)]
+    private ?FuelTypes $fuel = null;
 
     public function __construct()
     {
         $this->carshares = new ArrayCollection();
-        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -74,18 +72,6 @@ class Car
     public function setRegistration(string $registration): static
     {
         $this->registration = $registration;
-
-        return $this;
-    }
-
-    public function getFuel(): ?string
-    {
-        return $this->fuel;
-    }
-
-    public function setFuel(?string $fuel): static
-    {
-        $this->fuel = $fuel;
 
         return $this;
     }
@@ -144,26 +130,26 @@ class Car
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUser(): Collection
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function addUser(User $user): static
+    public function setUser(?User $user): static
     {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
-        }
+        $this->user = $user;
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function getFuel(): ?FuelTypes
     {
-        $this->user->removeElement($user);
+        return $this->fuel;
+    }
+
+    public function setFuel(FuelTypes $fuel): static
+    {
+        $this->fuel = $fuel;
 
         return $this;
     }

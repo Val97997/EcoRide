@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use App\Enum\CarshareStatus;
 use App\Repository\CarshareRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -32,9 +35,6 @@ class Carshare
     #[ORM\Column(length: 45)]
     private ?string $arrival_location = null;
 
-    #[ORM\Column(length: 45)]
-    private ?string $status = null;
-
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $available_seats = null;
 
@@ -48,6 +48,20 @@ class Carshare
     #[ORM\ManyToOne(inversedBy: 'carshares')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Car $car = null;
+
+    #[ORM\Column(enumType: CarshareStatus::class)]
+    private ?CarshareStatus $status = null;
+
+    /**
+     * @var Collection<int, User>
+     */
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'bookHistory')]
+    private Collection $usersBookedHistory;
+
+    public function __construct()
+    {
+        $this->usersBookedHistory = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -126,18 +140,6 @@ class Carshare
         return $this;
     }
 
-    public function getStatus(): ?string
-    {
-        return $this->status;
-    }
-
-    public function setStatus(string $status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getAvailableSeats(): ?int
     {
         return $this->available_seats;
@@ -182,6 +184,45 @@ class Carshare
     public function setCar(?Car $car): static
     {
         $this->car = $car;
+
+        return $this;
+    }
+
+    public function getStatus(): ?CarshareStatus
+    {
+        return $this->status;
+    }
+
+    public function setStatus(CarshareStatus $status): static
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsersBookedHistory(): Collection
+    {
+        return $this->usersBookedHistory;
+    }
+
+    public function addUsersBookedHistory(User $usersBookedHistory): static
+    {
+        if (!$this->usersBookedHistory->contains($usersBookedHistory)) {
+            $this->usersBookedHistory->add($usersBookedHistory);
+            $usersBookedHistory->addBookHistory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUsersBookedHistory(User $usersBookedHistory): static
+    {
+        if ($this->usersBookedHistory->removeElement($usersBookedHistory)) {
+            $usersBookedHistory->removeBookHistory($this);
+        }
 
         return $this;
     }
