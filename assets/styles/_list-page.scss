@@ -34,19 +34,6 @@ $font-serif : "Raleway", serif !default;
 .hidden{
     display: none;
 }
-//error messages : 
-ul{
-    background-color: $black;
-    border-radius: .5rem;
-    list-style: none;
-    margin: 0;
-    padding: 2rem;
-    color: red;
-    font-size: 1.5rem;
-    position: fixed;
-    bottom:1%;
-
-}
 //bg pic
 .search-page-hero-bg{
     z-index: -1;

@@ -58,6 +58,12 @@ class Carshare
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'bookHistory')]
     private Collection $usersBookedHistory;
 
+    #[ORM\Column]
+    private ?bool $smokingAllowance = null;
+
+    #[ORM\Column]
+    private ?bool $animalAllowance = null;
+
     public function __construct()
     {
         $this->usersBookedHistory = new ArrayCollection();
@@ -223,6 +229,30 @@ class Carshare
         if ($this->usersBookedHistory->removeElement($usersBookedHistory)) {
             $usersBookedHistory->removeBookHistory($this);
         }
+
+        return $this;
+    }
+
+    public function isSmokingAllowance(): ?bool
+    {
+        return $this->smokingAllowance;
+    }
+
+    public function setSmokingAllowance(bool $smokingAllowance): static
+    {
+        $this->smokingAllowance = $smokingAllowance;
+
+        return $this;
+    }
+
+    public function isAnimalAllowance(): ?bool
+    {
+        return $this->animalAllowance;
+    }
+
+    public function setAnimalAllowance(bool $animalAllowance): static
+    {
+        $this->animalAllowance = $animalAllowance;
 
         return $this;
     }

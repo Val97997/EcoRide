@@ -65,12 +65,13 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['placeholder' => 'Your date of birth'],
             ])
             ->add('picture', FileType::class, [
+                'data_class' => null,
                 'required' => false,
-                'attr' => ['accept' => '.png,.jpg,.jpeg', 'placeholder' => 'Choose a profile picture'],
+                'attr' => ['accept' => '.jpg', 'placeholder' => 'Choose a profile picture'],
                 'constraints' => [
                     new File([
                         'maxSize' => '1024k',
-                        'extensions' => [ 'jpg'],
+                        'extensions' => ['jpg'],
                         'extensionsMessage' => 'Please upload a valid image (max 1024ko) '
                     ])
                 ]
@@ -113,7 +114,7 @@ class RegistrationFormType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'crsf_protection' => false,
+            'crsf_protection' => true,
         ]);
     }
 }

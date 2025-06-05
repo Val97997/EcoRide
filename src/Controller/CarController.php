@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Car;
+use App\Entity\Carshare;
 use App\Entity\User;
 use App\Form\CarType;
 use App\Repository\CarRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Exception\AccessDeniedException;
+use RuntimeException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,15 +26,15 @@ final class CarController extends AbstractController{
         ]);
     }
 
-    #[Route('/{id}/new', name: 'app_car_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, User $user): Response
+    #[Route('/new', name: 'app_car_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $car = new Car();
-        $car->setUser($user);
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            $car->setUser($this->getUser());
             $entityManager->persist($car);
             $entityManager->flush();
 
@@ -52,8 +56,13 @@ final class CarController extends AbstractController{
     }
 
     #[Route('/{id}/edit', name: 'app_car_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Car $car, EntityManagerInterface $entityManager): Response
-    {
+    public function edit(Request $request, Car $car, EntityManagerInterface $entityManager): Response{
+        $user = $this->getUser();
+
+        // IMPORTANT : Prevent the user from accessing another user's Cars !!
+        if($car->getUser() !== $user){
+            throw new AccessDeniedException('Access denied, please load back to your profile');
+        }
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);
 

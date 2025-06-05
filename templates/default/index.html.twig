@@ -21,14 +21,31 @@
 
 {% block body %}
 
-{# Display flash messages #}
-    {% if showMessage %}
+{# Display flash redirect messages #}
+{# book success : #}
+    {% if showBookMessage %}
         <div id="temporary-message" class="alert alert-success">
             <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
                 <span class="fs-2">{{ app.flashes('success')[0] }}</span>
                 <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
             </h3>
         </div>
+    {# login success #}
+    {% elseif loginMessage %}
+        <div id="temporary-message" class="alert alert-success">
+            <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
+                <span class="fs-2">{{ app.flashes('login')[0] }}</span>
+                <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
+            </h3>
+        </div>
+    {% elseif registerMessage %}
+        <div id="temporary-message" class="alert alert-success">
+            <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
+                <span class="fs-2">{{ app.flashes('register')[0] }}</span>
+                <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
+            </h3>
+        </div>
+    {# Register success : #}
     {% endif %}
 
 

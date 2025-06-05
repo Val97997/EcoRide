@@ -91,11 +91,27 @@ Register
                 
         </div>
 
+        {% if form_errors(registrationForm) %}
+          
+        {% endif %}
+
         <div class="button-container">
             <button type="submit" class="btn btn-submit" id="submit-btn">Register</button>
         </div>
-        {{ form_end(registrationForm) }}
-        
+            {# Error display UX management and implementing break action boolean to avoid multiple displays : #}
+        {% set break = false %}
+        {% for item in registrationForm %}
+            {% if form_errors(item)|length > 0 and not break %}
+                
+                {% set break = true %}
+                <div class="text-center register-form-errors z-3 mt-3 mb-5 bg-danger p-5">
+                    <h3 class=" fs-3 fw-bolder">Input errors :</h3>
+                    {{form_errors(registrationForm.picture)}}
+                    {{form_errors(registrationForm.email)}}
+                    {{form_errors(registrationForm.phoneNb)}}
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 
 {% endblock %}

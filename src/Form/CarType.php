@@ -19,7 +19,14 @@ class CarType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('model')
+            ->add('model', null, [
+                'constraints' => [
+                    new Length([
+                        'max' => 30,
+                        'maxMessage' => 'Model input too long',
+                    ])
+                ]
+            ])
             ->add('registration_date',null,[
                 'widget' => 'single_text',
             ])
@@ -27,7 +34,14 @@ class CarType extends AbstractType
             ->add('fuel', EnumType::class,[
                 'class' => FuelTypes::class,
             ])
-            ->add('color')
+            ->add('color', null, [
+                'constraints' => [
+                    new Length([
+                        'max' => 25,
+                        'maxMessage' => 'Color input too long',
+                    ])
+                ]
+            ])
             ->add('registration', TextType::class, [
                 'constraints' => [
                     // create the registration plate format for France with regex and FIXED length :
@@ -46,6 +60,7 @@ class CarType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Car::class,
             'crsf_protection' => false,
+            'error_bubbling' => true, // third parameter switches off default rendering and positioning for erro messages, better UX
         ]);
     }
 }

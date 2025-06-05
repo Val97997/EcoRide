@@ -97,3 +97,20 @@ a.back-link{
     top: 10%;
     z-index: 100;
 }
+
+// error messages 
+div.car-form-errors{
+    width: auto;
+    height: auto;
+    color: $black;
+    border-radius: .5rem;
+    box-shadow: 0 0 1rem darkred;
+    ul{
+        width: auto;
+        height: auto;
+        list-style: none;
+        font-size: 1.6rem;
+        font-weight: bold;
+        padding: .5rem 1rem;
+    }
+}

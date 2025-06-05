@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
-#[Route('register/', name: 'app_register_')]
+#[Route('/register', name: 'app_register_')]
 class RegistrationController extends AbstractController
 {
     private EmailVerifier $emailVerifier;
@@ -27,7 +27,7 @@ class RegistrationController extends AbstractController
         $this->emailVerifier = $emailVerifier;
     }
 
-    #[Route('driver', name: 'user')]
+    #[Route('/driver', name: 'user')]
     public function registerDriver(Request $request, UserPasswordHasherInterface $userPasswordHasher,
     RoleManagerService $roleManager, EntityManagerInterface $entityManager): RedirectResponse|Response
     {
@@ -73,6 +73,9 @@ class RegistrationController extends AbstractController
 
             // do anything else you need here, like send an email
 
+            $this->addFlash('register', 'Driver account registered, please check your email inbox for pending verification !');
+            $request->getSession()->set('redirect_from', '/register');
+
             return new RedirectResponse($this->generateUrl('app_default'));
         }
 
@@ -82,7 +85,7 @@ class RegistrationController extends AbstractController
         ]);
     }
 
-    #[Route('passenger', name: 'client')]
+    #[Route('/passenger', name: 'client')]
      public function registerPassenger(Request $request, UserPasswordHasherInterface $userPasswordHasher,
     RoleManagerService $roleManager, EntityManagerInterface $entityManager): Response
     {
@@ -129,6 +132,9 @@ class RegistrationController extends AbstractController
             );
 
             // do anything else you need here, like send an email
+            //flash message for display on homepage redirect :
+            $this->addFlash('register', 'Sign in successful, please check your email inbox for pending verification !');
+            $request->getSession()->set('redirect_from', '/register');
 
             return $this->redirectToRoute('app_default');
         }

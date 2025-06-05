@@ -1,4 +1,20 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+<script src="{{ asset('build/js/carshare-crud.js') }}" defer></script>
+
+{% form_theme form  'form/template.html.twig' %}
+
+{{ form_start(form,  { 'attr': { 'class': 'form-carshare-new' }, 'csrf_protection': false }) }}
+    {{form_row(form.departure_date)}}
+    {{form_row(form.arrival_date)}}
+    {{form_row(form.departure_hour)}}
+    {{form_row(form.arrival_hour)}}
+    {{form_row(form.departure_location)}}
+    {{form_row(form.arrival_location)}}
+    
+    {{form_row(form.price)}}
+    {{form_row(form.available_seats)}}
+    {{form_row(form.car)}}
+    {{form_row(form.smokingAllowance)}}
+    {{form_row(form.animalAllowance)}}
+    
     <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
+{{ form_end(form, {render_rest: false}) }}

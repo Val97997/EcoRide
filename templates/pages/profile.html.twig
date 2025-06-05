@@ -11,7 +11,9 @@
 <section class="profile m-auto pt-5 pb-5">
     <div class="profile-row-1 m-auto">
         <span>{{app.user.pseudo}}</span>
-        <img src="{{asset('profile_pics/%s.jpg'|format(app.user.pseudo))}}" alt="Profile" style="height: 20rem; width: 20rem;">
+        {% if app.user.picture is not null %}
+        <img src="{{asset('profile_pics/%s.jpg'|format(app.user.pseudo))}}" alt="Profile" style="height: 20rem; width: 20rem;">  
+        {% endif %}
         <span>{{app.user.email}}</span>
     </div>
 
@@ -20,9 +22,28 @@
         <div class="profile-row-2 ps-5 pe-5 btn btn-primary">
             <span><i class="bi bi-person-vcard me-2"></i>{{app.user.firstName}} {{app.user.lastName}}</span>
 
-            <span><i class="bi bi-cake-fill me-2"></i> {{app.user.birthDate|date('d/m/Y')}}</span>
-            <span><i class="bi bi-geo-fill me-2"></i>{{app.user.address}}</span>
-            <span><i class="bi bi-telephone-fill me-2"></i>{{app.user.phoneNb}}</span>
+            <span>
+                <i class="bi bi-cake-fill me-2"></i> 
+                {% if app.user.birthDate is not null %}
+                    {{app.user.birthDate|date('d/m/Y')}}
+                {% else %}
+                    N/A
+                {% endif %}
+            </span>
+            <span><i class="bi bi-geo-fill me-2"></i>
+            {% if app.user.address is not null %}
+              {{app.user.address}}
+              {% else %}
+              N/A
+            {% endif %}
+            </span>
+            <span><i class="bi bi-telephone-fill me-2"></i>
+            {% if app.user.phoneNb %}
+              {{app.user.phoneNb}}
+              {% else %}
+              N/A
+            {% endif %}
+            </span>
         </div>
         <div class="profile-row-3">
             <span class="btn btn-secondary"><i class="bi bi-credit-card-fill me-2"></i> Current Credit balance : <em>{{app.user.creditBalance}}</em></span>
@@ -37,19 +58,19 @@
             {% if 'ROLE_DRIVER' in app.user.roles  %}
             {# REMEMBER to specify the app.user.id so that it gets added and queried automatically in the DB car.user field ! DO NOT
             leave it as an input choice for the Driver User, otherwise granting access to other Users IDs ! #}
-                <h3><a href="{{path('app_car_new', {'id': app.user.id})}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-plus-circle-fill"></i> Add a car</a></h3>
+                <h3><a href="{{path('app_car_new')}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-plus-circle-fill"></i> Add a car</a></h3>
                 {% if app.user.cars|length > 0 %}
-                    {# <h3><a href="{{path('app_carshare_new')}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-file-earmark-plus"></i> Create carshare</a></h3> #}
+                    <h3><a href="{{path('app_carshare_new')}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-file-earmark-plus"></i> Create carshare</a></h3>
                 {% elseif app.user.cars|length == 0 %}
-                    <h3><a href="{{path('app_car_new', {'id': app.user.id})}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-file-earmark-plus">
+                    <h3><a href="{{path('app_car_new')}}" class="btn btn-dark text-secondary text-decoration-none fs-3 fw-bold"><i class="bi bi-file-earmark-plus">
                     </i> Register a car in order to create a voyage</a></h3>
                 {# here we checked if the Driver has currently a car registered, as such allowing him to create a carshare / or not #}
                 {% endif %}
                 
                 
             {% else %}
-                <h3><a href="/">Become driver</a></h3>
-                <h3><a href="/">Access history</a></h3>
+                <h3><a href="{{path('app_user_switch', {'id': app.user.id})}}">Become driver (new login required)</a></h3>
+                <h3><a href="/">View history</a></h3>
                 
             {% endif %}
                 
@@ -59,10 +80,10 @@
     </div>
         
         
-        <a href="{{path('app_user_edit')}}" class="fs-2 btn btn-dark text-danger mt-2 btn-edit-profile">Edit info</a>
+        <a href="{{path('app_user_edit', {'id': app.user.id})}}" class="fs-2 btn btn-dark text-danger mt-2 btn-edit-profile">Edit info</a>
 
 
-        {% if app.user.cars|length > 0 %}
+        {% if 'ROLE_DRIVER' in app.user.roles and app.user.cars|length > 0 %}
         
             <table class="table-car-listing bg-black mt-3 mb-3">
                 <caption class="text-white caption-top">
@@ -87,7 +108,27 @@
                     {% endfor %}
                 </tbody>
             </table>
-          
+        {% elseif 'ROLE_DRIVER' not in app.user.roles and app.user.bookHistory|length > 0 %}
+            <table class="table-car-listing bg-black mt-3 mb-3">
+                <caption class="text-white caption-top">
+                    Voyage history
+                </caption>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>From</th>
+                        <th>Destination</th>
+                        <th>Driver</th>
+                        <th>Eco type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {# NOTE: sorting voyage history to order them by more recent, more user friendly that way to consult the list #}
+                    {% for carshare in app.user.bookHistory|sort((a, b) => b.departureDate <=> a.departureDate) %}
+                    {% include "carshare/_bookedCarshare-card.html.twig" %}
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endif %}
 </section>
 {% endblock %}

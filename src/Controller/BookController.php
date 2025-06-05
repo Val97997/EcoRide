@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
 class BookController extends AbstractController{
-    #[Route('carshare/book/{id}/{uid}', name: 'app_book')]
+    #[Route('/carshare/book/{id}/{uid}', name: 'app_book')]
 
     // IMPORTANT: The 'id' parameter should match the Carshare entity's ID and 'uid' should match the User entity's ID.
     // The 'uid' parameter is used to identify the user who is booking the carshare.
@@ -58,7 +58,7 @@ class BookController extends AbstractController{
 
         // Redirect to the default route after booking
         // This will redirect to the index action of DefaultController with a flash message confirming the booking !
-        $request->getSession()->set('redirect_from', 'carshare/book/');
+        $request->getSession()->set('redirect_from', '/carshare/book/');
         return new RedirectResponse($this->generateUrl('app_default'));
     }
 }

@@ -1,0 +1,13 @@
+<tr>
+    <td>{{carshare.departureDate|date('d/m/Y')}}</td>
+    <td>{{carshare.departureLocation}}</td>
+    <td>{{carshare.arrivalLocation}}</td>
+    <td>{{carshare.user.pseudo}}</td>
+    <td>
+        {% if carshare.car.fuel.value == 'electric' %}
+          Eco-friendly
+          {% else %}
+          Not eco-friendly
+        {% endif %}
+    </td>
+</tr>

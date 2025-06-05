@@ -7,3 +7,18 @@ $font-sans-serif: 'Poppins', sans-serif !default;
 $font-monospace: "Poppins", monospace !default;
 $font-serif : "Raleway", serif !default;
 
+.form-update-profile{
+    input{
+        height: 3.5rem;
+        font-size: 1.8rem;
+        border-radius: 2%;
+        background-color: $secondary;
+        color: $black;
+    }
+    input.edit-fname-input{
+        margin-bottom: 1rem;
+    }
+    input.edit-lname-input{
+        margin-top: 1rem;
+    }
+}

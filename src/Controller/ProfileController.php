@@ -4,8 +4,10 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegistrationFormType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,7 +23,7 @@ final class ProfileController extends AbstractController{
         ]);
     }
 
-    #[Route('/edit', name: 'edit')]
+    #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager){
 
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -34,7 +36,17 @@ final class ProfileController extends AbstractController{
 
             return $this->render('pages/profile-edit.html.twig', [
             'controller_name' => 'ProfileController',
+            'user' => $user,
             'registrationForm' => $form,
         ]);
+    }
+
+    #[Route('/switch/{id}', name: 'switch')]
+
+    public function becomeDriver(int $id, UserRepository $userRepository){
+        $user = $userRepository->find($id);
+        $userRepository->switchRoles($user);
+        
+        return $this->redirectToRoute('app_user_profile');
     }
 }
