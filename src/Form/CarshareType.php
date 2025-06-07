@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -58,19 +59,28 @@ class CarshareType extends AbstractType
             ])
             ->add('departure_location', null, [
                 'required' => true,
+                'attr' => [
+                    'minlength' => 1,
+                    'maxlength' => 40,
+                ],
                 'constraints' => [
-                    new Length(null,1,50,maxMessage:'Input for arrival location too long')
+                    new Length(null, 1,50,maxMessage:'Input for arrival location too long')
                 ]
             ])
             ->add('arrival_location', null, [
                 'required' => true,
+                'attr' => [
+                    'minlength' => 1,
+                    'maxlength' => 40,
+                ],
                 'constraints' => [
                     new Length(null,1,50,maxMessage:'Input for departure location too long')
                 ]
             ])
             ->add('available_seats', IntegerType::class, [
                 'required' => true,
-                'attr' => ['min'=>'1', 'max' => '100'],
+                'data' => 0,
+                'attr' => ['min'=>'1', 'max' => '50', 'maxlength' => 2,],
                 'constraints' => [
                     new GreaterThan(0,null,'Seats must be greater than 0'),
                     new LessThan(100,null, 'Seats too high !'),
@@ -78,7 +88,8 @@ class CarshareType extends AbstractType
             ])
             ->add('price', IntegerType::class, [
                 'required' => true,
-                'attr' => ['min' => '0', 'max' => '1000'],
+                'data' => 0,
+                'attr' => ['min' => '0', 'max' => '1000', 'maxlength' => 4],
                 'constraints' => [
                     new GreaterThan(0,null,'Price must be greater than 0'),
                     new LessThan(1000,null, 'Price too high !'),
@@ -92,8 +103,9 @@ class CarshareType extends AbstractType
             ])
             ->add('car', EntityType::class, [
                 'class' => Car::class,
+                'label' => 'Vehicle',
                 'choice_label' => function(Car $car){
-                    return sprintf('%s (%s)', $car->getModel(), $car->getColor());
+                    return sprintf('%s %s', $car->getModel(), $car->getRegistration());
                 },
                 // HERE BUILD the QUERY for restricted access to car Repository, otherwise Driver is able to pick others cars => DANGEROUS security breach
                 'query_builder' => function(EntityRepository $er){
@@ -108,6 +120,7 @@ class CarshareType extends AbstractType
                 'data' => CarshareStatus::WAITING,
                 'empty_data' => CarshareStatus::WAITING->value,
             ])
+            // ->add('pref', Type)
         ;
     }
 

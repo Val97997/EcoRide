@@ -1,0 +1,20 @@
+<tr>
+    <td>{{carshare.departureDate|date("d/m/Y")}}</td>
+    <td>{{carshare.departureLocation}}</td>
+    <td>{{carshare.arrivalLocation}}</td>
+    <td>{{carshare.car.model}}</td>
+    <td>{{carshare.price}}</td>
+    {% if carshare.status.value == 'waiting' %}
+      <td style="color: darkorange;"><i class="bi bi-hourglass-split me-1"></i>{{carshare.status.value}}</td>
+    {% elseif carshare.status.value == 'in_progress' %}
+      <td style="color: green;"><i class="bi bi-clock-history me-1"></i>{{carshare.status.value}}</td>
+    {% elseif carshare.status.value == 'canceled' %}
+      <td style="color: red;"><i class="bi bi-x-square-fill me-1"></i>{{carshare.status.value}}</td>
+    {% elseif carshare.status.value == 'complete' %}
+      <td style="color: turquoise;"><i class="bi bi-clipboard-check-fill me-1"></i>{{carshare.status.value}}</td>
+    {% endif %}
+    {% if carshare.status.value == 'waiting' %}
+      <td><i class="bi bi-exclamation-circle me-1"></i><a class="text-danger text-decoration-none" href="">Cancel</a></td>
+    {% endif %}
+
+</tr>

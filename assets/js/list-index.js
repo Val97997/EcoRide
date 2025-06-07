@@ -85,3 +85,17 @@ switchBtn.addEventListener("click", function () {
     arrivalInput.value = temp2;
     departureInput.value = temp;
 });
+
+
+
+
+// custom slider part designing :
+let sliderPrice = document.querySelector('input.price-slider-custom');
+let em = document.createElement('em');
+em.classList.add('price-slider-em');
+sliderPrice.insertAdjacentElement('beforebegin', em);
+em.innerText = '€';
+// USE INPUT EVENT for real time dynamic update of value :
+sliderPrice.addEventListener( 'input', () => {
+    em.innerText = sliderPrice.value + '€';
+})

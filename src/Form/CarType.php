@@ -20,6 +20,7 @@ class CarType extends AbstractType
     {
         $builder
             ->add('model', null, [
+                'attr'=> ['maxlength' => 20,],
                 'constraints' => [
                     new Length([
                         'max' => 30,
@@ -29,12 +30,16 @@ class CarType extends AbstractType
             ])
             ->add('registration_date',null,[
                 'widget' => 'single_text',
+                'attr' => [
+                    'max' => date('Y-m-d'),
+                ]
             ])
             // Use the enum for all the possible fuel options we have set up :
             ->add('fuel', EnumType::class,[
                 'class' => FuelTypes::class,
             ])
             ->add('color', null, [
+                'attr' => ['maxlength' => 25,],
                 'constraints' => [
                     new Length([
                         'max' => 25,
@@ -43,6 +48,7 @@ class CarType extends AbstractType
                 ]
             ])
             ->add('registration', TextType::class, [
+                'attr' => ['maxlength' => 9,],
                 'constraints' => [
                     // create the registration plate format for France with regex and FIXED length :
                     new Regex([

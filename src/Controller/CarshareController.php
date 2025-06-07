@@ -36,8 +36,10 @@ final class CarshareController extends AbstractController{
         
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($form->get('arrival_date')->getData() < $form->get('departure_date')->getData()){
-                $form->get('arrival_date')->addError(new FormError('Invalid dates, check your inputs'));
+            if($form->get('arrival_date')->getData() < $form->get('departure_date')->getData() ||
+               $form->get('arrival_hour')->getData() < $form->get('departure_hour')->getData()
+            ){
+                $form->addError(new FormError('Invalid dates, check your inputs'));
             }
             else{
                 // !! don't forget to set the carshare to waiting status and add driver as User owner
@@ -45,11 +47,14 @@ final class CarshareController extends AbstractController{
                 $entityManager->persist($carshare);
                 $entityManager->flush();
     
+                // flash message on redirect :
+                $this->addFlash('carshare-saved', 'New route saved and published');
+                $request->getSession()->set('redirect_from', '/carshare/new');
                 return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
 
             }
         }
-
+        
         return $this->render('carshare/new.html.twig', [
             'carshare' => $carshare,
             'form' => $form,

@@ -28,10 +28,10 @@
     
     
 
-    <div class="hidden" id="extended-search-fields">
+    <div class="hidden position-relative" id="extended-search-fields">
         <div class="extended-search-fields">
-            <div class="d-flex flex-nowrap flex-row align-items-end">
-                {{form_row(searchForm.max)}} <h5 class="text-secondary fs-2 p-0">€</h5>
+            <div id="price-div-search">
+                {{form_row(searchForm.max)}}
             </div>
             {{form_row(searchForm.duration)}}
             {{form_row(searchForm.eco)}}

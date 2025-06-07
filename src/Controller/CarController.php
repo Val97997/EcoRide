@@ -12,6 +12,7 @@ use App\Exception\AccessDeniedException;
 use RuntimeException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -27,7 +28,7 @@ final class CarController extends AbstractController{
     }
 
     #[Route('/new', name: 'app_car_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response|RedirectResponse
     {
         $car = new Car();
         $form = $this->createForm(CarType::class, $car);
@@ -38,7 +39,11 @@ final class CarController extends AbstractController{
             $entityManager->persist($car);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+            //flash mess :
+            $this->addFlash('car-added', 'Vehicle added to your fleet');
+            $request->getSession()->set('redirect_from', '/car/new');
+
+            return new RedirectResponse($this->generateUrl('app_user_profile'));
         }
 
         return $this->render('car/new.html.twig', [

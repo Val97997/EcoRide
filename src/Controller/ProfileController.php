@@ -15,11 +15,16 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/user', name: 'app_user_')]
 final class ProfileController extends AbstractController{
     #[Route('/profile', name: 'profile')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        // flash messages
+        $redirectFrom = $request->getSession()->get('redirect_from');
+        $request->getSession()->remove('redirect_from');
 
         return $this->render('pages/profile.html.twig', [
             'controller_name' => 'ProfileController',
+            'showCarMessage' => ($redirectFrom === '/car/new'),
+            'showCarshareMessage' => ($redirectFrom === '/carshare/new'),
         ]);
     }
 

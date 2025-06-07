@@ -12,6 +12,7 @@
 @import 'profile-edit';
 @import 'car-crud';
 @import 'car-show';
+@import 'carshare-crud.scss';
 
 
 @font-face {
@@ -181,6 +182,12 @@ aside.mini-profile{
         box-shadow: 0 0 1rem $secondary;
         animation: mini-profile-anime 1.5s ease-in-out alternate infinite;
     }
+    a{
+        text-decoration: none;
+    }
+    a:hover{
+        text-decoration: underline;
+    }
     img{
         border-radius: 50%;
     }
@@ -188,5 +195,11 @@ aside.mini-profile{
         text-decoration: none;
         font-size: 1.6rem;
         font-weight: 1000;
+    }
+}
+
+@media (max-width:1200px) {
+    aside.mini-profile{
+        top: 15%;
     }
 }

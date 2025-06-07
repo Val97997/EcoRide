@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -36,7 +37,7 @@ class SearchFormType extends AbstractType
             ->add('departure_date', DateType::class, [
                 'required' => true,
                 'label' => 'Departure date',
-                'attr' => ['placeholder' => 'Date'],
+                'attr' => ['placeholder' => 'Date', 'min' => date('Y-m-d')],
                 'constraints' => [
                     new GreaterThanOrEqual([
                         'value' => now(),
@@ -47,7 +48,7 @@ class SearchFormType extends AbstractType
             ->add('departure_location', null,[
                 'required' => true,
                 'label' => false,
-                'attr' => ['placeholder' => 'From...'],
+                'attr' => ['placeholder' => 'From...', 'maxlength' => 25],
                 'constraints' => [
                     new Type([
                         'type' => 'alpha',
@@ -58,7 +59,7 @@ class SearchFormType extends AbstractType
             ->add('arrival_location', null, [
                 'required' => true,
                 'label' => false,
-                'attr' => ['placeholder' => 'To...'],
+                'attr' => ['placeholder' => 'To...', 'maxlength' => 25],
                 'constraints' => [
                     new Type([
                         'type' => 'alpha',
@@ -66,10 +67,10 @@ class SearchFormType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('max', IntegerType::class, [
+            ->add('max', RangeType::class, [
                 'required' => false,
                 'label' => 'Max price',
-                'attr' => ['min' => '0', 'max' => '1000'],
+                'attr' => ['min' => '0', 'max' => '1000', 'class'=>'price-slider-custom'],
                 'constraints' => [
                     new GreaterThan([
                         'value' => 0,

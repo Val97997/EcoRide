@@ -40,7 +40,7 @@ $font-serif : "Raleway", serif !default;
     position: fixed;
     top:10%;
     width: 100%;
-    height: 20vw;
+    height: 75vh;
     background-image: url('../../public/build/img/search-banner.jpg');
     background-position: center;
     background-repeat: no-repeat;
@@ -217,11 +217,11 @@ $font-serif : "Raleway", serif !default;
         padding: 1rem;
         margin-top: 1rem;
         div{
-            margin: 0rem 3rem 0rem 3rem;
+            margin: 0rem .5rem 0rem .5rem;
             label{
                 color: $secondary;
                 height: 2rem;
-                font-size: 1.6rem;
+                font-size: 1.4rem;
             }
             input{
                 text-align: center;
@@ -283,5 +283,47 @@ $font-serif : "Raleway", serif !default;
                 background: $dark;
             }
         }
+    }
+}
+#price-div-search div{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    input[type = 'range']{
+        color: $dark !important;
+        background-color: $black !important;
+    }
+    .price-slider-em{
+        width: 5rem;
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: $secondary;
+    }
+}
+
+@media (max-width: 1000px) {
+    .extended-search-fields{
+        flex-direction: column !important;
+        min-height: 20rem !important;
+    }
+    #extended-search-fields{
+        z-index: 1000;
+    }
+    .basic-search-fields{
+        margin: 3rem auto !important;
+        flex-direction: column-reverse !important;
+        min-height: 20rem !important;
+        i.fa-magnifying-glass-arrow-right::before{
+            content: 'Search';
+            margin-bottom: 1rem !important;
+            &:hover{
+                background-color: $black;
+                color: $secondary;
+            }
+        }
+    }
+    .carshare-list-container{
+        margin-top: 35rem !important;
     }
 }

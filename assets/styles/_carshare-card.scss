@@ -123,4 +123,22 @@ $font-serif : "Raleway", serif !default;
                 }
             }
         }
+}
+
+@media (max-width:1000px) {
+    .card-title{
+        flex-direction: column !important;
     }
+    .card-user-details{
+        text-align: center!important;
+        height: 10rem !important;
+        width: 100% !important;
+    }
+    .btn-carshare-details{
+        margin-left: 80%;
+        margin-top: 5rem !important;
+    }
+    .card-timeline-details{
+        line-height: 8rem;
+    }
+}

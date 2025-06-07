@@ -7,7 +7,15 @@
 <div class="bg-profile">
 
 </div>
-
+{# Display flash redirect messages #}
+{# Car added #}
+{% if showCarMessage %}
+    {% include "layout/_flash-messages.html.twig" with {flashM: app.flashes('car-added')[0]}  %}
+{% endif %}
+{# Carshare created #}
+{% if showCarshareMessage %}
+    {% include "layout/_flash-messages.html.twig" with {flashM: app.flashes('carshare-saved')[0]}  %}
+{% endif %}
 <section class="profile m-auto pt-5 pb-5">
     <div class="profile-row-1 m-auto">
         <span>{{app.user.pseudo}}</span>
@@ -17,10 +25,10 @@
         <span>{{app.user.email}}</span>
     </div>
 
-    <div class="profile-body mt-5 p-3">
+    <div class="profile-body mt-5 p-5">
         
         <div class="profile-row-2 ps-5 pe-5 btn btn-primary">
-            <span><i class="bi bi-person-vcard me-2"></i>{{app.user.firstName}} {{app.user.lastName}}</span>
+            <span><i class="bi bi-person-vcard me-2"></i>{{app.user.firstName|slice(0, 15)}} {{app.user.lastName|slice(0, 15)}}</span>
 
             <span>
                 <i class="bi bi-cake-fill me-2"></i> 
@@ -32,7 +40,7 @@
             </span>
             <span><i class="bi bi-geo-fill me-2"></i>
             {% if app.user.address is not null %}
-              {{app.user.address}}
+              {{app.user.address|slice(0, 20)}}
               {% else %}
               N/A
             {% endif %}
@@ -45,6 +53,10 @@
             {% endif %}
             </span>
         </div>
+
+        <img src="{{asset('build/img/pen-deco.jpg')}}" class="pen-img" alt="A pen">
+
+
         <div class="profile-row-3">
             <span class="btn btn-secondary"><i class="bi bi-credit-card-fill me-2"></i> Current Credit balance : <em>{{app.user.creditBalance}}</em></span>
             {# check verification status in dynamic field display #}
@@ -76,7 +88,7 @@
                 
                 
         </div>
-            
+
     </div>
         
         
@@ -84,14 +96,15 @@
 
 
         {% if 'ROLE_DRIVER' in app.user.roles and app.user.cars|length > 0 %}
-        
-            <table class="table-car-listing bg-black mt-3 mb-3">
+        {# set up vehicle display table #}
+            <table class="table-car-listing bg-black mt-3 mb-3 draggable-profile">
                 <caption class="text-white caption-top">
                     {% if app.user.cars|length > 1 %}
                       Vehicle fleet
                        {% elseif app.user.cars|length == 1 %}
                       Vehicle
                     {% endif %}
+                    <em>(Click and hold to drag)</em>
                 </caption>
                 <thead>
                     <tr>
@@ -104,11 +117,45 @@
                 </thead>
                 <tbody>
                     {% for car in app.user.cars %}
-                    {% include "car/_vehicle-card.html.twig" %}
+                    {% include "car/_vehicle-row.html.twig" %}
                     {% endfor %}
                 </tbody>
             </table>
-        {% elseif 'ROLE_DRIVER' not in app.user.roles and app.user.bookHistory|length > 0 %}
+            {# set up offered carshares table #}
+            {% if app.user.carshares|length > 0 %}
+              <div class="carshares-table-container d-flex flex-row flex-nowrap justify-content-start w-100 align-content-between">
+                <button class="btn-reveal-routes btn btn-dark fs-1" id="btn-reveal-routes">
+                   <code id="codeElem" class=""></code>  <hr class=" text-black">
+                     <strong id="btn-reveal-routes-title" class=" fs-4 "> Rotate to view and consult your routes</strong>
+                </button>
+
+                <table class="table-carshare-listing bg-black mt-3 mb-3 draggable-profile-2 table-reveal-opac-hidden">
+                    <caption class="text-secondary w-100 shadow-sm caption-top">
+                        Carshares offered
+                        {# <em>(Click and hold to drag)</em> #}
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Departure</th>
+                            <th>Destination</th>
+                            <th>Car</th>
+                            <th>Price per seat</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for carshare in app.user.carshares %}
+                        {% include "carshare/_carshare-row.html.twig" %}
+                        {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+            {% endif %}
+        {% endif %}
+
+
+
+        {% if app.user.bookHistory|length > 0 %}
             <table class="table-car-listing bg-black mt-3 mb-3">
                 <caption class="text-white caption-top">
                     Voyage history
@@ -125,10 +172,11 @@
                 <tbody>
                     {# NOTE: sorting voyage history to order them by more recent, more user friendly that way to consult the list #}
                     {% for carshare in app.user.bookHistory|sort((a, b) => b.departureDate <=> a.departureDate) %}
-                    {% include "carshare/_bookedCarshare-card.html.twig" %}
+                    {% include "carshare/_bookedCarshare-row.html.twig" %}
                     {% endfor %}
                 </tbody>
             </table>
         {% endif %}
 </section>
+
 {% endblock %}

@@ -82,7 +82,7 @@
           {# IMPORTANT: In order to be able to display the profile picture, use a dynamic link through Twig's formatted variable,
           to the profile imgs folder in the correct way #}
           <img src="{{asset('profile_pics/%s.jpg'|format(app.user.pseudo))}}" alt="Profile" style="height: 5rem; width: 5rem;">
-          <h5><a class="text-secondary text-decoration-none" href="{{path('app_user_profile')}}">
+          <h5><a class="text-secondary" href="{{path('app_user_profile')}}">
             {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}
             {{app.user.pseudo|slice(0, 10)}}
           </a></h5>

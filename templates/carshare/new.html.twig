@@ -3,9 +3,9 @@
 {% block title %}New Carshare{% endblock %}
 
 {% block body %}
-    <h1>Create new Carshare</h1>
+    <h1 class=" w-100 text-xl-center fw-bolder fs-1 mt-5 mb-3">Create new Carshare</h1>
 
     {{ include('carshare/_form.html.twig') }}
 
-    <a href="{{ path('app_carshare_index') }}">back to list</a>
+    <a class="text-center text-decoration-none fs-1 btn btn-danger text-white back-prof-carsh-link" href="{{ path('app_user_profile') }}">back to profile</a>
 {% endblock %}

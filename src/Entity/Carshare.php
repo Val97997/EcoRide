@@ -64,6 +64,9 @@ class Carshare
     #[ORM\Column]
     private ?bool $animalAllowance = null;
 
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private ?array $pref = null;
+
     public function __construct()
     {
         $this->usersBookedHistory = new ArrayCollection();
@@ -253,6 +256,18 @@ class Carshare
     public function setAnimalAllowance(bool $animalAllowance): static
     {
         $this->animalAllowance = $animalAllowance;
+
+        return $this;
+    }
+
+    public function getPref(): ?array
+    {
+        return $this->pref;
+    }
+
+    public function setPref(?array $pref): static
+    {
+        $this->pref = $pref;
 
         return $this;
     }

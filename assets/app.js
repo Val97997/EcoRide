@@ -4,7 +4,7 @@ import './bootstrap';
 import 'bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import { waapi, animate, createSpring, stagger } from 'animejs';
+import { waapi, animate, createDraggable, stagger, utils } from 'animejs';
 /*
  * Welcome to your app's main JavaScript file!
  *
@@ -27,28 +27,76 @@ import './styles/app.scss';
 
 // anime.js animation setups
 //login page
-waapi.animate('.animate-title span', {
-  translate: `0 -2rem`,
-  delay: stagger(100),
-  duration: 600,
-  loop: 3,
-  alternate: true,
-  ease: 'inOut(2)',
-});
+if(document.getElementsByClassName('animate-title') != null){
+  waapi.animate('.animate-title span', {
+    translate: `0 -2rem`,
+    delay: stagger(100),
+    duration: 600,
+    loop: 3,
+    alternate: true,
+    ease: 'inOut(2)',
+  });
+}
 
 //list carshares page
-animate('.search-page-big-hero h1', {
-  opacity: [0, 1],
-  translateY: ['-2rem', '0'],
-  duration: 1000,
-  ease: 'bounce(2, 0.3)',
-  delay: stagger(100),
-});
+if(document.getElementsByClassName('search-page-big-hero') != null){
+  animate('.search-page-big-hero h1', {
+    opacity: [0, 1],
+    translateY: ['-2rem', '0'],
+    duration: 1000,
+    ease: 'bounce(2, 0.3)',
+    delay: stagger(100),
+  });
+  animate('.search-page-big-hero h4', {
+    opacity: [0, 1],
+    translateY: ['2rem', '0'],
+    duration: 1000,
+    ease: 'bounce(2, 0.3)',
+    delay: stagger(100),
+  });
+}
 
-animate('.search-page-big-hero h4', {
-  opacity: [0, 1],
-  translateY: ['2rem', '0'],
-  duration: 1000,
-  ease: 'bounce(2, 0.3)',
-  delay: stagger(100),
-});
+// profile driver routes anim panel :
+if(window.location.href == 'http://127.0.0.1:8000/user/profile'){
+  utils.set('.btn-reveal-routes', {z:100}, {snap: [90, 180]});
+  let codeElem = document.getElementById('codeElem');
+  const [$text] = utils.$('#btn-reveal-routes-title');
+  const [$table] = utils.$('.table-carshare-listing');
+
+  let offIcon = document.createElement('i');
+  offIcon.classList.add('bi');
+  offIcon.classList.add('bi-toggle-off');
+  codeElem.insertAdjacentElement('afterbegin', offIcon);
+
+
+  let draggable = createDraggable('.btn-reveal-routes', {
+    x: { mapTo: 'rotateY' },
+    y: { mapTo: 'z', snap: [90, 180] },
+    onRelease: () => {
+      $text.style.color = 'transparent';
+      $table.classList.add('table-reveal-opac-anim');
+      $table.classList.remove('table-reveal-opac-hidden');
+      if(!offIcon.classList.contains('bi-toggle-on')){
+        offIcon.classList.remove('bi-toggle-off');
+        offIcon.classList.add('bi-toggle-on');
+      }
+    }
+  });
+
+  if(offIcon.classList.contains('bi-toggle-on')){
+    draggable.disable();
+  }
+  if(document.getElementsByClassName('draggable-profile') != null){
+  
+    createDraggable('.draggable-profile',{
+      x: false
+    })
+  }
+  if(document.getElementsByClassName('draggable-profile-2') != null){
+  
+    createDraggable('.draggable-profile-2',{
+      x: true,
+      y: true
+    })
+  }
+}
