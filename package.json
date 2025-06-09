@@ -6,7 +6,6 @@
         "@hotwired/turbo": "^7.1.1 || ^8.0",
         "@popperjs/core": "^2.11.8",
         "@symfony/stimulus-bridge": "^3.2.0 || ^4.0.0",
-        "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
         "@symfony/webpack-encore": "^5.0.0",
         "bootstrap": "^5.3.5",
         "core-js": "^3.38.0",
@@ -19,6 +18,7 @@
         "typescript": "^5.8.3",
         "webpack": "^5.74.0",
         "webpack-cli": "^5.1.0",
+        "webpack-dev-server": "^5.2.2",
         "webpack-watch-files-plugin": "^1.2.1"
     },
     "license": "UNLICENSED",

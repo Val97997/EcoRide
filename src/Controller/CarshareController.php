@@ -19,13 +19,6 @@ use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/carshare')]
 final class CarshareController extends AbstractController{
-    #[Route(name: 'app_carshare_index', methods: ['GET'])]
-    public function index(CarshareRepository $carshareRepository): Response
-    {
-        return $this->render('carshare/index.html.twig', [
-            'carshares' => $carshareRepository->findAll(),
-        ]);
-    }
 
     #[Route('/new', name: 'app_carshare_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response|Error
@@ -50,7 +43,7 @@ final class CarshareController extends AbstractController{
                 // flash message on redirect :
                 $this->addFlash('carshare-saved', 'New route saved and published');
                 $request->getSession()->set('redirect_from', '/carshare/new');
-                return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_user_profile', [], Response::HTTP_PERMANENTLY_REDIRECT);
 
             }
         }
@@ -61,40 +54,75 @@ final class CarshareController extends AbstractController{
         ]);
     }
 
-    #[Route('/{id}', name: 'app_carshare_show', methods: ['GET'])]
-    public function show(Carshare $carshare): Response
-    {
-        return $this->render('carshare/show.html.twig', [
-            'carshare' => $carshare,
-        ]);
-    }
+    // #[Route('/{id}', name: 'app_carshare_show', methods: ['GET'])]
+    // public function show(Carshare $carshare): Response
+    // {
+    //     return $this->render('carshare/show.html.twig', [
+    //         'carshare' => $carshare,
+    //     ]);
+    // }
 
-    #[Route('/{id}/edit', name: 'app_carshare_edit', methods: ['GET', 'POST'])]
+    #[Route('/cancel/{id}', name: 'app_carshare_cancel', methods: ['GET', 'POST'])]
     public function edit(Request $request, Carshare $carshare, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(CarshareType::class, $carshare);
-        $form->handleRequest($request);
+        $user = $this->getUser();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_user_profile', [], Response::HTTP_SEE_OTHER);
+        if($carshare->getUser() !== $user){
+            return $this->redirectToRoute('app_403');
         }
+        $entityManager->persist($carshare);
+        $carshare->setStatus(CarshareStatus::CANCELED);
+        $entityManager->flush();
 
-        return $this->render('carshare/edit.html.twig', [
-            'carshare' => $carshare,
-            'form' => $form,
+        $this->addFlash('carshare-cancel', 'Carshare has been canceled');
+        $request->getSession()->set('redirect_from', '/carshare/cancel');
+
+        
+        return $this->redirectToRoute('app_user_profile', [
+        
         ]);
     }
 
-    #[Route('/{id}', name: 'app_carshare_delete', methods: ['POST'])]
-    public function delete(Request $request, Carshare $carshare, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$carshare->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($carshare);
-            $entityManager->flush();
-        }
 
-        return $this->redirectToRoute('app_carshare_index', [], Response::HTTP_SEE_OTHER);
+    #[Route('/start/{id}', name: 'app_carshare_start', methods: ['GET', 'POST'])]
+    public function start(Request $request, Carshare $carshare, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        if($carshare->getUser() !== $user){
+            return $this->redirectToRoute('app_403');
+        }
+        $entityManager->persist($carshare);
+        $carshare->setStatus(CarshareStatus::IN_PROGRESS);
+        $entityManager->flush();
+
+        $this->addFlash('carshare-start', 'Carshare has started');
+        $request->getSession()->set('redirect_from', '/carshare/start');
+
+        
+        return $this->render('pages/profile.html.twig', [
+        
+        ]);
+    }
+
+    #[Route('/end/{id}', name: 'app_carshare_end', methods: ['GET', 'POST'])]
+    public function end(Request $request, Carshare $carshare, EntityManagerInterface $entityManager): Response
+    {
+        $user = $this->getUser();
+
+        if($carshare->getUser() !== $user){
+            return $this->redirectToRoute('app_403');
+        }
+        $entityManager->persist($carshare);
+        $carshare->setStatus(CarshareStatus::COMPLETE);
+        $entityManager->flush();
+
+        $this->addFlash('carshare-end', 'Carshare has ended');
+        $request->getSession()->set('redirect_from', '/carshare/end');
+
+        
+        return $this->render('pages/profile.html.twig', [
+        
+        ]);
     }
 }

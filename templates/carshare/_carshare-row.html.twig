@@ -1,20 +1,178 @@
-<tr>
-    <td>{{carshare.departureDate|date("d/m/Y")}}</td>
-    <td>{{carshare.departureLocation}}</td>
-    <td>{{carshare.arrivalLocation}}</td>
-    <td>{{carshare.car.model}}</td>
-    <td>{{carshare.price}}</td>
+{% if carshare.status.value == 'canceled' %}
+
+<div class="carshare-driver-card text-center" style="filter:grayscale(.8);">
+  <div class="card-head text-center">
+
+    <h2 style="color: red;" class=" bg-black w-50 p-3 m-auto carshare-card-state mb-2">
+      <i class="fa-solid fa-circle-xmark me-3"></i>{{carshare.status.value}}
+    </h2>
+
+    <div class="from-card-field bg-dark text-secondary p-2">
+      <h3>From</h3>
+      <em class=" me-3 fs-3"><strong><i class="fa-solid fa-house-flag me-2"></i>{{carshare.departureLocation}}</strong></em>
+      <strong class=" fs-3"><i class="fa-regular fa-clock me-2"></i>{{carshare.departureHour|date("H:i")}}</strong>      
+    </div>
+    
+    <hr class=" border-3 border-primary">
+    <strong class="me-3 fs-3 text-primary"><i class="fa-regular fa-calendar me-2"></i>{{carshare.departureDate|date("d/m/Y")}}</strong><br>
+    <i class="bi bi-arrow-down-up fs-1 text-primary"></i><br>
+    <strong class="me-3 fs-3 text-primary"><i class="fa-regular fa-calendar me-2"></i>{{carshare.arrivalDate|date("d/m/Y")}}</strong>
+    <hr class=" border-3 border-primary">
+    
+    <div class="to-card-field bg-primary text-secondary p-2">
+      <h3>To</h3>
+      <em class=" me-3 fs-3"><strong><i class="fa-solid fa-flag-checkered me-2"></i>{{carshare.arrivalLocation}}</strong></em>
+      <strong class=" fs-3"><i class="fa-regular fa-clock me-2"></i>{{carshare.arrivalHour|date("H:i")}}</strong>
+    </div>
+  </div>
+
+  <div class="card-content mt-3 mb-3 bg-gradient bg-success text-white pt-5 pb-5">
+    <h3>Vehicle used</h3>
+    <strong class="fs-2">Your {{carshare.car.model}} {{carshare.car.registration}}</strong>
+
+    <h3>Price</h3>
+    <strong class="fs-2">{{carshare.price}}</strong>
+
+    <hr>
+
+      <a href="{{path('app_carshare_new')}}" class="fs-1 text-decoration-none text-dark btn btn-info">Make new route</a>
+
+  </div>
+</div>
+
+{% else %}
+
+
+<div class="carshare-driver-card text-center">
+  <div class="card-head text-center">
     {% if carshare.status.value == 'waiting' %}
-      <td style="color: darkorange;"><i class="bi bi-hourglass-split me-1"></i>{{carshare.status.value}}</td>
-    {% elseif carshare.status.value == 'in_progress' %}
-      <td style="color: green;"><i class="bi bi-clock-history me-1"></i>{{carshare.status.value}}</td>
-    {% elseif carshare.status.value == 'canceled' %}
-      <td style="color: red;"><i class="bi bi-x-square-fill me-1"></i>{{carshare.status.value}}</td>
+      <h2 style="color: darkorange;" class=" bg-black w-50 p-3 m-auto carshare-card-state mb-2">
+        <i class="fa-solid fa-hourglass-half me-3"></i> {{carshare.status.value}}
+      </h2>
     {% elseif carshare.status.value == 'complete' %}
-      <td style="color: turquoise;"><i class="bi bi-clipboard-check-fill me-1"></i>{{carshare.status.value}}</td>
-    {% endif %}
-    {% if carshare.status.value == 'waiting' %}
-      <td><i class="bi bi-exclamation-circle me-1"></i><a class="text-danger text-decoration-none" href="">Cancel</a></td>
+      <h2 style="color: green;" class=" bg-black w-50 p-3 m-auto carshare-card-state mb-2">
+        <i class="fa-solid fa-check-double me-3"></i> {{carshare.status.value}}
+      </h2>
+    {% elseif carshare.status.value == 'in_progress' %}
+      <h2 style="color: lightblue;" class=" bg-black w-50 p-3 m-auto carshare-card-state mb-2">
+        <i class="fa-solid fa-spinner me-3"></i> {{carshare.status.value}}
+      </h2>
     {% endif %}
 
-</tr>
+    <div class="from-card-field bg-dark text-secondary p-2">
+      <h3>From</h3>
+      <em class=" me-3 fs-3"><strong><i class="fa-solid fa-house-flag me-2"></i>{{carshare.departureLocation}}</strong></em>
+      <strong class=" fs-3"><i class="fa-regular fa-clock me-2"></i>{{carshare.departureHour|date("H:i")}}</strong>      
+    </div>
+    
+    <hr class=" border-3 border-primary">
+    <strong class="me-3 fs-3 text-primary"><i class="fa-regular fa-calendar me-2"></i>{{carshare.departureDate|date("d/m/Y")}}</strong><br>
+    <i class="bi bi-arrow-down-up fs-1 text-primary"></i><br>
+    <strong class="me-3 fs-3 text-primary"><i class="fa-regular fa-calendar me-2"></i>{{carshare.arrivalDate|date("d/m/Y")}}</strong>
+    <hr class=" border-3 border-primary">
+    
+    <div class="to-card-field bg-primary text-secondary p-2">
+      <h3>To</h3>
+      <em class=" me-3 fs-3"><strong><i class="fa-solid fa-flag-checkered me-2"></i>{{carshare.arrivalLocation}}</strong></em>
+      <strong class=" fs-3"><i class="fa-regular fa-clock me-2"></i>{{carshare.arrivalHour|date("H:i")}}</strong>
+    </div>
+  </div>
+
+  <div class="card-content mt-3 mb-3 bg-gradient bg-success text-white pt-5 pb-5">
+    <h3>Vehicle used</h3>
+    <strong class="fs-2">Your {{carshare.car.model}} {{carshare.car.registration}}</strong>
+
+    <h3>Price</h3>
+    <strong class="fs-2">{{carshare.price}}</strong>
+
+    <hr>
+
+    {% if carshare.status.value == 'waiting' %}
+      <a href="#" class="text-danger fs-1 text-decoration-none btn btn-dark fw-bold" data-bs-toggle="modal" data-bs-target="#cancelCarshareModal">
+        <i class="fa-solid fa-triangle-exclamation me-2"></i>Cancel
+      </a>
+
+      {# ! CHECK if carshare CAN be started as of today with NOW fn  #}
+      {% if carshare.departureDate|date("m/d/Y") == 'now'|date('m/d/Y') %}
+      
+        <a href="#"
+         class=" text-info fs-1 text-decoration-none btn btn-primary fw-bold" data-bs-toggle="modal" data-bs-target="#startCarshareModal">
+          <i class="fa-solid fa-circle-play me-2"></i>Start it
+        </a>
+
+      {% endif %}
+    {% elseif carshare.status.value == 'complete' %}
+      <a href="#" class="fs-1 text-decoration-none text-dark btn btn-secondary fw-bold">View reviews</a>
+    {% elseif carshare.status.value == 'in_progress' %}
+        <a href="#" class="fs-1 text-decoration-none text-black btn btn-outline-danger btn-secondary fw-bold" data-bs-toggle="modal" data-bs-target="#endCarshareModal">End</a>
+    {% endif %}
+
+  </div>
+</div>
+{% endif %}
+
+
+{# cancel modal #}
+<div class="modal fade cancel-modal" id="cancelCarshareModal" tabindex="-1" role="dialog" aria-labelledby="cancelCarshareModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold cancel-modal-title text-primary" id="cancelCarshareModalLabel">Are you sure you want to cancel the route ?</h5>
+            </div>
+        {# <div class="modal-body modal-body-cancel">
+            <h3>You are about to cancel the following route :</h3>
+            <p>{{carshare.departureLocation}}<i class="bi bi-arrow-right me-5 ms-5"></i>{{carshare.arrivalLocation}}
+                <i class="bi bi-calendar ms-5 me-2"></i>{{carshare.departureDate|date('d/m/Y')}}</p>
+            </div> #}
+            <div class="modal-footer cancel-modal-footer">
+                <button type="button" class="btn btn-secondary fs-2" data-bs-dismiss="modal">Go back</button>
+                <button type="button" class="btn btn-danger fs-2"><a href="{{path('app_carshare_cancel', {'id' : carshare.id })}}" class=" text-white text-decoration-none">
+                    Confirm </a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{# start modal #}
+<div class="modal fade cancel-modal" id="startCarshareModal" tabindex="-1" role="dialog" aria-labelledby="startCarshareModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold start-modal-title text-primary fs-2" id="startCarshareModalLabel">Start the voyage?</h5>
+            </div>
+        {# <div class="modal-body modal-body-cancel">
+            <h3>You are about to cancel the following route :</h3>
+            <p>{{carshare.departureLocation}}<i class="bi bi-arrow-right me-5 ms-5"></i>{{carshare.arrivalLocation}}
+                <i class="bi bi-calendar ms-5 me-2"></i>{{carshare.departureDate|date('d/m/Y')}}</p>
+            </div> #}
+            <div class="modal-footer start-modal-footer">
+                <button type="button" class="btn btn-secondary fs-2" data-bs-dismiss="modal">Go back</button>
+                <button type="button" class="btn btn-danger fs-2"><a href="{{path('app_carshare_start', {'id' : carshare.id })}}" class=" text-white text-decoration-none">
+                    Confirm </a></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{# end modal #}
+<div class="modal fade cancel-modal" id="endCarshareModal" tabindex="-1" role="dialog" aria-labelledby="endCarshareModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold end-modal-title text-primary fs-2" id="endCarshareModalLabel">Finish the voyage?</h5>
+            </div>
+        {# <div class="modal-body modal-body-cancel">
+            <h3>You are about to cancel the following route :</h3>
+            <p>{{carshare.departureLocation}}<i class="bi bi-arrow-right me-5 ms-5"></i>{{carshare.arrivalLocation}}
+                <i class="bi bi-calendar ms-5 me-2"></i>{{carshare.departureDate|date('d/m/Y')}}</p>
+            </div> #}
+            <div class="modal-footer end-modal-footer">
+                <button type="button" class="btn btn-secondary fs-2" data-bs-dismiss="modal">Go back</button>
+                <button type="button" class="btn btn-danger fs-2"><a href="{{path('app_carshare_end', {'id' : carshare.id })}}" class=" text-white text-decoration-none">
+                    Confirm </a></button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,6 +1,6 @@
 {% form_theme form  'form/template.html.twig' %}
 {% block javascripts %}
-  <script src="{{ asset('build/js/car-crud.js') }}"></script>
+  <script src="{{ asset('build/js/car-crud.js') }}" defer></script>
 {% endblock javascripts %}
 {# let us define as attribute a class to make it easier to style in CSS: #}
 {{ form_start(form, { 'attr': { 'class': 'form-car-new' }, 'csrf_protection': false }) }}

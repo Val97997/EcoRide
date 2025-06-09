@@ -14,7 +14,7 @@
     {% if carshare.car.id == car.id %}
     
     {% set carLocked = true %}
-    {% set lockedCarshare = carshare.id %} {# retrieve back and store the locking carshare's id for generating the link to it #}
+    {% set lockedCarshare = carshare.arrivalLocation %} {# retrieve back and store the locking carshare's id for generating the link to it #}
     {% endif %}
     
     {% endfor %}
@@ -23,6 +23,7 @@
     <td><a class=" text-info" href="{{path('app_car_edit', {'id': car.id})}}">Edit</a></td>
     <td><a class="text-danger" href="{{path('app_car_delete', {'id': car.id})}}">Remove</a></td>
     {% else %}
-    <td><a class=" text-info" href="{{path('app_carshare_show', {'id': lockedCarshare})}}">Car locked (go to route)</a></td>
+    <td><a class=" text-info" href="#carshare-listing">Car locked by a route</a></td>
+    <td><a class=" text-danger" href="#carshare-listing">Car in use by your {{lockedCarshare}} route</a></td>
     {% endif %}
 </tr>

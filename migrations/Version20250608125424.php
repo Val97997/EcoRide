@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250607104905 extends AbstractMigration
+final class Version20250608125424 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -21,7 +21,7 @@ final class Version20250607104905 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE carshare ADD pref LONGTEXT DEFAULT NULL COMMENT '(DC2Type:array)'
+            ALTER TABLE carshare CHANGE pref pref LONGTEXT DEFAULT NULL COMMENT '(DC2Type:simple_array)'
         SQL);
     }
 
@@ -29,7 +29,7 @@ final class Version20250607104905 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql(<<<'SQL'
-            ALTER TABLE carshare DROP pref
+            ALTER TABLE carshare CHANGE pref pref LONGTEXT DEFAULT NULL COMMENT '(DC2Type:array)'
         SQL);
     }
 }

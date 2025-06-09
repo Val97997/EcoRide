@@ -71,6 +71,9 @@ input[type='number']{
                 input{
                     color: $secondary;
                     background-color: $black;
+                    &:hover{
+                        background-color: $black;
+                    }
                 }
             }
         }
@@ -101,12 +104,18 @@ input[type='number']{
             box-shadow: -1rem 1rem $neutral;
         }
         input:not([type='checkbox'], [type='range']), select{
+            &:hover{
+                background-color: $black;
+            }
             text-align: center;
             background-color: $primary;
             color: $secondary;
             box-shadow: 1rem -1rem lightgray;
         }
         input[type='checkbox']{
+            &:hover{
+                background-color: $black;
+            }
             margin-top: 2rem;
             height: 3rem;
             width: 3rem;
@@ -126,7 +135,7 @@ input[type='number']{
         color: $black;
         background-color: $secondary;
         &:hover{
-            transform: scale(2.5);
+            transform: scale(2);
             background-color: $primary;
             color: white;
         }
@@ -148,4 +157,7 @@ input[type='number']{
     ul{
         list-style-type: none;
     }
+}
+#carshare_pref::placeholder{
+    color: $secondary;
 }

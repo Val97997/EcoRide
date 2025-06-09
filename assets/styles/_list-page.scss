@@ -285,15 +285,14 @@ $font-serif : "Raleway", serif !default;
         }
     }
 }
+
+
+// style for slider price :
 #price-div-search div{
     display: flex;
     flex-wrap: nowrap;
     flex-direction: row;
     align-items: center;
-    input[type = 'range']{
-        color: $dark !important;
-        background-color: $black !important;
-    }
     .price-slider-em{
         width: 5rem;
         font-size: 1.6rem;

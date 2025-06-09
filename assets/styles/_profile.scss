@@ -7,6 +7,17 @@ $font-sans-serif: 'Poppins', sans-serif !default;
 $font-monospace: "Poppins", monospace !default;
 $font-serif : "Raleway", serif !default;
 
+@keyframes table-reveal-opac {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes rotate-hourglass {
+    0% {transform: rotate(0deg);}
+    50% {transform: rotate(180deg);}
+    100% {transform: rotate(360deg);}
+}
+
 .bg-profile{
     z-index: -1;
     top: 0;
@@ -123,9 +134,16 @@ section.profile{
 .table-car-listing{
     border-radius: 1.2rem;
     border-collapse: collapse;
-    width: 80%;
-    max-width: 80rem;
+    max-width: 70%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    tr:hover{
+        transform: scale(1.1);
+        box-shadow: 0 0 1rem $dark;
+        background-color: $black;
+        a:hover{
+            text-decoration: underline;
+        }
+    }
     caption{
         font-size: 2.5rem;
         background-color: $primary;
@@ -147,8 +165,12 @@ section.profile{
         tr:nth-child(even) {
             background-color: $black;
         }
+        tr:nth-child(odd) {
+            background-color: $dark;
+        }
     }
     th, td, tr {
+        transition: all .4s ease;
         border: .1rem solid #ddd;
         padding: 1.2rem;
         text-align: left;
@@ -161,19 +183,13 @@ section.profile{
         background-color: $black;
         font-weight: bold;
     }
-    tr:hover {
-        background-color: $neutral;
-    }
 }
 //carshare table 
-div.carshares-table-container{
-    caption{
-        font-size: 3rem;
-        font-weight: bolder;
-    }
+section.carshares-table-container{
+
     //Driver route section design
     .btn-reveal-routes{
-        height: auto;
+        height: 15rem;
         width: auto;
         padding: 2rem;
         background-color: $secondary;
@@ -186,45 +202,31 @@ div.carshares-table-container{
             color: $black;
         }
     }
-    table.table-carshare-listing{
-        z-index: 1000;
-        border-collapse:separate;
-        width: 70%;
-        height: auto;
-        padding: .5rem;
-        margin: auto 1rem;
-        th, td, tr{
-            padding: 1rem;
-            border: .1rem solid #ddd;
-            text-align: justify;
+    div.table-carshare-listing{
+      div.carshare-driver-card{
+        width: 30%;
+        border: .2rem solid $primary;
+        margin: 1rem;
+        padding: 1rem;
+        background-color: lightgrey;
+        &:hover{
+            background-color: rgb(203, 230, 203);
         }
-        thead, tbody{
-            padding: 1rem;
+        &:hover .fa-hourglass-half, &:hover .fa-spinner{
+            animation: rotate-hourglass 1.5s infinite;
         }
-        thead{
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: $neutral;
-        }
-        tbody{
-            font-size: 1.8rem;
-            font-size: 550;
-            tr{
-                transition: all .5s ease;
+        .card-head{
+            h2.carshare-card-state{
+                border-radius: 1.5rem;
+                box-shadow: 0rem 0rem 0.5rem .25rem $dark;
             }
-            tr:hover{
-                transform: scale(1.2);
-                box-shadow: 0 0 1rem $dark;
-            }
-            tr:nth-child(even){
+            .card-content{
+                min-height: 50rem;
                 background-color: $secondary;
                 color: $black;
             }
-            tr:nth-child(odd){
-                background-color: $dark;
-                color: $secondary;
-            }
         }
+      }
     }
 }
 .table-reveal-opac-hidden{
@@ -232,10 +234,6 @@ div.carshares-table-container{
 }
 .table-reveal-opac-anim{
     animation: table-reveal-opac 3s;
-}
-@keyframes table-reveal-opac {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
 }
 
 // notepad border like
@@ -251,4 +249,26 @@ div.carshares-table-container{
     background-position: center;
     background-size: contain;
     mix-blend-mode:darken;
+}
+//
+// today carshares icon anim : 
+.todays-routes{
+    i.fa-spinner, i.fa-hourglass-half{
+        animation: rotate-hourglass 1.5s infinite ease-in-out;
+    }
+}
+
+//modal for cancelling
+div#cancelCarshareModal{
+    min-width: 30rem;
+    h5{
+        font-size: 2.5rem;
+    }
+    p{
+        font-size: 1.6rem;
+    }
+    button{
+        width: 12rem !important;
+        height: 6rem !important;
+    }
 }

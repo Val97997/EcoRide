@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         {# !!IMPORTANT: stop the prefetch from Turbo v8 otherwise flush and GET methods triggered on hovering links   #}
         <meta name="turbo-prefetch" content="false">
+        {# <meta name="turbo-cache-control" content="no-cache"> #}
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,7 +18,7 @@
         
         {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
-        {{ encore_entry_script_tags('dd') }}
+        {# {{ encore_entry_script_tags('dd') }} #}
         {% endblock %}
       </head>
       <body class="h-100 position-relative" id="top">
@@ -82,7 +83,7 @@
           {# IMPORTANT: In order to be able to display the profile picture, use a dynamic link through Twig's formatted variable,
           to the profile imgs folder in the correct way #}
           <img src="{{asset('profile_pics/%s.jpg'|format(app.user.pseudo))}}" alt="Profile" style="height: 5rem; width: 5rem;">
-          <h5><a class="text-secondary" href="{{path('app_user_profile')}}">
+          <h5><a class="text-secondary" href="{{ path('app_user_profile') }}">
             {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}
             {{app.user.pseudo|slice(0, 10)}}
           </a></h5>

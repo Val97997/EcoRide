@@ -1,15 +1,18 @@
 {% extends "base.html.twig" %}
 
-{% if carshare.user.id = app.user.id or carshare in app.user.bookHistory %}
+{# customized title page #}
+{% block title %}{{carshare.arrivalLocation}} / {{carshare.departureDate|date('Y-m-d')}}{% endblock %}
+{% block body %}
+
+{% if carshare.user.id == app.user.id or carshare in app.user.bookHistory %}
   {% include "pages/403.html.twig" %}
   
 {% else %}
-  {# customized title page #}
-  {% block title %}{{carshare.arrivalLocation}} / {{carshare.departureDate|date('Y-m-d')}}{% endblock %}
-  {% block body %}
-  
-  
-  <div class="carshare-details-container">
+<div class="bg-carshareview">
+</div>
+
+
+<div class="carshare-details-container">
       <div class="text-center title-row">
           <span class="position-relative">
               Route from
@@ -80,15 +83,34 @@
                 {{carshare.car.color}}
                 {{carshare.car.model}}
             </span>
-            {% if carshare.car.fuel == 'electric' %}
-            <span style="background-color: green;">
-                <i class="bi bi-plugin"></i></i>{{carshare.car.fuel}}
+            {% if carshare.car.fuel.value == 'electric' %}
+            <span style="background-color: green; color:aquamarine;">
+                <i class="bi bi-plugin"></i></i>{{carshare.car.fuel.value}}
             </span>
             {% else %}
-            <span style="background-color: red;">
-                <i class="bi bi-fuel-pump"></i>{{carshare.car.fuel}}
+            <span style="background-color: red; color: black;">
+                <i class="bi bi-fuel-pump"></i>{{carshare.car.fuel.value}}
             </span>
             {% endif %}
+            <hr>
+            <div class=" w-50 m-auto mb-5">
+                {% if carshare.smokingAllowance %}
+                    <strong><i class="fa-solid fa-smoking"></i> Smoking allowed</strong>
+                {% else %}
+                    <strong><i class="fa-solid fa-ban-smoking"></i>No smoking</strong>
+                {% endif %}
+                <strong> || </strong>
+                {% if carshare.animalAllowance %}
+                    <strong><i class="fa-solid fa-dog"></i> Pets allowed</strong>
+                {% else %}
+                    <strong><i class="fa-solid fa-ban"></i>No pets</strong>
+                {% endif %}
+                <hr>
+                <h3>Additional restrictions</h5>
+                {% for line in carshare.pref %}
+                  <i class="fa-solid fa-circle-exclamation fa-2xs pe-2"></i><em class=" fs-2">{{line}}</em> 
+                {% endfor %}
+            </div>
             
         </div>
         {% for car in '{{carshare.user.cars}}'  %}
@@ -125,18 +147,18 @@
                 <div class="modal-header">
                     <h5 class="modal-title fw-bold confirm-modal-title text-primary" id="confirmBookingModalLabel">Do you wish to proceed ?</h5>
                 </div>
-                <div class="modal-body modal-body-confirm">
-                    <h3>You are about to book the following route :</h3>
-                    <p>{{carshare.departureLocation}}<i class="bi bi-arrow-right me-5 ms-5"></i>{{carshare.arrivalLocation}}
-                        <i class="bi bi-calendar ms-5 me-2"></i>{{carshare.departureDate|date('d/m/Y')}}</p>
-                    </div>
-                    <div class="modal-footer confirm-modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go back</button>
-                        <button type="button" class="btn btn-primary"><a href="{{path('app_book', {'id': carshare.id, 'uid': app.user.id})}}" class=" text-secondary text-decoration-none">
-                            Confirm (-{{carshare.price}}/10 credits)</a></button>
-                        </div>
-                    </div>
+            <div class="modal-body modal-body-confirm">
+                <h3>You are about to book the following route :</h3>
+                <p>{{carshare.departureLocation}}<i class="bi bi-arrow-right me-5 ms-5"></i>{{carshare.arrivalLocation}}
+                    <i class="bi bi-calendar ms-5 me-2"></i>{{carshare.departureDate|date('d/m/Y')}}</p>
+                </div>
+                <div class="modal-footer confirm-modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Go back</button>
+                    <button type="button" class="btn btn-primary"><a href="{{path('app_book', {'id': carshare.id, 'uid': app.user.id})}}" class=" text-secondary text-decoration-none">
+                        Confirm (-{{carshare.price}}/10 credits)</a></button>
                 </div>
             </div>
-            {% endblock body %}
-{% endif %}
+        </div>
+    </div>
+    {% endif %}
+{% endblock body %}

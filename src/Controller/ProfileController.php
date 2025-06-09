@@ -19,12 +19,15 @@ final class ProfileController extends AbstractController{
     {
         // flash messages
         $redirectFrom = $request->getSession()->get('redirect_from');
-        $request->getSession()->remove('redirect_from');
-
+        
         return $this->render('pages/profile.html.twig', [
             'controller_name' => 'ProfileController',
-            'showCarMessage' => ($redirectFrom === '/car/new'),
-            'showCarshareMessage' => ($redirectFrom === '/carshare/new'),
+            'showCarMessage' => ($redirectFrom == '/car/new'),
+            'showCarshareMessage' => ($redirectFrom == '/carshare/new'),
+            'showStartMessage' => ($redirectFrom == '/carshare/start'),
+            'showCancelMessage' => ($redirectFrom == '/carshare/cancel'),
+            'showEndMessage' => ($redirectFrom == '/carshare/end'),
+            $request->getSession()->remove('redirect_from'),
         ]);
     }
 

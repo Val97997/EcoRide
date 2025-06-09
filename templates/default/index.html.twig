@@ -1,52 +1,35 @@
 {% extends 'base.html.twig' %}
-{% block javascripts %}
-<script src="{{ asset('build/js/homepage.js') }}" defer></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const message = document.getElementById('temporary-message');
-            if (message) {
-                // Auto-hide after 5 seconds
-                setTimeout(function() {
-                    message.style.transition = 'opacity 1s';
-                    message.style.opacity = '0';
-                    setTimeout(function() {
-                        message.style.display = 'none';
-                    }, 1000);
-                }, 5000);
-            }
-        });
-    </script>
-{% endblock javascripts %}
+
 {% block title %}Home{% endblock %}
 
 {% block body %}
 
 {# Display flash redirect messages #}
 {# book success : #}
-    {% if showBookMessage %}
-        <div id="temporary-message" class="alert alert-success">
-            <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
-                <span class="fs-2">{{ app.flashes('success')[0] }}</span>
-                <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
-            </h3>
-        </div>
-    {# login success #}
-    {% elseif loginMessage %}
-        <div id="temporary-message" class="alert alert-success">
-            <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
-                <span class="fs-2">{{ app.flashes('login')[0] }}</span>
-                <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
-            </h3>
-        </div>
-    {% elseif registerMessage %}
-        <div id="temporary-message" class="alert alert-success">
-            <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
-                <span class="fs-2">{{ app.flashes('register')[0] }}</span>
-                <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
-            </h3>
-        </div>
-    {# Register success : #}
-    {% endif %}
+{% if showBookMessage %}
+<div id="temporary-message" class="alert alert-success">
+    <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
+        <span class="fs-2">{{ app.flashes('success')[0] }}</span>
+        <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
+    </h3>
+</div>
+{# login success #}
+{% elseif loginMessage %}
+<div id="temporary-message" class="alert alert-success">
+    <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
+        <span class="fs-2">{{ app.flashes('login')[0] }}</span>
+        <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
+    </h3>
+</div>
+{% elseif registerMessage %}
+<div id="temporary-message" class="alert alert-success">
+    <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
+        <span class="fs-2">{{ app.flashes('register')[0] }}</span>
+        <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
+    </h3>
+</div>
+{# Register success : #}
+{% endif %}
 
 
 <main>
@@ -54,14 +37,14 @@
     </div>
     
     <div class="big-hero">
-
+        
         <div class="big-hero-text" id="hero">
             <h1 class="text-center">Welcome to EcoRide</h1>
             <p class="text-center text-black fw-bolder">Your eco-friendly car sharing platform</p>
         </div>
-
+        
     </div>
-
+    
     <section class="hook pb-4">
         <h2 class="pt-4 pb-4 text-secondary">Create an account and become a member !</h2>
         <div class="hook-text m-auto mt-5 position-relative">
@@ -77,11 +60,11 @@
             </button>
             <div class="position-absolute semicirclebtn" id="semicirclebtn">
                 {% if app.user %}
-                  {# <a href="{{ path('app_user_profile') }}" class="btn text-capitalize semicircle-btn" type="button" id="btn-driver">See profile</a>
-                  <a href="{{ path('app_crud_carshare_new') }}" class="btn text-capitalize semicircle-btn text" type="button" id="btn-passenger">New route</a> #}
-                  {% else %}
-                  <a href="{{ path('app_register_client') }}" class="btn text-capitalize semicircle-btn" type="button" id="btn-driver">Passenger</a>
-                  <a href="{{ path('app_register_user') }}" class="btn text-capitalize semicircle-btn text" type="button" id="btn-passenger">Driver</a>
+                <a href="{{ path('app_user_profile') }}" class="btn text-capitalize semicircle-btn" type="button" id="btn-driver">See profile</a>
+                <a href="{{ path('app_carshare_new') }}" class="btn text-capitalize semicircle-btn text" type="button" id="btn-passenger">New route</a>
+                {% else %}
+                <a href="{{ path('app_register_client') }}" class="btn text-capitalize semicircle-btn" type="button" id="btn-driver">Passenger</a>
+                <a href="{{ path('app_register_user') }}" class="btn text-capitalize semicircle-btn text" type="button" id="btn-passenger">Driver</a>
                 {% endif %}
             </div>
             <p class="hook-par text-center"><i class="fa-solid fa-quote-left p-0 pe-5"></i>Help us grow and build a cleaner way of envisioning the <br>future of roadtrips and travels,<br>
@@ -89,7 +72,7 @@
             </p>
         </div>
     </section>
-
+    
     <section class="article-section w-100 h-auto mb-3">
         <article class="pt-5 pb-5">
             <div class="article-content">
@@ -99,7 +82,7 @@
             </div>
             <img src="{{ asset('build/img/Article_pic_01.png') }}" alt="Picture of a car" class="article-img">
         </article>
-
+        
         <article class="pt-5 pb-5">
             <div class="article-content">
                 <h3 class="mt-5 pt-5">Book seats all over the country !</h3>
@@ -108,7 +91,7 @@
             </div>
             <img src="{{ asset('build/img/Article_pic_02.png') }}" alt="Picture of a car" class="article-img">
         </article>
-
+        
         <article class="pt-5 pb-5">
             <div class="article-content">
                 <h3 class="mt-5 pt-5 text-white">Open new carshares !</h3>
@@ -117,9 +100,9 @@
             </div>
             <img src="{{ asset('build/img/Article_pic_03.png') }}" alt="Picture of a car" class="article-img">
         </article>
-
+        
     </section>
-
+    
     <section class="carousel-main">
         <button class=" position-absolute z-3 h-100" id="carousel-prev"><i class="fa-regular fa-square-caret-left fa-2x"></i></button>
         <button class=" position-absolute z-3 h-100" id="carousel-next"><i class="fa-regular fa-square-caret-right  fa-2x"></i></button>
@@ -137,13 +120,29 @@
             <a href=""><img src="{{ asset('build/img/Madrid.jpg') }}" alt="Madrid" id="Madrid"><h4>Madrid, <span class=" fs-2">warmth and sun</span></h4></a>
         </div>
     </section>
-  
-
+    
+    
     <aside class="btn-scroll-top">
         <a href="#top"><i class="fa-solid fa-angle-up fa-3x"></i></a>
     </aside>
-
+    
 </main>
 
 
+<script src="{{ asset('build/js/homepage.js') }}" data-turbo-track='reload'></script>
+    <script>
+        document.addEventListener('turbo:load', function() {
+            const message = document.getElementById('temporary-message');
+            if (message) {
+                // Auto-hide after 5 seconds
+                setTimeout(function() {
+                    message.style.transition = 'opacity 1s';
+                    message.style.opacity = '0';
+                    setTimeout(function() {
+                        message.style.display = 'none';
+                    }, 1000);
+                }, 5000);
+            }
+        });
+    </script>
 {% endblock %}

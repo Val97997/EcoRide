@@ -66,7 +66,8 @@ final class CarController extends AbstractController{
 
         // IMPORTANT : Prevent the user from accessing another user's Cars !!
         if($car->getUser() !== $user){
-            throw new AccessDeniedException('Access denied, please load back to your profile');
+            return $this->redirectToRoute('app_403');
+            // throw new AccessDeniedException('Access denied, please load back to your profile');
         }
         $form = $this->createForm(CarType::class, $car);
         $form->handleRequest($request);

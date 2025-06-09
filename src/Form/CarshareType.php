@@ -9,12 +9,14 @@ use App\Enum\CarshareStatus;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\RangeType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -120,7 +122,26 @@ class CarshareType extends AbstractType
                 'data' => CarshareStatus::WAITING,
                 'empty_data' => CarshareStatus::WAITING->value,
             ])
-            // ->add('pref', Type)
+            // custom preferences array add input field :
+            ->add('pref', TextType::class, [
+                'required' => false,
+                'label' => 'Add your own additional preferences',
+                'attr' => ['placeholder' => 'Separate your inputs by ; + space ']
+            ]);
+
+            $builder->get('pref')
+                ->addModelTransformer(new CallbackTransformer(
+                    // transform the data type to string for display on User end
+                    function($prefsArray): string {
+                        // transform the pref values array to a string split by semicolon
+                        return implode('; ', $prefsArray);
+                    },
+                    // transform back to an array to store in db :
+                    function($prefsString): array{
+                        // transform the string back to an array
+                        return explode('; ', $prefsString);
+                    }
+                ))
         ;
     }
 

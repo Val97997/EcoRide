@@ -3,10 +3,21 @@ const Encore = require('@symfony/webpack-encore');
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
-    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
+    Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev-server');
 }
 
 Encore
+    // VITAL !! Webpack config dev-server in here allows FULL reload of twig templates when navigating webapp, 
+    // avoiding Js scripts NOT loading properly !!
+    .configureDevServerOptions(options => {
+        options.liveReload = true ;
+        options.static = {
+            watch: false
+        };
+        options.watchFiles = {
+            paths: ['templates/**/**'],
+        };
+    })
     // directory where compiled assets will be stored
     .setOutputPath('public/build/')
     // public path used by the web server to access the output path

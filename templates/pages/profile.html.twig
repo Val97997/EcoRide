@@ -16,6 +16,17 @@
 {% if showCarshareMessage %}
     {% include "layout/_flash-messages.html.twig" with {flashM: app.flashes('carshare-saved')[0]}  %}
 {% endif %}
+{% if showStartMessage %}
+    {% include "layout/_flash-messages.html.twig" with {flashM: app.flashes('carshare-start')[0]}  %}
+{% endif %}
+{% if showCancelMessage %}
+    {% include "layout/_flash-messages.html.twig" with {flashM: app.flashes('carshare-cancel')[0]}  %}
+{% endif %}
+{% if showEndMessage %}
+    {% include "layout/_flash-messages.html.twig" with {flashM: app.flashes('carshare-end')[0]}  %}
+{% endif %}
+
+
 <section class="profile m-auto pt-5 pb-5">
     <div class="profile-row-1 m-auto">
         <span>{{app.user.pseudo}}</span>
@@ -97,7 +108,7 @@
 
         {% if 'ROLE_DRIVER' in app.user.roles and app.user.cars|length > 0 %}
         {# set up vehicle display table #}
-            <table class="table-car-listing bg-black mt-3 mb-3 draggable-profile">
+            <table class="table-car-listing bg-black mt-3 mb-3 draggable-profile w-100 me-auto ms-auto">
                 <caption class="text-white caption-top">
                     {% if app.user.cars|length > 1 %}
                       Vehicle fleet
@@ -121,35 +132,34 @@
                     {% endfor %}
                 </tbody>
             </table>
+
+            <section class="todays-routes me-auto ms-auto mt-5 mb-5 rounded bg-secondary w-50 p-5">
+                <h1 class=" w-100 text-center fw-bolder">Today's routes</h1>
+                {% if app.user.carshares|length > 0 %}
+                    {% for carshare in app.user.carshares %}
+                      {% if carshare.departureDate|date("m/d/Y") == 'now'|date("m/d/Y") %}
+                        {% include "carshare/_carshare-row.html.twig" %}
+                      {% endif %}
+                    {% endfor %}
+                {% endif %}
+            </section>
+
             {# set up offered carshares table #}
             {% if app.user.carshares|length > 0 %}
-              <div class="carshares-table-container d-flex flex-row flex-nowrap justify-content-start w-100 align-content-between">
-                <button class="btn-reveal-routes btn btn-dark fs-1" id="btn-reveal-routes">
+              <section class="carshares-table-container d-flex flex-column justify-content-start w-100 align-content-between m-auto p-0" id="carshare-listing">
+                <button class="btn-reveal-routes btn btn-dark fs-1 w-25 m-auto" id="btn-reveal-routes">
                    <code id="codeElem" class=""></code>  <hr class=" text-black">
                      <strong id="btn-reveal-routes-title" class=" fs-4 "> Rotate to view and consult your routes</strong>
                 </button>
 
-                <table class="table-carshare-listing bg-black mt-3 mb-3 draggable-profile-2 table-reveal-opac-hidden">
-                    <caption class="text-secondary w-100 shadow-sm caption-top">
-                        Carshares offered
-                        {# <em>(Click and hold to drag)</em> #}
-                    </caption>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Departure</th>
-                            <th>Destination</th>
-                            <th>Car</th>
-                            <th>Price per seat</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for carshare in app.user.carshares %}
-                        {% include "carshare/_carshare-row.html.twig" %}
-                        {% endfor %}
-                    </tbody>
-                </table>
-              </div>
+                <div class="table-reveal-opac-hidden table-carshare-listing d-flex flex-wrap flex-row justify-content-center w-100 m-auto p-0">
+                    
+                    {% for carshare in app.user.carshares|sort((a,b) => b.departureDate <=> a.departureDate )%}
+                    {% include "carshare/_carshare-row.html.twig" with {carshare:carshare} only %}
+                    {% endfor %}
+
+                </div>
+              </section>
             {% endif %}
         {% endif %}
 
@@ -178,5 +188,6 @@
             </table>
         {% endif %}
 </section>
+
 
 {% endblock %}

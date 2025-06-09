@@ -64,8 +64,8 @@ class Carshare
     #[ORM\Column]
     private ?bool $animalAllowance = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
-    private ?array $pref = null;
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private ?array $pref = [];
 
     public function __construct()
     {

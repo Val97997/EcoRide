@@ -25,9 +25,9 @@ import './styles/app.scss';
 // // or you can include specific pieces
 
 
-// anime.js animation setups
+// anime.js animation setups NOTICE : condition is vital to avoid console warning and loading the full code on wrong pages
 //login page
-if(document.getElementsByClassName('animate-title') != null){
+if(window.location.href == 'http://127.0.0.1:8000/login'){
   waapi.animate('.animate-title span', {
     translate: `0 -2rem`,
     delay: stagger(100),
@@ -39,7 +39,7 @@ if(document.getElementsByClassName('animate-title') != null){
 }
 
 //list carshares page
-if(document.getElementsByClassName('search-page-big-hero') != null){
+if(window.location.href == 'http://127.0.0.1:8000/search'){
   animate('.search-page-big-hero h1', {
     opacity: [0, 1],
     translateY: ['-2rem', '0'],
@@ -90,13 +90,6 @@ if(window.location.href == 'http://127.0.0.1:8000/user/profile'){
   
     createDraggable('.draggable-profile',{
       x: false
-    })
-  }
-  if(document.getElementsByClassName('draggable-profile-2') != null){
-  
-    createDraggable('.draggable-profile-2',{
-      x: true,
-      y: true
     })
   }
 }
