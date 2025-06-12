@@ -133,16 +133,16 @@
                 </tbody>
             </table>
 
-            <section class="todays-routes me-auto ms-auto mt-5 mb-5 rounded bg-secondary w-50 p-5">
-                <h1 class=" w-100 text-center fw-bolder">Today's routes</h1>
-                {% if app.user.carshares|length > 0 %}
-                    {% for carshare in app.user.carshares %}
-                      {% if carshare.departureDate|date("m/d/Y") == 'now'|date("m/d/Y") %}
+            {% if app.user.carshares|length > 0 %}
+                {% for carshare in app.user.carshares %}
+                    {% if carshare.departureDate|date("m/d/Y") == 'now'|date("m/d/Y") %}
+                    <section class="todays-routes me-auto ms-auto mt-5 mb-5 rounded bg-secondary w-50 p-5">
+                        <h1 class=" w-100 text-center fw-bolder">Today's routes</h1>
                         {% include "carshare/_carshare-row.html.twig" %}
-                      {% endif %}
-                    {% endfor %}
-                {% endif %}
-            </section>
+                    </section>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
 
             {# set up offered carshares table #}
             {% if app.user.carshares|length > 0 %}
@@ -164,11 +164,12 @@
         {% endif %}
 
 
-
         {% if app.user.bookHistory|length > 0 %}
-            <table class="table-car-listing bg-black mt-3 mb-3">
+            <section class=" w-100 me-auto ms-auto mt-5 mb-3 d-flex flex-wrap flex-row justify-content-between">
+
+            {# <table class=" bg-black mt-3 mb-3">
                 <caption class="text-white caption-top">
-                    Voyage history
+                    Booking history
                 </caption>
                 <thead>
                     <tr>
@@ -182,12 +183,12 @@
                 <tbody>
                     {# NOTE: sorting voyage history to order them by more recent, more user friendly that way to consult the list #}
                     {% for carshare in app.user.bookHistory|sort((a, b) => b.departureDate <=> a.departureDate) %}
-                    {% include "carshare/_bookedCarshare-row.html.twig" %}
+                    
+                        {% include "carshare/_bookedCarshare-row.html.twig" %}
+                    
                     {% endfor %}
-                </tbody>
-            </table>
+            </section>
         {% endif %}
+
 </section>
-
-
 {% endblock %}

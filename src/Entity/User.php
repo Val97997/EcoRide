@@ -64,12 +64,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $credit_balance = 20;
 
-    /**
-     * @var Collection<int, Review>
-     */
-    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'user')]
-    private ?Collection $reviews;
-
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $birthDate = null;
 
@@ -89,13 +83,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, Carshare>
      */
-    #[ORM\ManyToMany(targetEntity: Carshare::class, inversedBy: 'usersBookedHistory')]
+    #[ORM\ManyToMany(targetEntity: Carshare::class, inversedBy: 'passengers')]
     private Collection $bookHistory;
 
     public function __construct()
     {
         $this->carshare = new ArrayCollection();
-        $this->reviews = new ArrayCollection();
         $this->cars = new ArrayCollection();
         $this->bookHistory = new ArrayCollection();
     }
@@ -273,37 +266,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreditBalance(int $credit_balance): static
     {
         $this->credit_balance = $credit_balance;
-        
-        return $this;
-    }
-    
-    /**
-     * @return Collection<int, Review>
-     */
-    public function getReviews(): ?Collection
-    {
-        return $this->reviews;
-    }
-    
-    
-    public function addReview(Review $review): static
-    {
-        if (!$this->reviews->contains($review)) {
-            $this->reviews->add($review);
-            $review->setUser($this);
-        }
-        
-        return $this;
-    }
-    
-    public function removeReview(Review $review): static
-    {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getUser() === $this) {
-                $review->setUser(null);
-            }
-        }
         
         return $this;
     }

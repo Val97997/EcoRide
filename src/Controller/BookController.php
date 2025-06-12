@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Carshare;
 use App\Entity\User;
+use App\Form\SearchFormType;
 use App\Service\BookMailService;
 use App\Service\TicketGeneratorService;
 use Doctrine\DBAL\Driver\PgSQL\ConvertParameters;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,8 +18,9 @@ use Symfony\Component\Routing\Attribute\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
+#[Route('/booking', name: 'app_')]
 class BookController extends AbstractController{
-    #[Route('/carshare/book/{id}/{uid}', name: 'app_book')]
+    #[Route('book/{id}/{uid}', name: 'book')]
 
     // IMPORTANT: The 'id' parameter should match the Carshare entity's ID and 'uid' should match the User entity's ID.
     // The 'uid' parameter is used to identify the user who is booking the carshare.
@@ -38,6 +41,7 @@ class BookController extends AbstractController{
         $creditPrice = (int)($carshare->getPrice() / 10);
         $user->setCreditBalance($balance-$creditPrice);
         $user->addBookHistory($carshare);
+        $carshare->addPassenger($user);
         $carshare->setAvailableSeats($quantity - 1);
         
         // Optionally, you can add logic to handle the case when no seats are available
@@ -58,7 +62,52 @@ class BookController extends AbstractController{
 
         // Redirect to the default route after booking
         // This will redirect to the index action of DefaultController with a flash message confirming the booking !
-        $request->getSession()->set('redirect_from', '/carshare/book/');
+        $request->getSession()->set('redirect_from', '/booking/book/');
         return new RedirectResponse($this->generateUrl('app_default'));
+    }
+
+    #[Route('/cancelDialog/{id}', name: 'cancel_confirm')]
+    public function cancelConfirm(Carshare $carshare): Response{
+        $user = $this->getUser();
+        $pass = $carshare->getPassengers();
+        $isPassenger = false;
+        foreach ($pass as $p) {
+            if ($p === $user) {
+                $isPassenger = true;
+                break;
+            }
+        }
+        if(!$isPassenger){
+            return $this->render('403.html.twig');
+        }
+
+        return $this->render('carshare/cancel_book.html.twig', [
+            'controller_name' => 'BookController',
+            'carshare' => $carshare,
+        ]);
+    }
+
+    #[Route('/cancel/{id}/{uid}', name: 'cancel')]
+    public function cancel(Carshare $carshare,#[MapEntity(expr: 'repository.find(uid)')] User $user, EntityManagerInterface $em): RedirectResponse|Response{
+        $em->persist($carshare);
+        $em->persist($user);
+        $pass = $carshare->getPassengers();
+        $isPassenger = false;
+        foreach ($pass as $p) {
+            if ($p === $user) {
+                $isPassenger = true;
+                break;
+            }
+        }
+        if(!$isPassenger){
+            return $this->render('403.html.twig');
+        }
+        else{
+            $user->removeBookHistory($carshare);
+            $balance = $user->getCreditBalance();
+            $user->setCreditBalance($balance + round(($carshare->getPrice())/10));
+            $em->flush();
+            return $this->redirectToRoute('app_search');
+        }
     }
 }

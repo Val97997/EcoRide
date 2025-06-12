@@ -19,9 +19,9 @@ final class DefaultController extends AbstractController{
 
         return $this->render('default/index.html.twig', [
             'controller_name' => 'DefaultController',
-            'showBookMessage' => ($redirectFrom === '/carshare/book/'),
-            'loginMessage' => ($redirectFrom === '/login'),
+            'showBookMessage' => ($redirectFrom === '/booking/book'),
             'registerMessage' => ($redirectFrom === '/register'),
+            'cancelMessage' => ($redirectFrom === '/booking/cancel'),
         ]);
     }
 }

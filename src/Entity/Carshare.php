@@ -56,7 +56,7 @@ class Carshare
      * @var Collection<int, User>
      */
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'bookHistory')]
-    private Collection $usersBookedHistory;
+    private Collection $passengers;
 
     #[ORM\Column]
     private ?bool $smokingAllowance = null;
@@ -66,11 +66,6 @@ class Carshare
 
     #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
     private ?array $pref = [];
-
-    public function __construct()
-    {
-        $this->usersBookedHistory = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -212,25 +207,25 @@ class Carshare
     /**
      * @return Collection<int, User>
      */
-    public function getUsersBookedHistory(): Collection
+    public function getPassengers(): Collection
     {
-        return $this->usersBookedHistory;
+        return $this->passengers;
     }
 
-    public function addUsersBookedHistory(User $usersBookedHistory): static
+    public function addPassenger(User $passengers): static
     {
-        if (!$this->usersBookedHistory->contains($usersBookedHistory)) {
-            $this->usersBookedHistory->add($usersBookedHistory);
-            $usersBookedHistory->addBookHistory($this);
+        if (!$this->passengers->contains($passengers)) {
+            $this->passengers->add($passengers);
+            $passengers->addBookHistory($this);
         }
 
         return $this;
     }
 
-    public function removeUsersBookedHistory(User $usersBookedHistory): static
+    public function removePassenger(User $passengers): static
     {
-        if ($this->usersBookedHistory->removeElement($usersBookedHistory)) {
-            $usersBookedHistory->removeBookHistory($this);
+        if ($this->passengers->removeElement($passengers)) {
+            $passengers->removeBookHistory($this);
         }
 
         return $this;

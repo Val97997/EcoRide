@@ -82,7 +82,11 @@
         <aside class="mini-profile position-fixed p-2">
           {# IMPORTANT: In order to be able to display the profile picture, use a dynamic link through Twig's formatted variable,
           to the profile imgs folder in the correct way #}
+          {% if app.user.picture is null %}
+          <img src="{{asset('profile_pics/default-profile.jpg')}}" alt="Profile" style="height: 5rem; width: 5rem;">
+          {% else %}
           <img src="{{asset('profile_pics/%s.jpg'|format(app.user.pseudo))}}" alt="Profile" style="height: 5rem; width: 5rem;">
+          {% endif %}
           <h5><a class="text-secondary" href="{{ path('app_user_profile') }}">
             {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}
             {{app.user.pseudo|slice(0, 10)}}
@@ -99,7 +103,7 @@
           <div class="col-md-4 ms-5 pt-3 text-center text-black footer-group">
             
             <h4 class="col-md-4 w-100 fs-2">Contact us !</h4>
-            <a href="mailto:test@email.com" class="w-100 fs-4 text-dark footer-link">test@email.com</a>
+            <a href="mailto:noreply@ecoride.com" class="w-100 fs-4 text-dark footer-link">test@email.com</a>
             
           </div>
 

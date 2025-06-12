@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Enum\CarshareStatus;
 use App\Form\CarshareType;
 use App\Repository\CarshareRepository;
+use App\Service\BookMailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Error;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -63,15 +64,29 @@ final class CarshareController extends AbstractController{
     // }
 
     #[Route('/cancel/{id}', name: 'app_carshare_cancel', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Carshare $carshare, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Carshare $carshare, EntityManagerInterface $entityManager, BookMailService $bookMailService): Response
     {
         $user = $this->getUser();
+        // restitute the spent credits to the passengers :
+        $passengers = $carshare->getPassengers();
+        $entityManager->persist($carshare);
+        $carshare->setStatus(CarshareStatus::CANCELED);
+        if($passengers != null){
+            foreach($passengers as $pass){
+
+                $credits = $pass->getCreditBalance()+ round(($carshare->getPrice())/10);
+                $pass->setCreditBalance($credits);
+
+                // send mail notifying them :
+                $bookMailService->setUser($pass);
+                $bookMailService->generateCancelEmail($carshare);
+            }
+        }
+        
 
         if($carshare->getUser() !== $user){
             return $this->redirectToRoute('app_403');
         }
-        $entityManager->persist($carshare);
-        $carshare->setStatus(CarshareStatus::CANCELED);
         $entityManager->flush();
 
         $this->addFlash('carshare-cancel', 'Carshare has been canceled');
@@ -82,7 +97,11 @@ final class CarshareController extends AbstractController{
         
         ]);
     }
-
+    #[Route('/book/cancel/{id}', name: 'app_carshare_cancel_booking', methods: ['GET', 'POST'])]
+    public function cancelBook(Request $request, Carshare $carshare, EntityManagerInterface $em){
+        
+        return $this->render('default/index.html.twig');
+    }
 
     #[Route('/start/{id}', name: 'app_carshare_start', methods: ['GET', 'POST'])]
     public function start(Request $request, Carshare $carshare, EntityManagerInterface $entityManager): Response
@@ -106,9 +125,21 @@ final class CarshareController extends AbstractController{
     }
 
     #[Route('/end/{id}', name: 'app_carshare_end', methods: ['GET', 'POST'])]
-    public function end(Request $request, Carshare $carshare, EntityManagerInterface $entityManager): Response
+    public function end(Request $request, Carshare $carshare, EntityManagerInterface $entityManager, BookMailService $bookMailService): Response
     {
         $user = $this->getUser();
+        // notify passengers of finished travel :
+        $passengers = $carshare->getPassengers();
+        $entityManager->persist($carshare);
+        $carshare->setStatus(CarshareStatus::CANCELED);
+        if($passengers != null){
+            foreach($passengers as $pass){
+
+                // send mail notifying them :
+                $bookMailService->setUser($pass);
+                $bookMailService->generateFinishEmail($carshare);
+            }
+        }
 
         if($carshare->getUser() !== $user){
             return $this->redirectToRoute('app_403');

@@ -17,32 +17,7 @@ class CarshareRepository extends ServiceEntityRepository
         parent::__construct($registry, Carshare::class);
     }
 
-//    /**
-//     * @return Carshare[] Returns an array of Carshare objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Carshare
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
-
-// Filter manage section
+// Search Filter manage section
 public function findSearch(SearchData $search){
     //create the search query
     $query = $this->createQueryBuilder('c')

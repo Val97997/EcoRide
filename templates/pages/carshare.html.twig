@@ -106,10 +106,12 @@
                     <strong><i class="fa-solid fa-ban"></i>No pets</strong>
                 {% endif %}
                 <hr>
-                <h3>Additional restrictions</h5>
-                {% for line in carshare.pref %}
-                  <i class="fa-solid fa-circle-exclamation fa-2xs pe-2"></i><em class=" fs-2">{{line}}</em> 
-                {% endfor %}
+                {% if carshare.pref is not same as '' %}
+                    <h3>Additional restrictions</h5>
+                    {% for line in carshare.pref %}
+                        <i class="fa-solid fa-circle-exclamation fa-2xs pe-2"></i><em class=" fs-2">{{line}}</em> 
+                    {% endfor %}
+                {% endif %}
             </div>
             
         </div>
@@ -119,16 +121,16 @@
         
         <div class="btn-book-container w-100 text-center">
             {% if app.user %}
-            {% if app.user.creditBalance > carshare.price %}
-            <button type="button" data-bs-toggle="modal" data-bs-target="#confirmBookingModal" class="btn m-auto btn-dark">Book</button>
+                {% if app.user.creditBalance > carshare.price %}
+                <button type="button" data-bs-toggle="modal" data-bs-target="#confirmBookingModal" class="btn m-auto btn-dark mb-2">Book</button>
+                {% else %}
+                <button type="button" class="btn m-auto btn-danger mb-2" href="/">Not enough credits</button>
+                {% endif %}
             {% else %}
-            <button type="button" class="btn m-auto btn-danger" href="/">Not enough credits</button>
-            {% endif %}
-            {% else %}
-            <a href="{{path('app_login')}}" class="btn m-auto btn-dark">Login to book</a>
+            <a href="{{path('app_login')}}" class="btn m-auto btn-dark mb-2">Login to book</a>
             {% endif %}
         </div>
-        <div class="reviews-row">
+        {# <div class="reviews-row">
             <h3>Driver reviews :</h3>
             {% for review in reviews %}
             {% for i in 1..review.rating %}
@@ -136,7 +138,7 @@
             {% endfor %}
             <p><strong>{{review.rating}}/5</strong><br>{{review.comment}}</p><hr>
             {% endfor %}
-        </div>
+        </div> #}
     </div>
     
     

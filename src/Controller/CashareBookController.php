@@ -22,12 +22,12 @@ final class CashareBookController extends AbstractController{
             return new Exception('Access denied');
         }
 
-        $reviews =$user->getReviews();
+        // $reviews =$user->getReviews();
         return $this->render('pages/carshare.html.twig', [
             'controller_name' => 'CashareController',
             $carshare->getId() => $carshare,
             'carshare' => $carshare,
-            'reviews' => $reviews,
+            // 'reviews' => $reviews,
         ]);
     }
 }

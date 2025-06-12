@@ -13,14 +13,7 @@
         <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
     </h3>
 </div>
-{# login success #}
-{% elseif loginMessage %}
-<div id="temporary-message" class="alert alert-success">
-    <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
-        <span class="fs-2">{{ app.flashes('login')[0] }}</span>
-        <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
-    </h3>
-</div>
+{# Register success : #}
 {% elseif registerMessage %}
 <div id="temporary-message" class="alert alert-success">
     <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
@@ -28,7 +21,14 @@
         <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
     </h3>
 </div>
-{# Register success : #}
+{# Cancel booking success : #}
+{% elseif cancelMessage %}
+<div id="temporary-message" class="alert alert-success">
+    <h3 class="text-center mt-5 p-3 d-flex flex-row justify-content-center align-items-center">
+        <span class="fs-2">{{ app.flashes('success')[1] }}</span>
+        <button type="button" class="btn-close fs-5 ms-4" data-bs-dismiss="alert" aria-label="Close"></button>
+    </h3>
+</div>
 {% endif %}
 
 
@@ -61,7 +61,7 @@
             <div class="position-absolute semicirclebtn" id="semicirclebtn">
                 {% if app.user %}
                 <a href="{{ path('app_user_profile') }}" class="btn text-capitalize semicircle-btn" type="button" id="btn-driver">See profile</a>
-                <a href="{{ path('app_carshare_new') }}" class="btn text-capitalize semicircle-btn text" type="button" id="btn-passenger">New route</a>
+                <a href="{{ path('app_search') }}" class="btn text-capitalize semicircle-btn text" type="button" id="btn-passenger">Book</a>
                 {% else %}
                 <a href="{{ path('app_register_client') }}" class="btn text-capitalize semicircle-btn" type="button" id="btn-driver">Passenger</a>
                 <a href="{{ path('app_register_user') }}" class="btn text-capitalize semicircle-btn text" type="button" id="btn-passenger">Driver</a>

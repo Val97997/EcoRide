@@ -25,6 +25,9 @@ For testing with phpUnit :
 We have installed an extension for access to DQL higher functions for our queries (needed for Search page filters)
 # $ composer require beberlei/doctrineextensions
 
+Necessary for inlining CSS files in our mail templates :
+# $ composer require twig/cssinliner-extra
+
 ADMIN USER CREATION :
     In order to process the Admin profile creation, NAVIGATE to localhost/creatAdmin (only accessible if logged in => security.yaml config),
     this will execute a custom pure SQL script and create the Admin profile. @Todo : think of a better and safer method for implementing Admin profile
