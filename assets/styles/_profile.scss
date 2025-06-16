@@ -338,9 +338,12 @@ div.table-book-listing{
         grid-row: 2;
         grid-column: 2;
     }
-    .cancel-book{
+    .cancel-book, .confirm-route{
         grid-row: 3;
         grid-column: 2;
+        border-radius: 2rem;
+    }
+    .cancel-book{
         &:hover ~ h2.cancel-panel{
             transform: translate(-55%) rotate(-90deg);
         }
@@ -351,6 +354,14 @@ div.table-book-listing{
             background-color: darkred;
             color: greenyellow;
         }
+    }
+    .confirm-route{
+        border-radius: 2rem;
+        overflow: hidden;
+    }
+    .confirm-route:hover i.fa-circle-check{
+        transition: all .4s ease;
+        transform: scale(20);
     }
     .contact-book{
         button:hover{
@@ -380,5 +391,40 @@ div.table-book-listing{
     .cancel-panel-r{
         right: 0%;
         transform: rotate(90deg);
+    }
+}
+// media queries
+
+@media (max-width: 1500px) {
+    .table-book-listing{
+        grid-template-columns: repeat(3, 28vw) !important;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        text-align: center;
+        .cancel-panel, .cancel-panel-r{
+            display: none;
+        }
+    }
+}
+@media (max-width: 1200px) {
+    .table-car-listing{
+        caption{
+            border-radius: 2rem 2rem 0% 0%;
+        }
+    }
+    .carshare-driver-card{
+        .card-head h2{
+            width: 80% !important;
+        }
+        .card-content a{
+            margin-top: 2.5rem;
+        }
+        .card-content{
+            height: 40rem !important;
+        }
+    }
+    .btn-reveal-routes{
+        height: auto !important;
+        width: 30vw !important;
     }
 }

@@ -149,7 +149,7 @@
               <section class="carshares-table-container d-flex flex-column justify-content-start w-100 align-content-between m-auto p-0" id="carshare-listing">
                 <button class="btn-reveal-routes btn btn-dark fs-1 w-25 m-auto" id="btn-reveal-routes">
                    <code id="codeElem" class=""></code>  <hr class=" text-black">
-                     <strong id="btn-reveal-routes-title" class=" fs-4 "> Rotate to view and consult your routes</strong>
+                     <strong id="btn-reveal-routes-title" class=" fs-4 "> Rotate to consult your routes</strong>
                 </button>
 
                 <div class="table-reveal-opac-hidden table-carshare-listing d-flex flex-wrap flex-row justify-content-center w-100 m-auto p-0">
@@ -165,23 +165,8 @@
 
 
         {% if app.user.bookHistory|length > 0 %}
-            <section class=" w-100 me-auto ms-auto mt-5 mb-3 d-flex flex-wrap flex-row justify-content-between">
-
-            {# <table class=" bg-black mt-3 mb-3">
-                <caption class="text-white caption-top">
-                    Booking history
-                </caption>
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>From</th>
-                        <th>Destination</th>
-                        <th>Driver</th>
-                        <th>Eco type</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {# NOTE: sorting voyage history to order them by more recent, more user friendly that way to consult the list #}
+            <section class="book-history-table w-100 me-auto ms-auto mt-5 mb-3 d-flex flex-wrap flex-row justify-content-between">
+                <h1 class="text-center w-100 me-auto ms-auto mb-5 fw-bolder fs-1 bg-black text-secondary pt-3 pb-3">Passenger history</h1>
                     {% for carshare in app.user.bookHistory|sort((a, b) => b.departureDate <=> a.departureDate) %}
                     
                         {% include "carshare/_bookedCarshare-row.html.twig" %}

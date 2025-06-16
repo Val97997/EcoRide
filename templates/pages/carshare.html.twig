@@ -130,15 +130,28 @@
             <a href="{{path('app_login')}}" class="btn m-auto btn-dark mb-2">Login to book</a>
             {% endif %}
         </div>
-        {# <div class="reviews-row">
-            <h3>Driver reviews :</h3>
-            {% for review in reviews %}
-            {% for i in 1..review.rating %}
-            <i class="bi bi-star-fill"></i>
-            {% endfor %}
-            <p><strong>{{review.rating}}/5</strong><br>{{review.comment}}</p><hr>
-            {% endfor %}
-        </div> #}
+        {# reviews display section #}
+        {% if reviews|length > 0 %}
+
+            <div class="reviews-row mt-5">
+                <hr>
+                <h3>Driver reviews :</h3>
+                
+                {% for review in reviews %}
+                {# check if review has been approved by EcoRide #}
+                {% if review.status == 'approved' %}
+
+                    {% for i in 1..review.rating %}
+                    <i class="bi bi-star-fill fs-1"></i>
+                    {% endfor %}
+                    <p class="fs-3"><strong>{{review.rating}}/5</strong><br>{{review.content}}</p><hr>
+
+                {% endif %}
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
     </div>
     
     

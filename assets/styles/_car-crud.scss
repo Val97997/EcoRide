@@ -114,3 +114,13 @@ div.car-form-errors{
         padding: .5rem 1rem;
     }
 }
+
+@media (max-width: 1200px) {
+    form.form-car-new{
+        width: 80%;
+        margin-top: 20vh;
+    }
+    a.back-link{
+        top:7%;
+    }
+}

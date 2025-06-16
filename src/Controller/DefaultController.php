@@ -21,7 +21,6 @@ final class DefaultController extends AbstractController{
             'controller_name' => 'DefaultController',
             'showBookMessage' => ($redirectFrom === '/booking/book'),
             'registerMessage' => ($redirectFrom === '/register'),
-            'cancelMessage' => ($redirectFrom === '/booking/cancel'),
         ]);
     }
 }

@@ -14,8 +14,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormError;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/carshare')]
@@ -39,6 +41,10 @@ final class CarshareController extends AbstractController{
                 // !! don't forget to set the carshare to waiting status and add driver as User owner
                 $carshare->setUser($this->getUser());
                 $entityManager->persist($carshare);
+                $driver = $carshare->getUser();
+                $entityManager->persist($driver);
+                $balance = $driver->getCreditBalance();
+                $driver->setCreditBalance($balance - 2); // 2 credits taxed by the platform
                 $entityManager->flush();
     
                 // flash message on redirect :
@@ -97,10 +103,47 @@ final class CarshareController extends AbstractController{
         
         ]);
     }
-    #[Route('/book/cancel/{id}', name: 'app_carshare_cancel_booking', methods: ['GET', 'POST'])]
-    public function cancelBook(Request $request, Carshare $carshare, EntityManagerInterface $em){
-        
-        return $this->render('default/index.html.twig');
+    #[Route('/validate/{id}', name: 'app_carshare_validate', methods: ['GET', 'POST'])]
+    public function validateRoute(Request $request, Carshare $carshare, EntityManagerInterface $em, SessionInterface $session){
+
+    // methode to prevent multiple validation of same route : potential Logical breach !
+    $routeName = $request->attributes->get('_route');
+
+    // Check if the route has been visited before
+    if ($session->get('visited_routes') && in_array($routeName, $session->get('visited_routes'))) {
+        // Route has been visited before, you can redirect or show a message
+        return new Response('This route is locked.');
+    }
+
+    // Add the route to the visited routes in the session
+    $visitedRoutes = $session->get('visited_routes', []);
+    $visitedRoutes[] = $routeName;
+    $session->set('visited_routes', $visitedRoutes);
+
+
+        $user = $this->getUser();
+        $passengers = $carshare->getPassengers();
+        $isPass = false;
+        foreach($passengers as $passenger){
+            if($passenger === $user){
+                $isPass = true;
+                break;
+            }
+        }
+        // if confirmed user is passenger, then update credit balance for driver user
+        if($isPass){
+            $driver = $carshare->getUser();
+            $em->persist($carshare);
+            $em->persist($driver);
+            $balance = $driver->getCreditBalance();
+            $driver->setCreditBalance($balance + round(($carshare->getPrice())/10));
+            $em->flush();
+            return new RedirectResponse('../../');
+        }
+        else{
+            return $this->redirectToRoute('app_403');
+        }
+
     }
 
     #[Route('/start/{id}', name: 'app_carshare_start', methods: ['GET', 'POST'])]

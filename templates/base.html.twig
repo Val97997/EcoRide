@@ -51,22 +51,31 @@
 
           </nav>
 
-          <nav class="navbar-mobile">
-            <input type="checkbox" id="menu-toggle" class="burger">
-            <label for="menu-toggle" class="burger">
-              <img src="{{ asset('build/img/Logo.svg')}}" alt="Logo">
-            </label>
-
-            <ul class="nav-links">
-              <li><a href="#">Home</a></li>
-              <li><a href="">Carshares</a></li>
-              <li><a href="">Contact</a></li>
-              {% if app.user %}
-              <li><a href="{{ path('app_logout')}}">Logout</a></li>
-              {% else %}
-              <li><a href="{{ path('app_login')}}">Login</a></li>
-              {% endif %}
-            </ul>
+          <nav class="navbar-mobile navbar navbar-expand-lg text-secondary bg-transparent">
+            <div class="container-fluid bg-transparent text-secondary">
+                  <a href="/" class="">
+                    <img src="{{ asset('build/img/Logo.svg') }}" alt="Logo" class="logo logo-nav" style="width: 7rem; height: 7rem;">
+                  </a>
+              <button class="navbar-toggler text-secondary bg-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="bi bi-sliders navbar-toggler-icon"></i>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                  <li class="nav-item">
+                    <a class="nav-link text-secondary fs-3" aria-current="page" href="#">Home</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-secondary fs-3" aria-current="page" href="#">Carshares</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link text-secondary fs-3" href="#">Contact</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link disabled text-white fs-2" aria-disabled="true">Logout</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </nav>
           
           <form class="d-flex search-bar">
@@ -87,10 +96,29 @@
           {% else %}
           <img src="{{asset('profile_pics/%s.jpg'|format(app.user.pseudo))}}" alt="Profile" style="height: 5rem; width: 5rem;">
           {% endif %}
+
+          {# differenciate between User => go to profile and Employee => go to Workspace #}
+          {% set isUser = true %}
+          {% for role in app.user.roles %}
+
+            {% if role == 'ROLE_EMPLOYEE' %}
+              {% set isUser = false %}
+            {% endif %}
+            
+          {% endfor %}
+
+          {% if isUser %}
           <h5><a class="text-secondary" href="{{ path('app_user_profile') }}">
             {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}
             {{app.user.pseudo|slice(0, 10)}}
           </a></h5>
+          {% else %}
+            <h5><a class="text-danger" href="{{ path('app_employee_workspace') }}">
+            {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}
+            {{app.user.pseudo|slice(0, 10)}}
+          </a></h5>
+          {% endif %}
+
         </aside>
         
         {% endif %}

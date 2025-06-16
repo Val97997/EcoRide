@@ -13,7 +13,8 @@
 @import 'car-crud';
 @import 'car-show';
 @import 'carshare-crud.scss';
-
+@import 'review-form.scss';
+@import "review-carshare-card.scss";
 
 @font-face {
     font-family: 'Raleway';
@@ -199,7 +200,24 @@ aside.mini-profile{
 }
 
 @media (max-width:1200px) {
+    img.logo-nav{
+        margin-right: 2rem;
+    }
+    a.nav-link{
+        margin: auto 1rem;
+    }
     aside.mini-profile{
         top: 15%;
+    }
+    .navbar-desktop{
+        display: none !important;
+    }
+    .navbar-mobile{
+        display: block !important;
+        padding: 0rem 2rem;
+        li{
+            margin-top: .5rem;
+            text-align: center;
+        }
     }
 }
