@@ -3,22 +3,29 @@
 namespace App\Repository;
 
 use App\Data\SearchData;
+use App\Document\Review;
 use App\Entity\Carshare;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\Persistence\ManagerRegistry;
+use Dom\Document;
 
 /**
  * @extends ServiceEntityRepository<Carshare>
  */
 class CarshareRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private DocumentManager $dm;
+    public function __construct(ManagerRegistry $registry, DocumentManager $documentManager)
     {
         parent::__construct($registry, Carshare::class);
+        $this->dm = $documentManager;
     }
 
 // Search Filter manage section
-public function findSearch(SearchData $search){
+public function findSearch(SearchData $search): array{
+
+    // $reviews = $this->dm->getRepository(Review::class)->findBy(['status' => 'approved']);
     //create the search query
     $query = $this->createQueryBuilder('c')
         ->orderBy('c.departure_date', 'ASC')
@@ -55,6 +62,26 @@ public function findSearch(SearchData $search){
         $query->andWhere('ca.fuel LIKE :ecological')
         ->setParameter('ecological', 'electric');
     }
-    return $query->getQuery()->getResult();
+    $result = $query->getQuery()->getResult();
+    // If there is no reviews, we return the result
+    if(!empty($search->rating)){
+        $invalidArray = [];
+        foreach ($result as $line) {
+           $id = ($line->getUser())->getId();
+           $reviews = $this->dm->getRepository(Review::class)->findBy(['userId' => $id, 'status' => 'approved']);
+           foreach ($reviews as $review){
+                if($review->getRating() > $search->rating){
+                    $invalidArray[] = $line;
+                    break;
+                }
+            }
+        }
+        $result = array_filter($result, function($item) use ($invalidArray) {
+            return !in_array($item, $invalidArray, true);
+        });
+        $result = array_values($result); // reindex array
+    }
+    return $result;
+    
 }
 }

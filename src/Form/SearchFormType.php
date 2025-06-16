@@ -12,6 +12,7 @@ use Doctrine\DBAL\Types\DateType as TypesDateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateIntervalType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -91,6 +92,17 @@ class SearchFormType extends AbstractType
                 'days' => range(0,4),
                 'hours' => array_combine(range(1, 23), range(1, 23)),
                 'attr' => ['placeholder' => 'HH', 'min' => '0', 'max' => '1000'],
+            ])
+            ->add('rating', ChoiceType::class, [
+                'required' => false,
+                'label' => 'Rating',
+                'choices' => [
+                    '3 stars' => 3,
+                    '4 stars' => 4,
+                    '5 stars' => 5,
+                ],
+                'placeholder' => 'Select a rating',
+                'attr' => ['class' => 'rating-select'],
             ])
             ;
     }

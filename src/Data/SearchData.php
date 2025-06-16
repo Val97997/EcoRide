@@ -22,5 +22,7 @@ class SearchData extends AbstractType{
     public ?bool $eco;
 
     public ?DateInterval $duration;
+
+    public ?int $rating;
 }
 

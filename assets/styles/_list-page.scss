@@ -300,6 +300,13 @@ $font-serif : "Raleway", serif !default;
         color: $secondary;
     }
 }
+// style for rating search option :
+#rating{
+    font-size: 1.6rem;
+    background-color: $dark;
+    color: $secondary;
+}
+
 
 @media (max-width: 1000px) {
     .extended-search-fields{
