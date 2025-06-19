@@ -48,7 +48,7 @@ Register
         </h1>
     
         {{ form_errors(registrationForm) }}
-        {{ form_start(registrationForm) }}
+        {{ form_start(registrationForm, { 'csrf_protection' : true }) }}
         <div class="form-contain"  id="form-container">
 
             <div class="slide slide1 slide-move" id="slider1">
@@ -86,7 +86,7 @@ Register
                     {{ form_row(registrationForm.email) }}
                     {{ form_row(registrationForm.phone_nb) }}
                     {{ form_row(registrationForm.address) }}
-                    {{ form_row(registrationForm.agreeTerms) }}
+                    {{ form_row(registrationForm.agreeTerms, { 'attr' : {'required' : true} }) }}
                 </div>
                 
         </div>

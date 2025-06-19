@@ -39,7 +39,7 @@ class ReviewController extends AbstractController{
             $this->dm->persist($review);
             $review->setUserId($user->getId());
             $review->setCarshareId($carshare->getId());
-            // $review->setStatus(ReviewState::PENDING);
+            
             $this->dm->flush();
         }
 

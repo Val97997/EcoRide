@@ -99,10 +99,13 @@
 
           {# differenciate between User => go to profile and Employee => go to Workspace #}
           {% set isUser = true %}
+          {% set isAdmin = false  %}
           {% for role in app.user.roles %}
 
             {% if role == 'ROLE_EMPLOYEE' %}
               {% set isUser = false %}
+            {% elseif role == 'ROLE_ADMIN' %}
+              {% set isAdmin = true %}
             {% endif %}
             
           {% endfor %}
@@ -112,6 +115,11 @@
             {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}
             {{app.user.pseudo|slice(0, 10)}}
           </a></h5>
+          {% elseif isAdmin %}
+          <h5><a class="text-danger text-capitalize" href="{{ path('app_admin_workspace') }}">
+            {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}
+            ADMIN
+          </a>
           {% else %}
             <h5><a class="text-danger" href="{{ path('app_employee_workspace') }}">
             {# here we truncate the pseudo in the eventuality it would be too long, avoiding ugly display #}

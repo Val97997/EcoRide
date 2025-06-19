@@ -136,7 +136,7 @@ final class CarshareController extends AbstractController{
             $em->persist($carshare);
             $em->persist($driver);
             $balance = $driver->getCreditBalance();
-            $driver->setCreditBalance($balance + round(($carshare->getPrice())/10));
+            $driver->setCreditBalance(($balance + round(($carshare->getPrice())/10)) -2 ); // index 2 credits for the platform
             $em->flush();
             return new RedirectResponse('../../');
         }

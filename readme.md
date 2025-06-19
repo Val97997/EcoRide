@@ -28,6 +28,10 @@ We have installed an extension for access to DQL higher functions for our querie
 Necessary for inlining CSS files in our mail templates :
 # $ composer require twig/cssinliner-extra
 
+Installing chart.js for admin panel charts:
+# $ npm install chart.js
+
+
 ADMIN USER CREATION :
     In order to process the Admin profile creation, NAVIGATE to localhost/creatAdmin (only accessible if logged in => security.yaml config),
     this will execute a custom pure SQL script and create the Admin profile. @Todo : think of a better and safer method for implementing Admin profile

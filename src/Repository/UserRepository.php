@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\FindUserData;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManager;
@@ -56,13 +57,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+   public function findUserByPseudoId(FindUserData $findUser): ?User
+   {
+       
+       if(!empty($findUser->pseudo)){
+            $query = $this->createQueryBuilder('u');
+            $query->andWhere('u.pseudo = :val')
+                ->setParameter('val', $findUser->pseudo);
+                if(!empty($findUser->id)){
+                 $query->andWhere('u.id LIKE :uid')
+                     ->setParameter('uid', $findUser->id);
+                }
+                return $query->getQuery()->getOneOrNullResult();
+        }
+        else
+        {
+            return null;
+        }
+   }
 }

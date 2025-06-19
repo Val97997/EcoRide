@@ -5,6 +5,9 @@ import 'bootstrap';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { waapi, animate, createDraggable, stagger, utils } from 'animejs';
+import {Chart} from 'chart.js/auto';
+
+window.Chart = Chart; // Make Chart.js globally available
 /*
  * Welcome to your app's main JavaScript file!
  *

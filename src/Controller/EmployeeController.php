@@ -49,10 +49,20 @@ final class EmployeeController extends AbstractController{
         ]);
     }
     #[Route('/review/approve/{id}', name: 'review-approve')]
-    public function approveReview(Review $review, DocumentManager $dm): Response
+    public function approveReview(Review $review, DocumentManager $dm, EntityManagerInterface $em): Response
     {
-        $review->setStatus('approved');
+        // set status for review, and update the driver credit balance accordingly !
         $dm->persist($review);
+        $review->setStatus('approved');
+        
+        $cid = $review->getCarshareId();
+        $carshare = $em->getRepository(Carshare::class)->findOneBy(['id' => $cid]);
+        $driver = $carshare->getUser();
+        $dm->persist($driver);
+        $currentBalance = $driver->getCreditBalance();
+        $pricePerSeat = round(($carshare->getPrice())/10);
+        $driver->setCreditBalance($currentBalance + $pricePerSeat - 2); // index the 2 platform tax credits
+
         $dm->flush();
 
         return $this->redirectToRoute('app_employee_workspace');
