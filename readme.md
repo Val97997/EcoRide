@@ -31,6 +31,8 @@ Necessary for inlining CSS files in our mail templates :
 Installing chart.js for admin panel charts:
 # $ npm install chart.js
 
+Run Docker :
+# $ docker-compose build && docker-compose up -d
 
 ADMIN USER CREATION :
     In order to process the Admin profile creation, NAVIGATE to localhost/creatAdmin (only accessible if logged in => security.yaml config),
