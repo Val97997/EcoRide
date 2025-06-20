@@ -1,5 +1,15 @@
 services:
 ###> doctrine/doctrine-bundle ###
+  ###> symfony/apache ###
+  # web:
+  #   image: ecoride:latest
+  #   ports:
+  #     - "8000:80" # Map host port 8000 to container port 80
+  #   volumes:
+  #     - .:/var/www/html
+  #   depends_on:
+  #     - database
+  #     - mongodb
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
     environment:
@@ -22,11 +32,10 @@ services:
   mongodb:
     # In production, you may want to use a managed database service
     image: mongodb/mongodb-atlas-local:latest
+    command: ["mongod", "--noauth"]   # Disable authentication
     environment:
-      - MONGODB_INITDB_DATABASE=${MONGODB_DB:-app}
       # You should definitely set a root username and password in production
-      - MONGODB_INITDB_ROOT_USERNAME=${MONGODB_USERNAME:-}
-      - MONGODB_INITDB_ROOT_PASSWORD=${MONGODB_PASSWORD:-}
+      - MONGODB_INITDB_DATABASE= ${MONGODB_DB}
     volumes:
       - mongodb_data:/data/db:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
