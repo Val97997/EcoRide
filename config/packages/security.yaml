@@ -46,7 +46,7 @@ security:
         - { path: ^/car, roles: ROLE_DRIVER}
         - { path: ^/user, roles: ROLE_USER}
         - { path: ^/carshare, roles: ROLE_USER}
-        - { path: ^/search, roles: ROLE_USER}
+        # - { path: ^/search, roles: ROLE_USER}
         - { path: ^/createAdmin, roles: ROLE_USER}
 
 when@test:
