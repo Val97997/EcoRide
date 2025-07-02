@@ -34,6 +34,9 @@ Installing chart.js for admin panel charts:
 Run Docker :
 # $ docker-compose build && docker-compose up -d
 
+Deployment check:
+# $ composer require symfony/requirements-checker
+
 ADMIN USER CREATION :
     In order to process the Admin profile creation, NAVIGATE to localhost/creatAdmin (only accessible if logged in => security.yaml config),
     this will execute a custom pure SQL script and create the Admin profile. @Todo : think of a better and safer method for implementing Admin profile

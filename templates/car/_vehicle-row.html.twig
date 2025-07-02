@@ -11,9 +11,10 @@
     {% set carLocked = false %} {# boolean verif car locking variable #}
     {% set lockedCarshare = null %}
     {% for carshare in app.user.carshares %}
-    {% if carshare.car.id == car.id %}
-    
-    {% set carLocked = true %}
+    {% if carshare.car.id == car.id%}
+        {% if carshare.status.value == 'pending' or carshare.status.value == 'in_progress'  %}
+        {% set carLocked = true %}
+        {% endif %}
     {% set lockedCarshare = carshare.arrivalLocation %} {# retrieve back and store the locking carshare's id for generating the link to it #}
     {% endif %}
     

@@ -16,7 +16,7 @@ sliderContainer2.addEventListener('mouseover', function(){
 })
 
 
-//form registration styling and User Xp enrichment
+//form registration styling and UX enrichment
 let submitBtn = document.getElementById("submit-btn");
 let passwLabel = document.getElementById("");
 let pseudoInput = document.getElementById("registration_form_pseudo");

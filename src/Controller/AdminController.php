@@ -27,11 +27,13 @@ final class AdminController extends AbstractController{
     #[Route('/workspace', name: 'workspace')]
     public function index(EntityManagerInterface $em, CarshareRepository $carshareRepository, Request $request, UserRepository $userRepository): Response
     {
+        // get info for the admin charts and total earned credits
         $routesPerD = $carshareRepository->getDailyRoutes();
         $earnings = $carshareRepository->getEarnedCredits();
         $totalBenef = $carshareRepository->getTotalBenef();
         // dd($totalBenef);
         // dd($earnings);
+
         // initiate the form for account browse and suspension
         $udata = new FindUserData();
         $form = $this->createForm(FindUserType::class, $udata);

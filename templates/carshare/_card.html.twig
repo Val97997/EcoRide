@@ -46,16 +46,13 @@
             <h6 class="btn btn-dark text-white fw-bold">{{carshare.availableSeats}} <b>available seats</b></h6> 
         </div>
         
-        <div class="btn-carshare-details">
-            {# IMPORTANT: Do NOT allow a User to book a voyage he's already booked, check if present in booking history #}
-            {% if carshare not in app.user.bookhistory %}
+        {% if carshare.availableSeats > 0 %}          
+            <div class="btn-carshare-details">
+                
                 <a href="{{path('app_carshare_details', {'id': carshare.id})}}" class="btn btn-light">Details</a>
-            {% else %}
-                
-                <a href="/" aria-disabled="true" class="btn btn-light">Booked</a>
-                
-            {% endif %}
-        </div>
+            
+            </div>
+        {% endif %}
         
     </div>
 </div>

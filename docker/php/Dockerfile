@@ -1,6 +1,6 @@
 # Use the official PHP image with FPM
 FROM php:8.3-fpm-alpine
-
+COPY www.conf /etc/php/pool.d/www.conf
 RUN apk --no-cache add curl git wget bash dpkg
 
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/

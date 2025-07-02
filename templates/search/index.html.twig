@@ -21,12 +21,21 @@
         <div class="col-md-9 mt-5 carshare-list-container">
             <div class=" d-grid">
                 {% for carshare in carshares %}
-                {# IMPORTANT (LOGICAL POTENTIAL ISSUE) : second condition will prevent Drivers from being able to see their own carshares, 
-                otherwise it would be non sensical for a driver to be able to book his own route !
-                Also specify only to show the carshares that are in a waiting stance and not either canceled or full // #}
-                {% if carshare.availableSeats > 0 and carshare.user.id != app.user.id and carshare.status.value == 'waiting'
-                and carshare not in app.user.bookHistory %}
-                    {% include "carshare/_card.html.twig" with {carshare: carshare} only %}
+                {% if app.user is not defined %}
+
+                    {% if carshare.availableSeats > 0 and carshare.status.value == 'waiting' %}
+                        {% include "carshare/_card.html.twig" with {carshare: carshare} only %}
+                    {% endif %}
+
+                {% else %}
+                    {# IMPORTANT (LOGICAL POTENTIAL ISSUE) : second condition will prevent Drivers from being able to see their own carshares, 
+                    otherwise it would be non sensical for a driver to be able to book his own route !
+                    Also specify only to show the carshares that are in a waiting stance and not either canceled or full // #}
+                    {% if carshare.availableSeats > 0 and carshare.user.id != app.user.id and carshare.status.value == 'waiting'
+                    and carshare not in app.user.bookHistory %}
+                        {% include "carshare/_card.html.twig" with {carshare: carshare} only %}
+                    {% endif %}
+                
                 {% endif %}
                 {% endfor %}
         

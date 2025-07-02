@@ -30,7 +30,7 @@ import './styles/app.scss';
 
 // anime.js animation setups NOTICE : condition is vital to avoid console warning and loading the full code on wrong pages
 //login page
-if(window.location.href == 'http://127.0.0.1:8000/login'){
+if(window.location.href == 'http://127.0.0.1:8000/login' || window.location.href == 'http://127.0.0.1:8080/login'){
   waapi.animate('.animate-title span', {
     translate: `0 -2rem`,
     delay: stagger(100),
@@ -42,7 +42,7 @@ if(window.location.href == 'http://127.0.0.1:8000/login'){
 }
 
 //list carshares page
-if(window.location.href == 'http://127.0.0.1:8000/search'){
+if(window.location.href == 'http://127.0.0.1:8000/search' || window.location.href == 'http://127.0.0.1:8080/search'){
   animate('.search-page-big-hero h1', {
     opacity: [0, 1],
     translateY: ['-2rem', '0'],
@@ -59,8 +59,9 @@ if(window.location.href == 'http://127.0.0.1:8000/search'){
   });
 }
 
-// profile driver routes anim panel :
-if(window.location.href == 'http://127.0.0.1:8000/user/profile'){
+// profile driver routes anim panel , check route and that user is driver by accessing driver only element on page:
+if((window.location.href == 'http://127.0.0.1:8000/user/profile' || window.location.href == 'http://127.0.0.1:8080/user/profile')
+&& document.getElementById('codeElem') != null){
   utils.set('.btn-reveal-routes', {z:100}, {snap: [90, 180]});
   let codeElem = document.getElementById('codeElem');
   const [$text] = utils.$('#btn-reveal-routes-title');

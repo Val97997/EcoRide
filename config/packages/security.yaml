@@ -1,7 +1,7 @@
 security:
     role_hierarchy:
         ROLE_ADMIN: [ROLE_EMPLOYEE, ROLE_DRIVER]
-        ROLE_DRIVER: [ROLE_USER, ROLE_PASSENGER]
+        ROLE_DRIVER: [ROLE_PASSENGER]
         ROLE_PASSENGER: [ROLE_USER]
     # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
     password_hashers:
@@ -43,11 +43,11 @@ security:
         - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/employee, roles: ROLE_EMPLOYEE }
         - { path: ^/carshare/crud, roles: ROLE_DRIVER}
-        - { path: ^/car, roles: ROLE_DRIVER}
+        - { path: ^/car/, roles: ROLE_DRIVER}
         - { path: ^/user, roles: ROLE_USER}
         - { path: ^/carshare, roles: ROLE_USER}
-        # - { path: ^/search, roles: ROLE_USER}
         - { path: ^/createAdmin, roles: ROLE_USER}
+        # - { path: ^/search, roles: ROLE_USER}
 
 when@test:
     security:

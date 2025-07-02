@@ -93,7 +93,7 @@
                 
             {% else %}
                 <h3><a href="{{path('app_user_switch', {'id': app.user.id})}}">Become driver (new login required)</a></h3>
-                <h3><a href="/">View history</a></h3>
+                <h3><a href="#book-history-table">View history</a></h3>
                 
             {% endif %}
                 
@@ -165,7 +165,7 @@
 
 
         {% if app.user.bookHistory|length > 0 %}
-            <section class="book-history-table w-100 me-auto ms-auto mt-5 mb-3 d-flex flex-wrap flex-row justify-content-between">
+            <section class="book-history-table w-100 me-auto ms-auto mt-5 mb-3 d-flex flex-wrap flex-row justify-content-between" id="book-history-table">
                 <h1 class="text-center w-100 me-auto ms-auto mb-5 fw-bolder fs-1 bg-black text-secondary pt-3 pb-3">Passenger history</h1>
                     {% for carshare in app.user.bookHistory|sort((a, b) => b.departureDate <=> a.departureDate) %}
                     

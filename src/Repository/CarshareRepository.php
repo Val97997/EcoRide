@@ -70,7 +70,7 @@ class CarshareRepository extends ServiceEntityRepository
             $id = ($line->getUser())->getId();
             $reviews = $this->dm->getRepository(Review::class)->findBy(['userId' => $id, 'status' => 'approved']);
             foreach ($reviews as $review){
-                    if($review->getRating() > $search->rating){
+                    if($review->getRating() < $search->rating){
                         $invalidArray[] = $line;
                         break;
                     }

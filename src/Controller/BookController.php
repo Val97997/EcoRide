@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 #[Route('/booking', name: 'app_')]
 class BookController extends AbstractController{
-    #[Route('book/{id}/{uid}', name: 'book')]
+    #[Route('/book/{id}/{uid}', name: 'book')]
 
     // IMPORTANT: The 'id' parameter should match the Carshare entity's ID and 'uid' should match the User entity's ID.
     // The 'uid' parameter is used to identify the user who is booking the carshare.
@@ -104,6 +104,8 @@ class BookController extends AbstractController{
         }
         else{
             $user->removeBookHistory($carshare);
+            $seats = $carshare->getAvailableSeats();
+            $carshare->setAvailableSeats($seats + 1);
             $balance = $user->getCreditBalance();
             $user->setCreditBalance($balance + round(($carshare->getPrice())/10));
             $em->flush();

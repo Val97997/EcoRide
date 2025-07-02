@@ -1,8 +1,8 @@
-$primary: #3e6259ff; // change the primary color to red
-$secondary: #aef6c7ff; // change the secondary color to blue
-$neutral: #5b8266ff; // change the neutral color to green
-$dark: #294936ff; // change the dark color to black
-$black: #212922ff; // change the background color to white
+$primary: #3e6259ff; // change the primary color
+$secondary: #aef6c7ff; // change the secondary color
+$neutral: #5b8266ff; // change the neutral color 
+$dark: #294936ff; // change the dark color 
+$black: #212922ff; // change the background color 
 $font-sans-serif: 'Poppins', sans-serif !default;
 $font-monospace: "Poppins", monospace !default;
 $font-serif : "Raleway", serif !default;
@@ -69,5 +69,16 @@ $font-serif : "Raleway", serif !default;
         font-size: 2.5rem;
         padding: 1rem;
         margin-top: 2rem;
+    }
+}
+// chart section 
+section.admincharts{
+    padding: 10rem 0rem;
+    border-radius: 2rem;
+    .chart-container{
+        width: 40%;
+        canvas{
+            border-radius: 1.5rem;
+        }
     }
 }

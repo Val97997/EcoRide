@@ -9,20 +9,24 @@
     <div class="benef-title">
         <h1>Total platform earnings <hr> <em class=" d-block m-auto" id="benef-counter"></em></h1>  
     </div>
+    <div class=" w-100 me-auto ms-auto mt-5 mb-5 account-suspension d-flex flex-column">
+        <h1>Suspend an account</h1>
+        {% include "pages/user-card.html.twig" %}
+    </div>
     <a href="{{path('app_admin_addemployee')}}" class="btn btn-info fs-2 add-employee-link pt-5"><i class="bi bi-person-plus-fill fs-1"></i> <hr>Create an employee profile</a>
 </div>
-<div class=" w-100 me-auto ms-auto mt-5 mb-5 account-suspension d-flex flex-column">
-    <h1>Suspend an account</h1>
-    {% include "pages/user-card.html.twig" %}
-</div>
 
-<div class="chart-container">
-    <canvas id="ridesPerDayChart" class=" w-75 p-2 m-auto"></canvas>
-</div>
+<section class="admincharts d-flex flex-wrap flex-row bg-primary justify-content-center m-5">
 
-<div class="chart-container">
-    <canvas id="creditsPerDayChart" class="w-75 p-2 m-auto"></canvas>
-</div>
+    <div class="chart-container">
+        <canvas id="ridesPerDayChart" class=" w-75 p-2 m-auto bg-white" title="ridesPerDayChart"></canvas>
+    </div>
+    
+    <div class="chart-container">
+        <canvas id="creditsPerDayChart" class="w-75 p-2 m-auto bg-white" title="creditsPerDayChart"></canvas>
+    </div>
+
+</section>
 
 
 
@@ -44,7 +48,8 @@
                         data: ridesPerDayData.map(item => item.count),
                         backgroundColor: '#aef6c7ff',
                         borderColor: 'rgba(54, 162, 235, 1)',
-                        borderWidth: 1
+                        borderWidth: 1,
+                        hoverBackgroundColor: 'green'
                     }]
                 },
                 options: {
