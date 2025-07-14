@@ -50,3 +50,13 @@ This project provides a complete Docker-based setup for local development and te
 ---
 
 For further customization (e.g., adding a web server), refer to the `docker/nginx/` directory and adjust your `compose.yaml` as needed.
+
+
+### Local deploy
+- Download and import app folder in VSC
+- run $ npm install for necessary node packages
+- run $ composer require for necessary composer dependencies
+- use .env.local external file to customize or import pre existing Database Settings
+- use the ecoride.sql file to import and build the MariaDB database for the app, OR run $ php bin/console doctrine:migrations:migrate to generate it at the URL
+specified in .env.local
+- run $ symfony server:start and navigate to localhost:8000
