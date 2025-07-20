@@ -1,0 +1,65 @@
+[{
+  "_id": {
+    "$oid": "684d487ac1acf76e2b0dbf9a"
+  },
+  "content": "lkpl",
+  "rating": 5,
+  "userId": 1,
+  "carshareId": 23,
+  "createdAt": {
+    "$date": "2025-06-14T10:01:00.000Z"
+  },
+  "status": "pending"
+},
+{
+  "_id": {
+    "$oid": "684eaefaaa1b71a046361854"
+  },
+  "content": "lkpl",
+  "rating": 2,
+  "userId": 1,
+  "carshareId": 23,
+  "createdAt": {
+    "$date": "2025-06-14T10:01:00.000Z"
+  },
+  "status": "approved"
+},
+{
+  "_id": {
+    "$oid": "684eaf03aa1b71a046361855"
+  },
+  "content": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"",
+  "rating": 5,
+  "userId": 1,
+  "carshareId": 23,
+  "createdAt": {
+    "$date": "2025-06-14T10:01:00.000Z"
+  },
+  "status": "pending"
+},
+{
+  "_id": {
+    "$oid": "684eaf05aa1b71a046361856"
+  },
+  "content": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"",
+  "rating": 5,
+  "userId": 16,
+  "carshareId": 2,
+  "createdAt": {
+    "$date": "2025-06-14T10:01:00.000Z"
+  },
+  "status": "empty"
+},
+{
+  "_id": {
+    "$oid": "6865149ba02220455208fe33"
+  },
+  "content": "Very good experience",
+  "rating": 4,
+  "userId": 22,
+  "carshareId": 25,
+  "createdAt": {
+    "$date": "2025-07-02T11:14:00.000Z"
+  },
+  "status": "pending"
+}]
